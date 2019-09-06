@@ -24,7 +24,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.get('/', (req, res) => Response.success(res, 200, 'Bears team 10!'));
 
 app.use((err, req, res, next) => {
-  // We log the error internaly
+  // We log the error internally
   debugged('err', err);
   //  Remove error's `stack` property. We don't want users to see this at the production env
   const error = process.env.NODE_ENV === 'development' ? err : {};
