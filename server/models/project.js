@@ -1,4 +1,5 @@
-import mongoose from 'mongoose';
+const mongoose = require('mongoose');
+
 
 const { Schema } = mongoose;
 
@@ -7,26 +8,26 @@ const todoListSchema = new Schema({
   description: String,
   date_create: { type: Date, default: Date.now },
   date_due: Date,
-  assigne_users: [{ ref: 'User' }],
-  notifie_users: [{ ref: 'User' }],
+  assigne_users: [Schema.Types.ObjectId],
+  notifie_users: [Schema.Types.ObjectId],
 });
 
 const messageBoardSchema = new Schema({
-  user: { ref: 'User' },
+  userId: Schema.Types.ObjectId,
   title: String,
   text: String,
 });
 
 const projectSchema = new Schema({
-  project_owner: { ref: 'User' },
+  project_owner: Schema.Types.ObjectId,
   name: String,
   description: String,
   date_create: { type: Date, default: Date.now },
   todos: [todoListSchema],
   message_board: [messageBoardSchema],
-  people: [{ ref: 'User' }],
+  people: [Schema.Types.ObjectId],
 });
 
 const Project = mongoose.model('Project', projectSchema);
 
-export default Project;
+module.exports = Project;
