@@ -5,5 +5,3 @@ export default class HomePage extends React.Component {
     return <div>this is the Home page</div>;
   }
 }
-
-//force format
