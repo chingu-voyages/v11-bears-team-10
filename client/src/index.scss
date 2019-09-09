@@ -1,0 +1,23 @@
+@import "../node_modules/bootstrap/scss/bootstrap.scss";
+
+.navbar-brand:hover {
+	cursor: pointer;
+}
+
+.w-sm-down-100 {
+	@include media-breakpoint-down(sm) {
+		width: 100%;
+	}
+}
+.w-md-50 {
+	@include media-breakpoint-up(md) {
+		width: 50% !important;
+	}
+}
+
+.error-info {
+	color: #636b6f;
+	font-family: "Nunito", sans-serif;
+	font-weight: 100;
+	font-size: 36px;
+}
