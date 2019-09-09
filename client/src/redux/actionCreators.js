@@ -4,3 +4,6 @@ export const setError = (message = "something went wrong", statusCode = null) =>
 	message,
 	statusCode
 });
+
+
+
