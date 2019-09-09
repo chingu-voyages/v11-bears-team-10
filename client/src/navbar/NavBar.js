@@ -61,3 +61,6 @@ export default withRouter(
 		{ setUser, setError }
 	)(NavBar)
 );
+
+
+//to foce format

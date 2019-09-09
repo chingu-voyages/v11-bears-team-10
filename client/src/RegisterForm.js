@@ -126,3 +126,5 @@ export default class RegisterForm extends React.Component {
 		);
 	}
 }
+
+//to foce format
