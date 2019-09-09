@@ -9,3 +9,4 @@ export default function ErrorInfo({ message, statusCode }) {
 		</Col>
 	);
 }
+
