@@ -10,4 +10,3 @@ export default function ErrorInfo({ message, statusCode }) {
 	);
 }
 
-//to foce format

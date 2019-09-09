@@ -62,5 +62,3 @@ export default withRouter(
 	)(NavBar)
 );
 
-
-//to foce format

@@ -6,4 +6,3 @@ export default class HomePage extends React.Component {
 	}
 }
 
-//to foce format
