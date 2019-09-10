@@ -1,60 +1,41 @@
-import express from 'express';
-import morgan from 'morgan';
-import debug from 'debug';
-import cors from 'cors';
-import mongoose from 'mongoose';
-// import bodyParser from 'body-parser'; DEPRECATED
-import compression from 'compression';
-import { config } from 'dotenv';
-import Response from './utils/Response';
+var createError = require('http-errors');
+var express = require('express');
+var path = require('path');
+var cookieParser = require('cookie-parser');
+var logger = require('morgan');
 
+var indexRouter = require('./routes/index');
+var usersRouter = require('./routes/users');
 
-config();
+var app = express();
 
-const app = express();
-const port = process.env.PORT || 5000;
-const debugged = debug('server');
+// view engine setup
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'pug');
 
-app.use(morgan('dev'));
-app.use(cors());
-app.use(compression());
-
-// DEPRECATED
-// app.use(bodyParser.json());
-// app.use(bodyParser.urlencoded({ extended: false }));
-
+app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser());
+app.use(express.static(path.join(__dirname, 'public')));
 
-app.get('/', (req, res) => Response.success(res, 200, 'Bears team 10!'));
+app.use('/', indexRouter);
+app.use('/users', usersRouter);
 
-app.use((err, req, res, next) => {
-  // We log the error internally
-  debugged('err', err);
-  //  Remove error's `stack` property. We don't want users to see this at the production env
-  const error = process.env.NODE_ENV === 'development' ? err : {};
-
-  Response.error(res, err.status || 500, error);
-  next();
+// catch 404 and forward to error handler
+app.use(function(req, res, next) {
+  next(createError(404));
 });
 
-app.use((req, res, next) => {
-  Response.error(res, 404, 'Page does not exist');
-  next();
+// error handler
+app.use(function(err, req, res, next) {
+  // set locals, only providing error in development
+  res.locals.message = err.message;
+  res.locals.error = req.app.get('env') === 'development' ? err : {};
+
+  // render the error page
+  res.status(err.status || 500);
+  res.render('error');
 });
 
-// DEPRECATED
-// mongoose.Promise = global.Promise; //
-
-// DUPLICATED
-// mongoose.set('useNewUrlParser', true);
-
-mongoose.set('useFindAndModify', false);
-
-// should be disabled in production
-mongoose.set('useCreateIndex', true);
-mongoose.connect(process.env.DB_URI, { useNewUrlParser: true });
-
-app.listen(port, () => debugged(`Server running on port ${port} 🔥`));
-
-export default app;
+module.exports = app;
