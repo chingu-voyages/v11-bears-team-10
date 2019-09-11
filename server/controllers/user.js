@@ -58,12 +58,13 @@ const findUsersByEmail = async (email, res) => {
 
 const createUser = async (req, res) => {
   const { username, email, password } = req.body;
+  console.log(req.body)
   try {
-    let user = await User.find({ username });
-    if (user.username)
-      return res.status(400).json({ error: 'Username already used', user });
-    user = await User.find({ email });
-    if (user.email)
+    let user = await User.findOne({ username });
+    if (user)
+      return res.status(400).json({ error: 'Username already used'});
+    user = await User.findOne({ email });
+    if (user)
       return res.status(400).json({ error: 'Email already used' });
     const newUser = await User.create({ username, email, password });
     const savedUser = await newUser.save();
