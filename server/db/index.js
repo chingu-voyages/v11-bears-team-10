@@ -5,7 +5,7 @@ const dbUri =
     ? process.env.dbUri
     : "mongodb://localhost/projectsmanager";
 
-mongoose.connect(dbUri, { useNewUrlParser: true });
+mongoose.connect(dbUri, { useNewUrlParser: true,  useUnifiedTopology: true });
 
 mongoose.connection.on("connected", () =>
   console.log("Mongoose is connected to ", dbUri)
