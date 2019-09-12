@@ -27,7 +27,9 @@
   justify-content: space-between;
   height: 10vh;
   .logout {
-    background: #00c4a7;
+		// background: #00c4a7;
+		// background: #23D160;
+		background: #11144c;
     padding: 5px;
     border: none;
     width: 100px;
@@ -54,7 +56,8 @@
   height: 80;
   @include align-flex-item(column);
   width: 80vw;
-  padding: 50px;
+	padding: 50px;
+	border: 3px red solid;
 }
 
 .add {
@@ -69,10 +72,11 @@
 
 .projects-summary {
   background: white;
-  width: 60vw;
-  margin-top: 20px;
+  width: 68vw;
+  // margin-top: 10px;
 	height: 10vh;
 	margin-bottom: 30px;
+	margin-left: 12px;
   @include drop-shadow;
 }
 

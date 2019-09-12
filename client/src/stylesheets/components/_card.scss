@@ -8,9 +8,20 @@
   }
 
   .trash {
-    background: #00c4a7;
-		font-weight: 200;
-		color: white;
-		padding: 5px;
-  }
+		// background: #00c4a7;
+		// background: #230338;
+		// background: #602080;
+		// background: #621e81ad;
+		// background: white;
+		// font-weight: 200;
+		// color: white;
+		// padding: 5px;
+		@include show-delete-card(false)
+	}
+}
+
+.app-card:hover{
+	.trash{
+    @include show-delete-card(true)
+	}
 }

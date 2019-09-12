@@ -9,6 +9,7 @@ import { library } from "@fortawesome/fontawesome-svg-core";
 import { faHome, faSearch, faTrash } from "@fortawesome/free-solid-svg-icons";
 
 import App from "./App";
+import Dashboard from './DashBoard'
 
 import "./index.scss";
 
@@ -23,7 +24,7 @@ ReactDOM.render(
     })}
   >
     <BrowserRouter>
-      <App />
+      <Dashboard />
     </BrowserRouter>
   </Provider>,
   document.getElementById("root")

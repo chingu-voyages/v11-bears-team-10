@@ -36,16 +36,13 @@ export default function DashBoards(props) {
       </Navbar>
       <section className="dash-body flex-col-centered">
         <div className="content">
-          <div className="flex-row add">
-            <a className="left">Add Project</a>
-          </div>
-          <section className="projects-summary">
-            <p>MY PROJECTS SUNNARY</p>
+          {/* <div className="flex-row add">
+            <a className="left" href='http://fakelink'>Add Project</a>
+          </div> */}
+          <section className="projects-summary flex-col-centered">
+            <div>MY PROJECTS SUNNARY</div>
           </section>
           <section className="projects-shelf flex-row">
-						<Card />
-						<Card />
-						<Card />
 						<Card />
 						<Card />
 						<Card />
