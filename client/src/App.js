@@ -69,6 +69,7 @@ class App extends React.Component {
 
               <Route
                 path="/dashboard"
+                // component={DashBoard}
                 render={props =>
                   this.props.user ? (
                     <DashBoard {...props} user={this.props.user} />
@@ -122,5 +123,3 @@ export default withRouter(
     { setUser, setError }
   )(App)
 );
-
-

@@ -5,19 +5,26 @@ import { BrowserRouter } from "react-router-dom";
 
 import configureAppStore from "./redux/store";
 import * as serviceWorker from "./serviceWorker";
+import { library } from '@fortawesome/fontawesome-svg-core'
 
+import Dashboard from "./DashBoard";
 import App from "./App";
 
+import {faHome, faSearch} from '@fortawesome/free-solid-svg-icons'
 import "./index.scss";
+
+library.add(faHome, faSearch)
 
 ReactDOM.render(
   <Provider
     store={configureAppStore({
       user: null,
       error: null // will be an object containing a message property , and a statusCode property
-    })}>
+    })}
+  >
     <BrowserRouter>
-      <App />
+      <Dashboard />
+      {/* <App /> */}
     </BrowserRouter>
   </Provider>,
   document.getElementById("root")
