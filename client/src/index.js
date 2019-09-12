@@ -5,15 +5,15 @@ import { BrowserRouter } from "react-router-dom";
 
 import configureAppStore from "./redux/store";
 import * as serviceWorker from "./serviceWorker";
-import { library } from '@fortawesome/fontawesome-svg-core'
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { faHome, faSearch, faTrash } from "@fortawesome/free-solid-svg-icons";
 
-import Dashboard from "./DashBoard";
 import App from "./App";
 
-import {faHome, faSearch, faTrash} from '@fortawesome/free-solid-svg-icons'
 import "./index.scss";
 
-library.add(faHome, faSearch, faTrash)
+//create a library to hold icons and brands
+library.add(faHome, faSearch, faTrash);
 
 ReactDOM.render(
   <Provider
@@ -23,8 +23,7 @@ ReactDOM.render(
     })}
   >
     <BrowserRouter>
-      <Dashboard />
-      {/* <App /> */}
+      <App />
     </BrowserRouter>
   </Provider>,
   document.getElementById("root")
