@@ -1,60 +1,57 @@
-import express from 'express';
-import morgan from 'morgan';
-import debug from 'debug';
-import cors from 'cors';
-import mongoose from 'mongoose';
-// import bodyParser from 'body-parser'; DEPRECATED
-import compression from 'compression';
-import { config } from 'dotenv';
-import Response from './utils/Response';
+require('./db');
 
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
+const passport = require('passport');
+const helmet = require('helmet');
 
-config();
+const auth = require('./passport');
+
+const indexRouter = require('./routes/index');
+const userRouter = require('./routes/user');
+const projectRouter = require('./routes/project');
+const authRouter = require('./routes/auth');
 
 const app = express();
-const port = process.env.PORT || 5000;
-const debugged = debug('server');
 
-app.use(morgan('dev'));
-app.use(cors());
-app.use(compression());
+app.use(helmet());
 
-// DEPRECATED
-// app.use(bodyParser.json());
-// app.use(bodyParser.urlencoded({ extended: false }));
+// view engine setup
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'pug');
 
+app.use(passport.initialize());
+auth();
+
+app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser());
+app.use(express.static(path.join(__dirname, 'public')));
 
-app.get('/', (req, res) => Response.success(res, 200, 'Bears team 10!'));
+// authorised routes without token
+app.use(authRouter);
+app.use('/', indexRouter);
 
-app.use((err, req, res, next) => {
-  // We log the error internally
-  debugged('err', err);
-  //  Remove error's `stack` property. We don't want users to see this at the production env
-  const error = process.env.NODE_ENV === 'development' ? err : {};
+// restrict access to other routes
+app.use(passport.authenticate('jwt', { session: false }), 
+  (req, res, next) =>  next()
+);
 
-  Response.error(res, err.status || 500, error);
-  next();
+
+app.use('/user', userRouter);
+app.use('/project', projectRouter);
+
+// catch 404 and forward to error handler
+app.use(function(req, res, next) {
+  res.status(404).json({ error: 'Route Not Found' });
 });
 
-app.use((req, res, next) => {
-  Response.error(res, 404, 'Page does not exist');
-  next();
+// error handler
+app.use(function(err, req, res, next) {
+  res.status(500).json({ error: 'Internal Server Error' });
 });
 
-// DEPRECATED
-// mongoose.Promise = global.Promise; //
-
-// DUPLICATED
-// mongoose.set('useNewUrlParser', true);
-
-mongoose.set('useFindAndModify', false);
-
-// should be disabled in production
-mongoose.set('useCreateIndex', true);
-mongoose.connect(process.env.DB_URI, { useNewUrlParser: true });
-
-app.listen(port, () => debugged(`Server running on port ${port} 🔥`));
-
-export default app;
+module.exports = app;
