@@ -7,8 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 export default function DashBoards(props) {
   return (
-    <div>
-      <section>
+    <div className="dashboard">
         <Navbar variant="dark" className="header">
           <Navbar.Brand href="#home">
             Projects | Window
@@ -34,7 +33,9 @@ export default function DashBoards(props) {
             </Form>
           </div>
         </Navbar>
-      </section>
+				<section className="dash-body">
+
+				</section>
     </div>
   );
 }
