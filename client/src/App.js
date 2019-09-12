@@ -122,5 +122,3 @@ export default withRouter(
     { setUser, setError }
   )(App)
 );
-
-

@@ -5,17 +5,23 @@ import { BrowserRouter } from "react-router-dom";
 
 import configureAppStore from "./redux/store";
 import * as serviceWorker from "./serviceWorker";
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { faHome, faSearch, faTrash } from "@fortawesome/free-solid-svg-icons";
 
 import App from "./App";
 
 import "./index.scss";
+
+//create a library to hold icons and brands
+library.add(faHome, faSearch, faTrash);
 
 ReactDOM.render(
   <Provider
     store={configureAppStore({
       user: null,
       error: null // will be an object containing a message property , and a statusCode property
-    })}>
+    })}
+  >
     <BrowserRouter>
       <App />
     </BrowserRouter>

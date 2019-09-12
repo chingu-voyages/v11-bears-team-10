@@ -1,4 +1,6 @@
 @import "../node_modules/bootstrap/scss/bootstrap.scss";
+@import './stylesheets/main.scss';
+
 
 .navbar-brand:hover {
 	cursor: pointer;
@@ -21,3 +23,5 @@
 	font-weight: 100;
 	font-size: 36px;
 }
+
+

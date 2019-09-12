@@ -1,0 +1,81 @@
+@import "../helpers/variables";
+@import "../helpers/mixins";
+
+//helpers
+.flex-row {
+  @include align-flex-item(row);
+}
+
+.flex-col {
+  @include align-flex-item(column);
+}
+
+.flex-col-centered {
+	@include align-flex-item(column);
+	justify-content: center;
+	align-items: center;
+}
+
+//dashboard
+.dashboard {
+  @include align-flex-item(column);
+  height: 100%;
+}
+.header {
+  background: white;
+  display: flex;
+  justify-content: space-between;
+  height: 10vh;
+  .logout {
+    background: #00c4a7;
+    padding: 5px;
+    border: none;
+    width: 100px;
+    color: white;
+    font-weight: 200;
+    margin-left: 5px;
+  }
+}
+
+.user-nav {
+  @include align-flex-item(row);
+}
+
+.dash-body {
+  // border: 2px red solid;
+  height: 90vh;
+  background: #e4f2f0c0;
+  @include align-flex-item(column);
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.content {
+  height: 80;
+  @include align-flex-item(column);
+  width: 80vw;
+  padding: 50px;
+}
+
+.add {
+  .left {
+    padding: 5px;
+    width: 60vw;
+    background: white;
+    border-right: $button-extension 4px solid;
+    @include drop-shadow;
+  }
+}
+
+.projects-summary {
+  background: white;
+  width: 60vw;
+  margin-top: 20px;
+	height: 10vh;
+	margin-bottom: 30px;
+  @include drop-shadow;
+}
+
+.projects-shelf{
+	flex-wrap: wrap;
+}
