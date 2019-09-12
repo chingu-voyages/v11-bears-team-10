@@ -10,10 +10,10 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import Dashboard from "./DashBoard";
 import App from "./App";
 
-import {faHome, faSearch} from '@fortawesome/free-solid-svg-icons'
+import {faHome, faSearch, faTrash} from '@fortawesome/free-solid-svg-icons'
 import "./index.scss";
 
-library.add(faHome, faSearch)
+library.add(faHome, faSearch, faTrash)
 
 ReactDOM.render(
   <Provider

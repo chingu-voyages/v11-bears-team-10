@@ -1,9 +1,8 @@
 import React from "react";
-import { Navbar, Nav, Form, Button, Image } from "react-bootstrap";
+import { Navbar, Nav, Form, Image } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-// export default function DashBoard(props) {
-//   return <div>this is {props.user.name}'s dashboard page</div>;
-// }
+
+import Card from './components/Card/Card'
 
 export default function DashBoards(props) {
   return (
@@ -35,7 +34,23 @@ export default function DashBoards(props) {
           </Form>
         </div>
       </Navbar>
-      <section className="dash-body"></section>
+      <section className="dash-body flex-col-centered">
+        <div className="content">
+          <div className="flex-row add">
+            <a className="left">Add Project</a>
+          </div>
+          <section className="projects-summary">
+            <p>MY PROJECTS SUNNARY</p>
+          </section>
+          <section className="projects-shelf flex-row">
+						<Card />
+						<Card />
+						<Card />
+						<Card />
+						<Card />
+          </section>
+        </div>
+      </section>
     </div>
   );
 }
