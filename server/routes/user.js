@@ -20,10 +20,6 @@ router.get('/email/:email', (req, res) => {
   User.findUsersByEmail(email, res)
 });
 
-/* POST user */
-router.post('/', (req, res) => {
-  User.createUser(req, res);
-});
 
 /* PUT user */
 router.put('/:id', (req, res) => {
