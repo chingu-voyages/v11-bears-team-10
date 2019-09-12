@@ -48,6 +48,7 @@ export default function DashBoards(props) {
 						<Card />
 						<Card />
 						<Card />
+						<Card />
           </section>
         </div>
       </section>
