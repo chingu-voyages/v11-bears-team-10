@@ -10,7 +10,7 @@ const findUsers = async res => {
     }
   } catch (error) {
     console.log(error);
-    res.status(500).json({ error: 'Serveur Error' });
+    res.status(500).json({ error: error.message });
   }
 };
 
@@ -24,7 +24,7 @@ const findUserById = async (id, res) => {
     }
   } catch (error) {
     console.log(error);
-    res.status(500).json({ error: 'Server Error' });
+    res.status(500).json({ error: error.message });
   }
 };
 
@@ -38,7 +38,7 @@ const findUsersByUsername = async (username, res) => {
     }
   } catch (error) {
     console.log(error);
-    res.status(500).json({ error: 'Server Error' });
+    res.status(500).json({ error: error.message });
   }
 };
 
@@ -52,7 +52,7 @@ const findUsersByEmail = async (email, res) => {
     }
   } catch (error) {
     console.log(error);
-    res.status(500).json({ error: 'Server Error' });
+    res.status(500).json({ error: error.message });
   }
 };
 
@@ -71,7 +71,7 @@ const createUser = async (req, res) => {
     return res.status(201).json(savedUser);
   } catch (error) {
     console.log(error);
-    res.status(500).json({ error: 'Server Error' });
+    res.status(500).json({ error: error.message });
   }
 };
 
@@ -86,7 +86,7 @@ const UpdateUser = async (id, req, res) => {
     }
   } catch (error) {
     console.log(error);
-    res.status(500).json({ error: 'Server Error' });
+    res.status(500).json({ error: error.message });
   }
 };
 
@@ -100,7 +100,7 @@ const deleteUser = async (id, res) => {
     }
   } catch (error) {
     console.log(error);
-    res.status(500).json({ error: 'Server Error' });
+    res.status(500).json({ error: error.message });
   }
 };
 

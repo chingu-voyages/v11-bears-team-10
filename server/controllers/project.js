@@ -11,7 +11,7 @@ const findUserProjects = async (userId, res) => {
     }
   } catch (error) {
     console.log(error);
-    res.status(500).json({ error: 'Serveur Error' });
+    res.status(500).json({ error: error.message });
   }
 };
 
@@ -25,7 +25,7 @@ const findProject = async (id, res) => {
     }
   } catch (error) {
     console.log(error);
-    res.status(500).json({ error: 'Server Error' });
+    res.status(500).json({ error: error.message });
   }
 };
 
@@ -43,7 +43,7 @@ const createProject = async (userId, req, res) => {
     res.status(201).json(savedProject);
   } catch (error) {
     console.log(error);
-    res.status(500).json({ error: 'Server Error' });
+    res.status(500).json({ error: error.message });
   }
 };
 
@@ -58,7 +58,7 @@ const updateProject = async (id, req, res) => {
     }
   } catch (error) {
     console.log(error);
-    res.status(500).json({ error: 'Server Error' });
+    res.status(500).json({ error: error.message });
   }
 };
 
@@ -77,7 +77,7 @@ const deleteProject = async (id, res) => {
     }
   } catch (error) {
     console.log(error);
-    res.status(500).json({ error: 'Server Error' });
+    res.status(500).json({ error: error.message });
   }
 };
 
