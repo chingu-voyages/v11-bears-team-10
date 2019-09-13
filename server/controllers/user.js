@@ -9,7 +9,6 @@ const findUsers = async res => {
       res.status(400).json({ error: 'Not Found' });
     }
   } catch (error) {
-    console.log(error);
     res.status(500).json({ error: error.message });
   }
 };
@@ -23,7 +22,6 @@ const findUserById = async (id, res) => {
       res.status(404).json({ error: 'Not Found' });
     }
   } catch (error) {
-    console.log(error);
     res.status(500).json({ error: error.message });
   }
 };
@@ -37,7 +35,6 @@ const findUsersByUsername = async (username, res) => {
       res.status(404).json({ error: 'Not Found' });
     }
   } catch (error) {
-    console.log(error);
     res.status(500).json({ error: error.message });
   }
 };
@@ -51,14 +48,12 @@ const findUsersByEmail = async (email, res) => {
       res.status(404).json({ error: 'Not Found' });
     }
   } catch (error) {
-    console.log(error);
     res.status(500).json({ error: error.message });
   }
 };
 
 const createUser = async (req, res) => {
   const { username, email, password } = req.body;
-  console.log(req.body)
   try {
     let user = await User.findOne({ username });
     if (user)
@@ -70,7 +65,6 @@ const createUser = async (req, res) => {
     const savedUser = await newUser.save();
     return res.status(201).json(savedUser);
   } catch (error) {
-    console.log(error);
     res.status(500).json({ error: error.message });
   }
 };
@@ -85,7 +79,6 @@ const UpdateUser = async (id, req, res) => {
       res.status(404).json({ error: 'Not Found' });
     }
   } catch (error) {
-    console.log(error);
     res.status(500).json({ error: error.message });
   }
 };
@@ -99,7 +92,6 @@ const deleteUser = async (id, res) => {
       res.status(404).json({ error: 'Not Found' });
     }
   } catch (error) {
-    console.log(error);
     res.status(500).json({ error: error.message });
   }
 };
