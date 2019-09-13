@@ -19,7 +19,6 @@
 //dashboard
 .dashboard {
   @include align-flex-item(column);
-  height: 100%;
 }
 .header {
   background: white;
@@ -45,7 +44,6 @@
 
 .dash-body {
   // border: 2px red solid;
-  height: 90vh;
   background: #e4f2f0c0;
   @include align-flex-item(column);
   align-items: center;
