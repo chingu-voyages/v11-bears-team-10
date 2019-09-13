@@ -1,16 +1,35 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
+import "../../stylesheets/css/styles.css";
+
 function Card() {
   return (
-    <div className="flex-col app-card">
-      <div className="project-card"></div>
+    <div className="flex-col app-card hvr-grow-shadow">
+      <div className="project-card flex-col-centered">
+        <h4>{"Test Project"}</h4>
+        <p className="flex-row-centered">
+          <div className="badge-icon">
+            <FontAwesomeIcon icon="users" id="members" />
+            <span class="badge">{0}</span>
+          </div>
+          <div className="badge-icon">
+            <FontAwesomeIcon icon="comments" id="comments" />
+            <span class="badge">{0}</span>
+          </div>
+          <div className="badge-icon">
+            <FontAwesomeIcon icon="sitemap" id="teams" />
+            <span class="badge">{0}</span>
+          </div>
+        </p>
+      </div>
       <div className="trash flex-col-centered">
-        <FontAwesomeIcon icon="trash" />
+        <div onClick={() => console.log('delete this card on click')}>
+          <FontAwesomeIcon icon="trash" className="bin" />
+        </div>
       </div>
     </div>
   );
 }
 
-
-export default Card
+export default Card;

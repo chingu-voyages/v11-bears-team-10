@@ -16,25 +16,41 @@
 	align-items: center;
 }
 
+.flex-row-centered {
+	@include align-flex-item(row);
+	justify-content: center;
+	align-items: center;
+}
+
 //dashboard
 .dashboard {
   @include align-flex-item(column);
-  height: 100%;
 }
 .header {
-  background: white;
+  background: #160f30;
+  // background: white;
   display: flex;
   justify-content: space-between;
-  height: 10vh;
+	height: 10vh;
+	#find{
+	margin-left: 20px;
+	}
   .logout {
-    background: #00c4a7;
+		background: #00c4a7;;
     padding: 5px;
     border: none;
     width: 100px;
-    color: white;
-    font-weight: 200;
-    margin-left: 5px;
-  }
+    color: whitesmoke;
+    font-weight: 400;
+		margin-left: 10px;
+	}
+	span{
+		color: white;
+	}
+}
+
+.center-nav{
+	justify-content: space-between;
 }
 
 .user-nav {
@@ -43,7 +59,6 @@
 
 .dash-body {
   // border: 2px red solid;
-  height: 90vh;
   background: #e4f2f0c0;
   @include align-flex-item(column);
   align-items: center;
@@ -54,7 +69,8 @@
   height: 80;
   @include align-flex-item(column);
   width: 80vw;
-  padding: 50px;
+	padding: 50px;
+	// border: 3px red solid;
 }
 
 .add {
@@ -69,11 +85,39 @@
 
 .projects-summary {
   background: white;
-  width: 60vw;
-  margin-top: 20px;
-	height: 10vh;
+  width: 68vw;
 	margin-bottom: 30px;
-  @include drop-shadow;
+	margin-left: 12px;
+	padding: 20px;
+	justify-content: flex-start;
+	@include drop-shadow;
+	p{
+		margin-bottom: unset;
+		// font-size: 10px;
+	}
+	hr{
+		// @include divider(red);
+		height: .01em;
+		width: 65vw;
+		color: #ECF4F3;
+		background: #ECF4F3;
+		margin-left: unset;
+	}
+	h2,h3,h5{
+		font-size: 13px;
+		margin: unset;
+	}
+}
+
+.summary-cards{
+	justify-content: space-between;
+	margin: 0 4px;
+	div{
+		// backdrop-filter: 
+		width: 20vw;
+		padding: 10px;
+		background: #e4f2f0c0;
+	}
 }
 
 .projects-shelf{

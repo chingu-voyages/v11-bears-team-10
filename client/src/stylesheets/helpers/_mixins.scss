@@ -1,10 +1,29 @@
-@mixin align-flex-item($direction){
-	display: flex;
-	flex: {
-		direction: $direction 
-	}
-} 
+@mixin align-flex-item($direction) {
+  display: flex;
+  flex: {
+    direction: $direction;
+  }
+}
 
-@mixin  drop-shadow {
-	box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.103);
+@mixin drop-shadow($shadow: rgba(0, 0, 0, 0.103)) {
+  box-shadow: 0px 1px 4px 0px $shadow;
+}
+
+@mixin show-delete-card($state: false) {
+  @if $state == false {
+    background: white;
+    font-weight: 200;
+    color: white;
+    padding: 5px;
+  } @else {
+    background: #00c4a7;
+  }
+}
+
+
+
+@mixin divider($color: black) {
+	color: $color;
+  background: $color;
+  height: 5px;
 }
