@@ -42,13 +42,7 @@
 	margin-left: 20px;
 	}
   .logout {
-		background: #00c4a7;;
-    padding: 5px;
-    border: none;
-    width: 100px;
-    color: whitesmoke;
-    font-weight: 400;
-		margin-left: 10px;
+	  @include theme-button;
 	}
 	span{
 		color: white;

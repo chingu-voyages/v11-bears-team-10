@@ -1,0 +1,38 @@
+
+#project-form{
+	padding: 10px;
+	color: white;
+}
+
+#project-header{
+	background: $theme-green;
+	color: white;
+}
+
+#project-title{
+	@include title-font;
+	// color: white;
+	font-weight: 700;
+}
+
+.form-field{
+	font-size: 13px;
+	padding: 10px;
+}
+
+.form-label{
+	font-weight: bold;
+	color: $theme-purple-form-label;
+}
+
+
+
+#close{
+	@include theme-button();
+	border-radius: unset;
+}
+
+#save{
+	@extend #close;
+	@include theme-button(#202040, $theme-green);
+}

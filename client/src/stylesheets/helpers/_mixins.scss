@@ -1,3 +1,6 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap');
+
+// set flex with direction
 @mixin align-flex-item($direction) {
   display: flex;
   flex: {
@@ -5,10 +8,12 @@
   }
 }
 
+// drop a shadow with desired color settings
 @mixin drop-shadow($shadow: rgba(0, 0, 0, 0.103)) {
   box-shadow: 0px 1px 4px 0px $shadow;
 }
 
+// mixin to show delete project bin div on hover on project card
 @mixin show-delete-card($state: false) {
   @if $state == false {
     background: white;
@@ -20,22 +25,25 @@
   }
 }
 
+// divider helper with color as input
 @mixin divider($color: black) {
   color: $color;
   background: $color;
   height: 5px;
 }
 
-@mixin header-gradient {
-  background: #6441a5; /* fallback for old browsers */
-  background: -webkit-linear-gradient(
-    to right,
-    #2a0845,
-    #6441a5
-  ); /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(
-    to right,
-    #2a0845,
-    #6441a5
-  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+@mixin title-font {
+	font-family:  'Roboto', sans-serif;
+}
+
+
+//them button
+@mixin  theme-button($backColor:#00c4a7, $testColor: white) {
+	background: $backColor;
+	padding: 5px;
+	border: none;
+	width: 100px;
+	color: $testColor;
+	font-weight: 400;
+	margin-left: 10px;
 }
