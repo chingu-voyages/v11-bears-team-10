@@ -25,7 +25,8 @@ app.set('view engine', 'pug');
 app.use(passport.initialize());
 auth();
 
-app.use(logger('dev'));
+if (!process.env.NODE_ENV) app.use(logger('dev'));
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
@@ -37,9 +38,11 @@ app.use('/', indexRouter);
 
 // restrict access to other routes
 app.use(passport.authenticate('jwt', { session: false }), 
-  (req, res, next) =>  next()
+(req, res, next) =>{
+  next()
+}
+ 
 );
-
 
 app.use('/user', userRouter);
 app.use('/project', projectRouter);
