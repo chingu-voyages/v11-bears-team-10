@@ -37,8 +37,11 @@ app.use(authRouter);
 app.use('/', indexRouter);
 
 // restrict access to other routes
-app.use(passport.authenticate('jwt', { session: false }), (req, res, next) =>
+app.use(passport.authenticate('jwt', { session: false }), 
+(req, res, next) =>{
   next()
+}
+ 
 );
 
 app.use('/user', userRouter);

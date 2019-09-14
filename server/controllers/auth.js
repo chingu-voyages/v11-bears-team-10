@@ -12,18 +12,18 @@ const login = async (req, res) => {
     const user = await User.findOne({ username });
     if (!user)
       return res
-        .status(404)
+        .status(401)
         .json({ error: 'Username or Password is invalide' });
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch)
       return res
-        .status(404)
+        .status(401)
         .json({ error: 'Username or Password is invalide' });
     const playload = {
       id: user._id
     };
     const token = jwt.sign(playload, secret, { expiresIn: 60 * 60 * 24 });
-    res.status(200).json({ token, id: user._id });
+    res.status(200).json({ token, user });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
