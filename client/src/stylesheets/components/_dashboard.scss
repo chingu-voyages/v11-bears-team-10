@@ -27,22 +27,22 @@
   @include align-flex-item(column);
 }
 .header {
-  background: #160f30;
-  // background: white;
+  // background: #160f30;
+  // background: #a89eccc7;
+	// background: white;
+	// @include header-gradient;
+	background: #202040;
   display: flex;
   justify-content: space-between;
 	height: 10vh;
+	#brand{
+		width: 50px;
+	}
 	#find{
 	margin-left: 20px;
 	}
   .logout {
-		background: #00c4a7;;
-    padding: 5px;
-    border: none;
-    width: 100px;
-    color: whitesmoke;
-    font-weight: 400;
-		margin-left: 10px;
+	  @include theme-button;
 	}
 	span{
 		color: white;
