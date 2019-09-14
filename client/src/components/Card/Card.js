@@ -8,20 +8,20 @@ function Card() {
     <div className="flex-col app-card hvr-grow-shadow">
       <div className="project-card flex-col-centered">
         <h4>{"Test Project"}</h4>
-        <p className="flex-row-centered">
+        <span className="flex-row-centered">
           <div className="badge-icon">
             <FontAwesomeIcon icon="users" id="members" />
-            <span class="badge">{0}</span>
+            <span className="badge">{0}</span>
           </div>
           <div className="badge-icon">
             <FontAwesomeIcon icon="comments" id="comments" />
-            <span class="badge">{0}</span>
+            <span className="badge">{0}</span>
           </div>
           <div className="badge-icon">
             <FontAwesomeIcon icon="sitemap" id="teams" />
-            <span class="badge">{0}</span>
+            <span className="badge">{0}</span>
           </div>
-        </p>
+        </span>
       </div>
       <div className="trash flex-col-centered">
         <div onClick={() => console.log('delete this card on click')}>

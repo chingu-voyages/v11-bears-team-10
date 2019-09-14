@@ -27,11 +27,17 @@
   @include align-flex-item(column);
 }
 .header {
-  background: #160f30;
-  // background: white;
+  // background: #160f30;
+  // background: #a89eccc7;
+	// background: white;
+	// @include header-gradient;
+	background: #202040;
   display: flex;
   justify-content: space-between;
 	height: 10vh;
+	#brand{
+		width: 50px;
+	}
 	#find{
 	margin-left: 20px;
 	}

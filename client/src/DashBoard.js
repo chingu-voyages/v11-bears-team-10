@@ -4,13 +4,23 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import Card from "./components/Card/Card";
 import AddProject from "./components/Card/AddProjectCard";
+import AddProjectForm from './container/Modals/AddProjectForm'
+
+import band from './images/greenbrand.png'
 
 export default function DashBoards(props) {
-  const [projectsData, setProjectsData] = useState({});
+	const [projectsData, setProjectsData] = useState({})
+	const [showModal, setShowModal] = useState(false)
+	
+	const showForm = () => setShowModal(true)
+	const closeModal = () => setShowModal(false)
+
   return (
     <div className="dashboard">
       <Navbar variant="dark" className="header">
-        <Navbar.Brand href="#home">Projects | Window</Navbar.Brand>
+        <Navbar.Brand href="#home">
+					<img src={band} alt="brand" id="brand" />
+				</Navbar.Brand>
         <Nav className="center-nav flex-row">
           <Nav.Link href="#home">
             <FontAwesomeIcon icon="home" />
@@ -38,13 +48,10 @@ export default function DashBoards(props) {
       </Navbar>
       <section className="dash-body flex-col-centered">
         <div className="content" data-aos="fade-in">
-          {/* <div className="flex-row add">
-            <a className="left" href='http://fakelink'>Add Project</a>
-          </div> */}
           <section className="projects-summary flex-col" data-aos="fade-up">
-            <p>
+            <span>
               <h3>Projects Summary</h3>
-            </p>
+            </span>
             <hr />
             <section className="flex-row summary-cards">
               <div className="summary">
@@ -62,7 +69,8 @@ export default function DashBoards(props) {
             </section>
           </section>
           <section className="projects-shelf flex-row" data-aos="fade-up">
-            <AddProject />
+            <AddProject handleShowModal={showForm} />
+						<AddProjectForm showForm={showModal} handleCloseForm={closeModal}/>
             <Card />
           </section>
         </div>
