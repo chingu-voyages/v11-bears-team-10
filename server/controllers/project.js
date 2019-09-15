@@ -10,7 +10,6 @@ const findUserProjects = async (userId, res) => {
       res.status(404).json({ error: 'Not Found' });
     }
   } catch (error) {
-    console.log(error);
     res.status(500).json({ error: error.message });
   }
 };
@@ -24,7 +23,6 @@ const findProject = async (id, res) => {
       res.status(404).json({ error: 'Not Found' });
     }
   } catch (error) {
-    console.log(error);
     res.status(500).json({ error: error.message });
   }
 };
@@ -33,7 +31,7 @@ const createProject = async (userId, req, res) => {
   const project = req.body;
   try {
     const newProject = await Project.create({
-      project_owner: userId,
+      admin: userId,
       ...project
     });
     const savedProject = await newProject.save();
@@ -42,7 +40,6 @@ const createProject = async (userId, req, res) => {
     });
     res.status(201).json(savedProject);
   } catch (error) {
-    console.log(error);
     res.status(500).json({ error: error.message });
   }
 };
@@ -57,7 +54,6 @@ const updateProject = async (id, req, res) => {
       res.status(404).json({ error: 'Not Found' });
     }
   } catch (error) {
-    console.log(error);
     res.status(500).json({ error: error.message });
   }
 };
@@ -66,7 +62,7 @@ const deleteProject = async (id, res) => {
   try {
     const project = await Project.findByIdAndDelete(id);
     if (project) {
-      const userId = project.project_owner;
+      const userId = project.admin;
       const projectId = project._id;
       await User.findByIdAndUpdate(userId, {
         $pull: { projectList: projectId }
@@ -76,7 +72,6 @@ const deleteProject = async (id, res) => {
       res.status(404).json({ error: 'Not Found' });
     }
   } catch (error) {
-    console.log(error);
     res.status(500).json({ error: error.message });
   }
 };

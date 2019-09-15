@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
 const todoListSchema = new Schema({
-  name: String,
+  title: {type: String, required},
   description: String,
   date_create: { type: Date, default: Date.now },
   date_due: Date,
@@ -12,19 +12,20 @@ const todoListSchema = new Schema({
 });
 
 const messageBoardSchema = new Schema({
-  userId: Schema.Types.ObjectId,
   title: String,
-  text: String
+  text: String,
+  userId: Schema.Types.ObjectId
 });
 
 const projectSchema = new Schema({
-  project_owner: Schema.Types.ObjectId,
-  name: String,
+  title: {type: String, required},
   description: String,
+  admin : Schema.Types.ObjectId,
   date_create: { type: Date, default: Date.now },
   todos: [todoListSchema],
   message_board: [messageBoardSchema],
-  people: [Schema.Types.ObjectId]
+  team: [Schema.Types.ObjectId],
+  isFinished: {type: Boolean, default: false}
 });
 
 const Project = mongoose.model('Project', projectSchema);
