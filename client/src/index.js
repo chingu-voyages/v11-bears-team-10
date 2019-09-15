@@ -18,7 +18,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 import App from "./App";
-//import Dashboard from "./DashBoard";
+import Dashboard from "./DashBoard";
 
 import "aos/dist/aos.css";
 import "./index.scss";
@@ -35,7 +35,7 @@ ReactDOM.render(
     })}
   >
     <BrowserRouter>
-      <App />
+      <Dashboard />
     </BrowserRouter>
   </Provider>,
   document.getElementById("root")
