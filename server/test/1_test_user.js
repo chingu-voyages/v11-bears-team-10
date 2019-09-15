@@ -4,18 +4,21 @@ const chaiHttp = require('chai-http');
 const should = chai.should();
 
 const mongoose = require('mongoose');
-mongoose.connection.dropCollection('users');
+// mongoose.connection.dropCollection('users');
+// for (let i in mongoose.connection.collections) {
+//   mongoose.connection.collections[i].deleteMany({});
+// }
 
 chai.use(chaiHttp);
 
-const userTest = {
+const userOne = {
   id: '',
   username: 'yakhousam',
   email: 'yakhousam@mymail.com',
   password: 'mypassword',
   token: ''
 };
-const userToDelete = {
+const userTwo = {
   id: '',
   username: 'yakhousam2',
   email: 'yakhousam2@mymail.com',
@@ -24,33 +27,39 @@ const userToDelete = {
 };
 
 describe('TEST User collectiion', function() {
+  before(function(){
+    for (let i in mongoose.connection.collections) {
+      mongoose.connection.collections[i].deleteMany();
+    }
+  })
   // this.timeout(5000);
   describe('TEST REGISTRATION - URI = /register', function(){
     it('POST - /register - User can register an account - should return 201', function(done) {
-      const { username, email, password } = userTest;
       chai
         .request(pmApp)
         .post('/register')
-        .send({ username, email, password })
+        .send(userOne)
         .end((err, response) => {
           should.equal(201, response.status);
-          userTest.id = response.body.user._id;
-          userTest.token = 'bearer ' + response.body.token;
+          response.body.should.have.property('user')
+          response.body.should.have.property('token')
+          userOne.id = response.body.user._id;
+          userOne.token = 'bearer ' + response.body.token;
           // done();
         });
       chai
         .request(pmApp)
         .post('/register')
-        .send(userToDelete)
+        .send(userTwo)
         .end((err, response) => {
           should.equal(201, response.status);
-          userToDelete.id = response.body.user._id;
-          userToDelete.token = 'bearer ' + response.body.token;
+          userTwo.id = response.body.user._id;
+          userTwo.token = 'bearer ' + response.body.token;
           done();
         });
     });
     it('POST - /register - User cannot register an account with an existing Username - should return 401', function(done) {
-      const { username,  password } = userTest;
+      const { username,  password } = userOne;
       chai
         .request(pmApp)
         .post('/register')
@@ -61,7 +70,7 @@ describe('TEST User collectiion', function() {
         });
     });
     it('POST - /register - User cannot register an account with an existing Email - should return 401', function(done) {
-      const { email,  password } = userTest;
+      const { email,  password } = userOne;
       chai
         .request(pmApp)
         .post('/register')
@@ -78,12 +87,12 @@ describe('TEST User collectiion', function() {
       chai
         .request(pmApp)
         .post('/login')
-        .send(userTest)
+        .send(userOne)
         .end((err, response) => {
           response.status.should.equal(200);
           response.body.should.have.property('token');
           response.body.should.have.property('user');
-          // userTest.token = 'bearer ' + response.body.token;
+          // userOne.token = 'bearer ' + response.body.token;
   
           done();
         });
@@ -105,7 +114,7 @@ describe('TEST User collectiion', function() {
       chai
         .request(pmApp)
         .get('/user')
-        .set({ Authorization: userTest.token })
+        .set({ Authorization: userOne.token })
         .end((err, response) => {
           response.status.should.equal(200);
           response.body.should.have.property('users');
@@ -121,13 +130,13 @@ describe('TEST User collectiion', function() {
     it('GET - /user/{user-id} - Retrieve existing user by ID - should return 200', function(done) {
       chai
         .request(pmApp)
-        .get(`/user/${userTest.id}`)
-        .set({ Authorization: userTest.token })
+        .get(`/user/${userOne.id}`)
+        .set({ Authorization: userOne.token })
         .end((err, response) => {
           response.status.should.equal(200);
           const user = response.body.user;
-          user.should.have.property('_id').equal(userTest.id);
-          user.should.have.property('username').equal(userTest.username);
+          user.should.have.property('_id').equal(userOne.id);
+          user.should.have.property('username').equal(userOne.username);
   
           done();
         });
@@ -136,13 +145,13 @@ describe('TEST User collectiion', function() {
     it('GET - /user/username/{username} - Retrieve existing user by username - should return 200', function(done) {
       chai
         .request(pmApp)
-        .get(`/user/username/${userTest.username}`)
-        .set({ Authorization: userTest.token })
+        .get(`/user/username/${userOne.username}`)
+        .set({ Authorization: userOne.token })
         .end((err, response) => {
           response.status.should.equal(200);
           const user = response.body.user;
-          user.should.have.property('_id').equal(userTest.id);
-          user.should.have.property('username').equal(userTest.username);
+          user.should.have.property('_id').equal(userOne.id);
+          user.should.have.property('username').equal(userOne.username);
   
           done();
         });
@@ -151,13 +160,13 @@ describe('TEST User collectiion', function() {
     it('GET - /user/email/{email} - Retrieve existing user by email - should return 200', function(done) {
       chai
         .request(pmApp)
-        .get(`/user/email/${userTest.email}`)
-        .set({ Authorization: userTest.token })
+        .get(`/user/email/${userOne.email}`)
+        .set({ Authorization: userOne.token })
         .end((err, response) => {
           response.status.should.equal(200);
           const user = response.body.user;
-          user.should.have.property('_id').equal(userTest.id);
-          user.should.have.property('email').equal(userTest.email);
+          user.should.have.property('_id').equal(userOne.id);
+          user.should.have.property('email').equal(userOne.email);
   
           done();
         });
@@ -168,7 +177,7 @@ describe('TEST User collectiion', function() {
       chai
         .request(pmApp)
         .get(`/user/${id}`)
-        .set({ Authorization: userTest.token })
+        .set({ Authorization: userOne.token })
         .end((err, response) => {
           response.status.should.equal(404);
             
@@ -180,7 +189,7 @@ describe('TEST User collectiion', function() {
       chai
         .request(pmApp)
         .get(`/user/username/chewbacca`)
-        .set({ Authorization: userTest.token })
+        .set({ Authorization: userOne.token })
         .end((err, response) => {
           response.status.should.equal(404);
             
@@ -192,7 +201,7 @@ describe('TEST User collectiion', function() {
       chai
         .request(pmApp)
         .get(`/user/email/chewbacca@mail.com`)
-        .set({ Authorization: userTest.token })
+        .set({ Authorization: userOne.token })
         .end((err, response) => {
           response.status.should.equal(404);
             
@@ -203,11 +212,11 @@ describe('TEST User collectiion', function() {
 
   describe('TEST UPDATE USER - URI = /user', function(){
     it('PUT - /user/{user-id} - User can update his account - should return 200', function(done) {
-      const updateUser = { ...userTest, lastName: 'Doe', firstName: 'John' };
+      const updateUser = { ...userOne, lastName: 'Doe', firstName: 'John' };
       chai
         .request(pmApp)
-        .put(`/user/${userTest.id}`)
-        .set({ Authorization: userTest.token })
+        .put(`/user/${userOne.id}`)
+        .set({ Authorization: userOne.token })
         .send(updateUser)
         .end((err, response) => {
           response.status.should.equal(200);
@@ -217,11 +226,11 @@ describe('TEST User collectiion', function() {
     });
 
     it('PUT - /user/{user-id} - User cannot update other user account - should return 401', function(done) {
-      const updateUser = { ...userTest, lastName: 'Doe', firstName: 'John' };
+      const updateUser = { ...userOne, lastName: 'Doe', firstName: 'John' };
       chai
         .request(pmApp)
-        .put(`/user/${userTest.id}`)
-        .set({ Authorization: userToDelete.token })
+        .put(`/user/${userOne.id}`)
+        .set({ Authorization: userTwo.token })
         .send(updateUser)
         .end((err, response) => {
           response.status.should.equal(401);
@@ -233,9 +242,9 @@ describe('TEST User collectiion', function() {
     it('PUT - /user/{user-id} - User cannot update his username if the username is already used by someone else - should return 401', function(done) {
       chai
         .request(pmApp)
-        .put(`/user/${userTest.id}`)
-        .set({ Authorization: userTest.token })
-        .send({username: userToDelete.username})
+        .put(`/user/${userOne.id}`)
+        .set({ Authorization: userOne.token })
+        .send({username: userTwo.username})
         .end((err, response) => {
           response.status.should.equal(401);
   
@@ -246,9 +255,9 @@ describe('TEST User collectiion', function() {
     it('PUT - /user/{user-id} - User cannot update his email if the email is already used by someone else - should return 401', function(done) {
       chai
         .request(pmApp)
-        .put(`/user/${userTest.id}`)
-        .set({ Authorization: userTest.token })
-        .send({email: userToDelete.email})
+        .put(`/user/${userOne.id}`)
+        .set({ Authorization: userOne.token })
+        .send({email: userTwo.email})
         .end((err, response) => {
           response.status.should.equal(401);
   
@@ -261,8 +270,8 @@ describe('TEST User collectiion', function() {
     it(`DELETE - /user/{user_id} - User cannot delete other User account, should return 401`, function(done) {
       chai
         .request(pmApp)
-        .delete(`/user/${userToDelete.id}`)
-        .set({ Authorization: userTest.token })
+        .delete(`/user/${userTwo.id}`)
+        .set({ Authorization: userOne.token })
         .end((err, response) => {
           response.status.should.equal(401);
   
@@ -272,8 +281,8 @@ describe('TEST User collectiion', function() {
     it('DELETE - /user/{user_id} - User can delete his account, should return 200 ', function(done) {
       chai
         .request(pmApp)
-        .delete(`/user/${userToDelete.id}`)
-        .set({ Authorization: userToDelete.token })
+        .delete(`/user/${userTwo.id}`)
+        .set({ Authorization: userTwo.token })
         .end((err, response) => {
           response.status.should.equal(200);
   
@@ -281,5 +290,12 @@ describe('TEST User collectiion', function() {
         });
     });
   })
-
+  after(function() {
+    for (let i in mongoose.connection.collections) {
+      mongoose.connection.collections[i].deleteMany();
+    }
+  });
 });
+
+
+
