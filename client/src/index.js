@@ -18,7 +18,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 import App from "./App";
-//import Dashboard from "./DashBoard";
+// import Dashboard from "./DashBoard";
 
 import "aos/dist/aos.css";
 import "./index.scss";
