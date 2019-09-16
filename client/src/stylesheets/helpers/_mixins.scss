@@ -38,7 +38,7 @@
 }
 
 
-//them button
+//theme button
 @mixin  theme-button($backColor:#00c4a7, $testColor: white) {
 	background: $backColor;
 	padding: 5px;
@@ -53,3 +53,6 @@
 @mixin space-between {
 	justify-content: space-between;
 }
+
+
+//summary icon styler

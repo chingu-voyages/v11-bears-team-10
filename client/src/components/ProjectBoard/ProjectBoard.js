@@ -2,7 +2,7 @@ import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import Header from "../Header/Header";
-import TodoList from '../Todos/Todo'
+import TodoList from '../TodoList/TodoList'
 
 function ProjectBoard() {
   return (
@@ -17,10 +17,10 @@ function ProjectBoard() {
             <hr />
             <section className="flex-row summary-cards">
               <div className="flex-row">
-                <div className="summary-icon flex-row-centered">
+                <div className="summary-icon flex-row-centered summary-icon-clicked">
                   <FontAwesomeIcon icon="list-ul" />
                 </div>
-                <div className="summary">
+                <div className="summary clicked">
                   <h3>Todos</h3>
                 </div>
               </div>
