@@ -7,7 +7,7 @@ const logger = require('morgan');
 const passport = require('passport');
 const helmet = require('helmet');
 
-const corse = require('cors')
+const cors = require('cors')
 
 const auth = require('./passport');
 
