@@ -7,24 +7,24 @@ const todoListSchema = new Schema({
   description: String,
   date_create: { type: Date, default: Date.now },
   date_due: Date,
-  assigne_users: [Schema.Types.ObjectId],
-  notifie_users: [Schema.Types.ObjectId]
+  assigne_users: [{type: Schema.Types.ObjectId, ref: 'User'}],
+  notifie_users: [{type: Schema.Types.ObjectId, ref: 'User'}]
 });
 
 const messageBoardSchema = new Schema({
   title: String,
   text: String,
-  userId: Schema.Types.ObjectId
+  userId: {type: Schema.Types.ObjectId, ref: 'User'}
 });
 
 const projectSchema = new Schema({
   title: {type: String, required},
   description: String,
-  admin : Schema.Types.ObjectId,
+  admin : {type: Schema.Types.ObjectId, ref: 'User'},
   date_create: { type: Date, default: Date.now },
   todos: [todoListSchema],
   message_board: [messageBoardSchema],
-  team: [Schema.Types.ObjectId],
+  team: [{type: Schema.Types.ObjectId, ref: 'User'}],
   isFinished: {type: Boolean, default: false}
 });
 
