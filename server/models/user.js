@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const bcrypt = require('bcrypt')
+const bcrypt = require('bcrypt');
 
 const { Schema } = mongoose;
 
@@ -38,7 +38,7 @@ const userSchema = new Schema({
     type: String,
     trim: true
   },
-  projectList: [{type: Schema.Types.ObjectId, ref: 'Project'}]
+  projectList: [Schema.Types.ObjectId]
 });
 
 userSchema.pre('save', function(next) {
