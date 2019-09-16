@@ -3,29 +3,29 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
 const todoListSchema = new Schema({
-  title: {type: String, required},
+  title: { type: String, required },
   description: String,
   date_create: { type: Date, default: Date.now },
   date_due: Date,
-  assigne_users: [{type: Schema.Types.ObjectId, ref: 'User'}],
-  notifie_users: [{type: Schema.Types.ObjectId, ref: 'User'}]
+  assigne_users: [Schema.Types.ObjectId],
+  notifie_users: [Schema.Types.ObjectId]
 });
 
 const messageBoardSchema = new Schema({
   title: String,
   text: String,
-  userId: {type: Schema.Types.ObjectId, ref: 'User'}
+  userId: Schema.Types.ObjectId
 });
 
 const projectSchema = new Schema({
-  title: {type: String, required},
+  title: { type: String, required },
   description: String,
-  admin : {type: Schema.Types.ObjectId, ref: 'User'},
+  admin: Schema.Types.ObjectId,
   date_create: { type: Date, default: Date.now },
   todos: [todoListSchema],
   message_board: [messageBoardSchema],
-  team: [{type: Schema.Types.ObjectId, ref: 'User'}],
-  isFinished: {type: Boolean, default: false}
+  team: [Schema.Types.ObjectId],
+  isFinished: { type: Boolean, default: false }
 });
 
 const Project = mongoose.model('Project', projectSchema);
