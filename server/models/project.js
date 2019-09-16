@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
 const todoListSchema = new Schema({
-  title: { type: String, required },
+  title: { type: String, required: true },
   description: String,
   date_create: { type: Date, default: Date.now },
   date_due: Date,
@@ -18,7 +18,7 @@ const messageBoardSchema = new Schema({
 });
 
 const projectSchema = new Schema({
-  title: { type: String, required },
+  title: { type: String, required: true },
   description: String,
   admin: Schema.Types.ObjectId,
   date_create: { type: Date, default: Date.now },
