@@ -26,7 +26,7 @@ ReactDOM.render(
     })}
   >
     <BrowserRouter>
-      <ProjectBoard />
+      <App />
     </BrowserRouter>
   </Provider>,
   document.getElementById("root")
