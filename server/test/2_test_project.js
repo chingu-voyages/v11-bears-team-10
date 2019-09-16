@@ -3,18 +3,10 @@ const chai = require('chai');
 const chaiHttp = require('chai-http');
 const should = chai.should();
 
-const mongoose = require('mongoose');
-//  mongoose.connection.dropCollection('users');
-//  mongoose.connection.dropCollection('projects');
-// Array.from(mongoose.connection.collections).forEach( (collection, i) =>{
-//   mongoose.connection.collections[i].remove(function(){})
-// mongoose.connection.dropCollection(collection)
-// })
-// console.log(mongoose.connection.collections)
+const User = require('../models/user');
+const jwt = require('jsonwebtoken');
 
-// for (let i in mongoose.connection.collections) {
-//   mongoose.connection.collections[i].deleteMany({});
-// }
+const mongoose = require('mongoose');
 
 chai.use(chaiHttp);
 
@@ -41,24 +33,6 @@ const userThree = {
 };
 let projectOne = {};
 
-// [userOne, userTwo, userThree].forEach(async (user, i, arr) => {
-//   try {
-//     const response = await chai
-//       .request(pmApp)
-//       .post('/register')
-//       .send(user);
-//     if (response) {
-//       response.status.should.equal(201);
-//       user.id = response.body.user._id;
-//       user.token = 'bearer ' + response.body.token;
-//       // console.log('user create =', userOne)
-//       if(i === arr.length -1) done()
-//     }
-//   } catch (error) {
-//     console.error(error);
-//   }
-// });
-
 describe('TEST PROJECT Collection ', function() {
   before(function() {
     for (let i in mongoose.connection.collections) {
@@ -66,39 +40,16 @@ describe('TEST PROJECT Collection ', function() {
     }
   });
   describe('creating users', function() {
-    it('POST - /user - should return 201', function(done) {
-      chai
-        .request(pmApp)
-        .post('/register')
-        .send(userOne)
-        .end((err, response) => {
-          should.equal(201, response.status);
-          response.body.should.have.property('user');
-          response.body.should.have.property('token').not.be.empty;
-          userOne.id = response.body.user._id;
-          userOne.token = 'bearer ' + response.body.token;
-
-          chai
-            .request(pmApp)
-            .post('/register')
-            .send(userTwo)
-            .end((err, response) => {
-              should.equal(201, response.status);
-              userTwo.id = response.body.user._id;
-              userTwo.token = 'bearer ' + response.body.token;
-
-              chai
-                .request(pmApp)
-                .post('/register')
-                .send(userThree)
-                .end((err, response) => {
-                  should.equal(201, response.status);
-                  userThree.id = response.body.user._id;
-                  userThree.token = 'bearer ' + response.body.token;
-                  done();
-                });
-            });
+    it('', function(done) {
+      User.insertMany([userOne, userTwo, userThree], (err, docs) => {
+        if (err) throw err;
+        userOne.id = docs[0]._id;
+        const token = jwt.sign({ id: userOne.id }, 'my secret', {
+          expiresIn: 60 * 60 * 24
         });
+        userOne.token = 'bearer ' + token;
+        done();
+      });
     });
   });
 
@@ -122,7 +73,7 @@ describe('TEST PROJECT Collection ', function() {
             .end((err, response) => {
               response.status.should.equal(200);
               const user = response.body.user;
-              user.should.have.property('projectList').that.include(projectOne._id)
+              user.projectList[0].pr_id.should.equal(projectOne._id)
 
               done();
             });
@@ -145,8 +96,6 @@ describe('TEST PROJECT Collection ', function() {
           projects[0].should.have.property('title');
           projects[0].should.have.property('admin');
 
-          // console.log('projects = ', response.body)
-
           done();
         });
     });
@@ -162,6 +111,25 @@ describe('TEST PROJECT Collection ', function() {
           project.should.have.property('_id').equal(projectOne._id);
           project.should.have.property('title').equal(projectOne.title);
 
+          done();
+        });
+    });
+  });
+
+  describe('TEST UPDATE PROJECT - URI = /porject', function() {
+    it('PUT PROJECT BY ID - Route = /project/:project-id - should return 200', function(done) {
+      const todos = [...projectOne.todos];
+      todos.push({ title: 'my new todo', description: 'awesom todo list' });
+      const update = { ...projectOne, todos };
+      chai
+        .request(pmApp)
+        .put(`/project/${projectOne._id}`)
+        .send(update)
+        .set({ Authorization: userOne.token })
+        .end((err, response) => {
+          response.status.should.equal(200);
+          const project = response.body.project;
+          project.todos[0].title.should.equal(todos[0].title)
           done();
         });
     });
