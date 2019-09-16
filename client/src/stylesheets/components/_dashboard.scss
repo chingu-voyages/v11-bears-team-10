@@ -1,7 +1,7 @@
 @import "../helpers/variables";
 @import "../helpers/mixins";
 
-//helpers
+// general helpers
 .flex-row {
   @include align-flex-item(row);
 }
@@ -11,46 +11,24 @@
 }
 
 .flex-col-centered {
-	@include align-flex-item(column);
-	justify-content: center;
-	align-items: center;
+  @include align-flex-item(column);
+  justify-content: center;
+  align-items: center;
 }
 
 .flex-row-centered {
-	@include align-flex-item(row);
-	justify-content: center;
-	align-items: center;
+  @include align-flex-item(row);
+  justify-content: center;
+  align-items: center;
 }
 
 //dashboard
 .dashboard {
   @include align-flex-item(column);
 }
-.header {
-  // background: #160f30;
-  // background: #a89eccc7;
-	// background: white;
-	// @include header-gradient;
-	background: #202040;
-  display: flex;
-  justify-content: space-between;
-	height: 10vh;
-	#brand{
-		width: 50px;
-	}
-	#find{
-	margin-left: 20px;
-	}
-  .logout {
-	  @include theme-button;
-	}
-	span{
-		color: white;
-	}
-}
 
-.center-nav{
-	justify-content: space-between;
+.center-nav {
+  justify-content: space-between;
 }
 
 .user-nav {
@@ -69,8 +47,8 @@
   height: 80;
   @include align-flex-item(column);
   width: 80vw;
-	padding: 50px;
-	// border: 3px red solid;
+  padding: 50px;
+  // border: 3px red solid;
 }
 
 .add {
@@ -86,40 +64,42 @@
 .projects-summary {
   background: white;
   width: 68vw;
-	margin-bottom: 30px;
-	margin-left: 12px;
-	padding: 20px;
-	justify-content: flex-start;
-	@include drop-shadow;
-	p{
-		margin-bottom: unset;
-		// font-size: 10px;
-	}
-	hr{
-		// @include divider(red);
-		height: .01em;
-		width: 65vw;
-		color: #ECF4F3;
-		background: #ECF4F3;
-		margin-left: unset;
-	}
-	h2,h3,h5{
-		font-size: 13px;
-		margin: unset;
-	}
+  margin-bottom: 30px;
+  margin-left: 12px;
+  padding: 20px;
+  justify-content: flex-start;
+  @include drop-shadow;
+  p {
+    margin-bottom: unset;
+    // font-size: 10px;
+  }
+  hr {
+    // @include divider(red);
+    height: 0.01em;
+    width: 65vw;
+    color: #ecf4f3;
+    background: #ecf4f3;
+    margin-left: unset;
+  }
+  h2,
+  h3,
+  h5 {
+    font-size: 13px;
+    margin: unset;
+  }
 }
 
-.summary-cards{
-	justify-content: space-between;
-	margin: 0 4px;
-	div{
-		// backdrop-filter: 
-		width: 20vw;
-		padding: 10px;
-		background: #e4f2f0c0;
-	}
+.summary-cards {
+  justify-content: space-between;
+  margin: 0 4px;
+  div {
+    // backdrop-filter:
+    width: 20vw;
+    padding: 10px;
+    background: #e4f2f0c0;
+  }
 }
 
-.projects-shelf{
-	flex-wrap: wrap;
+.projects-shelf {
+  flex-wrap: wrap;
 }

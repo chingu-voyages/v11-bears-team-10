@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const bcrypt = require('bcrypt')
+const bcrypt = require('bcrypt');
 
 const { Schema } = mongoose;
 
@@ -38,7 +38,15 @@ const userSchema = new Schema({
     type: String,
     trim: true
   },
-  projectList: [Schema.Types.ObjectId]
+  projectList: [
+    {
+      pr_id: Schema.Types.ObjectId,
+      title: String,
+      nb_todos: {type: Number, default: 0},
+      nb_msg: {type: Number, default: 0},
+      nb_member: {type: Number, default: 0}
+    }
+  ]
 });
 
 userSchema.pre('save', function(next) {
