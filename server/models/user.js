@@ -38,7 +38,7 @@ const userSchema = new Schema({
     type: String,
     trim: true
   },
-  projectList: [Schema.Types.ObjectId]
+  projectList: [{type: Schema.Types.ObjectId, ref: 'Project'}]
 });
 
 userSchema.pre('save', function(next) {
