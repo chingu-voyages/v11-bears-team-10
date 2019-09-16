@@ -1,4 +1,5 @@
-@import url('https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap');
+// @import url('https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Roboto+Mono|Roboto:400,700&display=swap');
 
 // set flex with direction
 @mixin align-flex-item($direction) {
@@ -37,7 +38,7 @@
 }
 
 
-//them button
+//theme button
 @mixin  theme-button($backColor:#00c4a7, $testColor: white) {
 	background: $backColor;
 	padding: 5px;
@@ -47,3 +48,11 @@
 	font-weight: 400;
 	margin-left: 10px;
 }
+
+//spacings
+@mixin space-between {
+	justify-content: space-between;
+}
+
+
+//summary icon styler

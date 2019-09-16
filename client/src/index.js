@@ -6,25 +6,16 @@ import { BrowserRouter } from "react-router-dom";
 import configureAppStore from "./redux/store";
 import * as serviceWorker from "./serviceWorker";
 import AOS from "aos";
-import { library } from "@fortawesome/fontawesome-svg-core";
-import {
-  faHome,
-  faSearch,
-  faTrash,
-  faPlusCircle,
-	faUsers,
-	faComments,
-	faSitemap
-} from "@fortawesome/free-solid-svg-icons";
+
 
 import App from "./App";
-// import Dashboard from "./DashBoard";
+import Dashboard from "./DashBoard";
+import ProjectBoard from "./components/ProjectBoard/ProjectBoard";
 
 import "aos/dist/aos.css";
 import "./index.scss";
+import './images/icons/icons'
 
-//create a library to hold icons and brands
-library.add(faHome, faSearch, faTrash, faPlusCircle, faUsers, faComments, faSitemap);
 AOS.init({});
 
 ReactDOM.render(

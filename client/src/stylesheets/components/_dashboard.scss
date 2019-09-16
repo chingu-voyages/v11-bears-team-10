@@ -22,6 +22,7 @@
   align-items: center;
 }
 
+
 //dashboard
 .dashboard {
   @include align-flex-item(column);
@@ -37,7 +38,7 @@
 
 .dash-body {
   // border: 2px red solid;
-  background: #e4f2f0c0;
+  background: $body-color;
   @include align-flex-item(column);
   align-items: center;
   justify-content: flex-start;
@@ -92,7 +93,7 @@
 .summary-cards {
   justify-content: space-between;
   margin: 0 4px;
-  div {
+  .summary {
     // backdrop-filter:
     width: 20vw;
     padding: 10px;
