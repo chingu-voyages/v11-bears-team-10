@@ -7,6 +7,8 @@ const logger = require('morgan');
 const passport = require('passport');
 const helmet = require('helmet');
 
+const corse = require('cors')
+
 const auth = require('./passport');
 
 const indexRouter = require('./routes/index');
@@ -17,6 +19,7 @@ const authRouter = require('./routes/auth');
 const app = express();
 
 app.use(helmet());
+app.use(cors())
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
