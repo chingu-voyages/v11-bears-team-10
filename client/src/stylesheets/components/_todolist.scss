@@ -3,9 +3,8 @@
 }
 
 .project-list {
-  background: #202040;
+  background: $theme-purple;
 	padding-bottom: 5px;
-	// border: red 3px solid;
 	@include drop-shadow(rgba(0, 0, 0, 0.425));
   h3 {
     color: $theme-green;

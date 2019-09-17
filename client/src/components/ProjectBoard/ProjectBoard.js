@@ -1,10 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import Header from "../Header/Header";
-import TodoList from '../TodoList/TodoList'
+import TodosBoard from "../Todos/TodosBoard/TodosBoard";
+import MessageBoard from "../Messages/MessageBoard";
 
 function ProjectBoard() {
+  const [showMessages, setShowMessages] = useState(false);
+  const [showTodos, setShowTodos] = useState(false);
   return (
     <>
       <Header />
@@ -20,7 +23,13 @@ function ProjectBoard() {
                 <div className="summary-icon flex-row-centered summary-icon-clicked">
                   <FontAwesomeIcon icon="list-ul" />
                 </div>
-                <div className="summary clicked">
+                <div
+                  className="summary clicked"
+                  onClick={() => {
+                    setShowMessages(false);
+                    setShowTodos(true);
+                  }}
+                >
                   <h3>Todos</h3>
                 </div>
               </div>
@@ -28,17 +37,24 @@ function ProjectBoard() {
                 <div className="summary-icon flex-row-centered">
                   <FontAwesomeIcon icon="sticky-note" />
                 </div>
-                <div className="summary">
+								<div 
+									className="summary"
+									onClick={() => {
+										setShowTodos(false);
+                    setShowMessages(true);   
+                  }}
+								>
                   <h3>Message Board</h3>
                 </div>
               </div>
             </section>
           </section>
-          <section className="projects-shelf flex-row" data-aos="fade-up">
-           <TodoList />
-           <TodoList />
-           <TodoList />
-          </section>
+          <section
+            className="projects-shelf flex-row"
+            data-aos="fade-up"
+          >
+						{ showTodos? <TodosBoard /> : <MessageBoard />}
+					</section>
         </div>
       </section>
     </>
