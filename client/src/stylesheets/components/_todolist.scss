@@ -1,11 +1,11 @@
-.todo-body{
-	position: relative;
+.todo-body {
+  position: relative;
 }
 
 .project-list {
   background: $theme-purple;
-	padding-bottom: 5px;
-	@include drop-shadow(rgba(0, 0, 0, 0.425));
+  padding-bottom: 5px;
+  @include drop-shadow(rgba(0, 0, 0, 0.425));
   h3 {
     color: $theme-green;
     font-family: $roboto-mono;
@@ -30,12 +30,12 @@
       margin-left: 7px;
       font-size: 10px;
     }
-	}
-	
-	.date{
-	 color: rgba(255, 255, 255, 0.466);
-	 font-size: 10px;
-	}
+  }
+
+  .date {
+    color: rgba(255, 255, 255, 0.466);
+    font-size: 10px;
+  }
 }
 
 .todo-icon {
@@ -45,31 +45,13 @@
   color: white;
 }
 
-.summary-cards {
-  justify-content: unset;
-  .summary-icon {
-    flex-basis: 10%;
-    background: rgba(128, 128, 128, 0.479);
-  }
-  div:nth-child(2) {
-    margin-right: 7px;
-    cursor: pointer;
-  }
-
-  .clicked {
-    background: $theme-green;
-    color: white;
-	}
-	
-}
-
 // close todo button
-.close-todo{
-	background: rgba(128, 128, 128, 0.322);
-	height: 20px;
-	color: rgba(255, 255, 255, 0.63);
-	padding: 5px;
-	position: absolute;
-	right: 0;
-	cursor: pointer;
+.close-todo {
+  background: rgba(128, 128, 128, 0.322);
+  height: 20px;
+  color: rgba(255, 255, 255, 0.63);
+  padding: 5px;
+  position: absolute;
+  right: 0;
+  cursor: pointer;
 }

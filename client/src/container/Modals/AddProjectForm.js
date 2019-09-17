@@ -1,11 +1,9 @@
-import React, { useState } from "react";
+import React from "react";
 import { Modal, Button, Form } from "react-bootstrap";
 
-function AddProjectForm({ showForm, handleCloseForm }) {
-  // const [show, setShow] = useState(false)
 
-  // const handleShow = () => setShow(true);
-  // const handleClose = () => setShow(false)
+function AddProjectForm({ showForm, handleCloseForm }) {
+
   return (
     <>
       <Modal show={showForm} onHide={handleCloseForm} id="project-form">

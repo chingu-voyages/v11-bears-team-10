@@ -18,7 +18,7 @@ function ProjectBoard() {
               <h3>Project Name</h3>
             </span>
             <hr />
-            <section className="flex-row summary-cards">
+            <section className="flex-row projects-items">
               <div className="flex-row">
                 <div className="summary-icon flex-row-centered summary-icon-clicked">
                   <FontAwesomeIcon icon="list-ul" />
