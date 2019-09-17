@@ -1,10 +1,12 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Link, NavLink } from "react-router-dom";
-import { Navbar, Nav, Image, NavItem } from "react-bootstrap";
+import { Navbar, Nav, NavItem } from "react-bootstrap";
 
-import ProfileDropdown from "./ProfileDropdown";
+import ProfileSection from "./ProfileSection";
 import AuthenticationButtons from "./AuthenticationButtons";
+
+import logo from "../images/logo.png";
 
 class NavBar extends React.Component {
 	render() {
@@ -17,7 +19,7 @@ class NavBar extends React.Component {
 				<div className="d-flex flex-nowrap w-sm-down-100">
 					<Link to="/">
 						<Navbar.Brand className="mr-auto">
-							<Image src="https://via.placeholder.com/50" />
+							<img alt="brand" src={logo} width="40" height="40" />
 						</Navbar.Brand>
 					</Link>
 					<Navbar.Toggle aria-controls="navbar-nav-collapse" className="ml-auto mr-2" />
@@ -43,7 +45,7 @@ class NavBar extends React.Component {
 					</Nav>
 
 					{this.props.user ? (
-						<ProfileDropdown user={this.props.user} />
+						<ProfileSection user={this.props.user} />
 					) : (
 						<AuthenticationButtons />
 					)}

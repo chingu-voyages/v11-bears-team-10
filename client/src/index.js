@@ -11,13 +11,13 @@ import "aos/dist/aos.css";
 import "./index.scss";
 import "./images/icons/icons";
 
-
 import App from "./App";
 
 AOS.init({});
 
 export const INITIAL_STATE = {
-	user: null,
+	// user: null,
+	user: { name: "john doe" },
 	error: {
 		showError: false,
 		statusCode: null,
@@ -28,7 +28,7 @@ export const INITIAL_STATE = {
 
 ReactDOM.render(
 	<Provider store={configureAppStore(INITIAL_STATE)}>
-		<App  />
+		<App />
 	</Provider>,
 	document.getElementById("root")
 );

@@ -1,10 +1,11 @@
 import React from "react";
-import { Nav, NavDropdown, Spinner } from "react-bootstrap";
+import { Nav, NavDropdown, Spinner, Dropdown } from "react-bootstrap";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { setUser } from "../redux/actionCreators";
+import Avatar from "../components/Avatar";
 
-class ProfileDropDown extends React.Component {
+class ProfileSection extends React.Component {
 	constructor(props) {
 		super(props);
 
@@ -12,6 +13,8 @@ class ProfileDropDown extends React.Component {
 			isloggingOut: false
 		};
 	}
+
+	toggleDropdown = (...a) => console.log(a);
 
 	logout = () =>
 		this.setState({ isloggingOut: true }, () =>
@@ -33,10 +36,15 @@ class ProfileDropDown extends React.Component {
 						<span className="sr-only">Logging out ...</span>
 					</Spinner>
 				)}
+
+				<Link to="/dashboard" role="image">
+					<Avatar />
+				</Link>
+
 				<NavDropdown alignRight title={this.props.user.name} id="basic-nav-dropdown">
-					<Link to="/dashboard" role="button" className="dropdown-item">
+					<NavDropdown.Item as={Link} role="button" to="/dashboard">
 						my dashboard
-					</Link>
+					</NavDropdown.Item>
 					<NavDropdown.Divider />
 					<NavDropdown.Item onClick={this.logout}>logout</NavDropdown.Item>
 				</NavDropdown>
@@ -47,4 +55,4 @@ class ProfileDropDown extends React.Component {
 export default connect(
 	null,
 	{ setUser }
-)(ProfileDropDown);
+)(ProfileSection);
