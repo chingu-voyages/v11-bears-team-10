@@ -9,12 +9,10 @@
   }
 }
 
-// drop a shadow with desired color settings
 @mixin drop-shadow($shadow: rgba(0, 0, 0, 0.103)) {
   box-shadow: 0px 1px 4px 0px $shadow;
 }
 
-// mixin to show delete project bin div on hover on project card
 @mixin show-delete-card($state: false) {
   @if $state == false {
     background: white;
@@ -26,9 +24,10 @@
   }
 }
 
-// divider helper with color as input
+
+
 @mixin divider($color: black) {
-  color: $color;
+	color: $color;
   background: $color;
   height: 5px;
 }

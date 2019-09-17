@@ -1,6 +1,5 @@
 @import "../node_modules/bootstrap/scss/bootstrap.scss";
-@import './stylesheets/main.scss';
-
+@import "./stylesheets/main.scss";
 
 .navbar-brand:hover {
 	cursor: pointer;
@@ -24,4 +23,7 @@
 	font-size: 36px;
 }
 
-
+.nav-link.active {
+	background-color: #d5d5d545;
+	border-radius: 10%;
+}

@@ -1,35 +1,34 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
-import { BrowserRouter } from "react-router-dom";
-
 import configureAppStore from "./redux/store";
-import * as serviceWorker from "./serviceWorker";
 import AOS from "aos";
 
-
-import App from "./App";
-import Dashboard from "./DashBoard";
-import ProjectBoard from "./components/ProjectBoard/ProjectBoard";
+import * as serviceWorker from "./serviceWorker";
 
 import "aos/dist/aos.css";
 import "./index.scss";
-import './images/icons/icons'
+import "./images/icons/icons";
+
+import App from "./App";
 
 AOS.init({});
 
+export const INITIAL_STATE = {
+	user: null,
+	error: {
+		showError: false,
+		statusCode: null,
+		message: null,
+		requestTimeout: false
+	}
+};
+
 ReactDOM.render(
-  <Provider
-    store={configureAppStore({
-      user: null,
-      error: null // will be an object containing a message property , and a statusCode property
-    })}
-  >
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
-  </Provider>,
-  document.getElementById("root")
+	<Provider store={configureAppStore(INITIAL_STATE)}>
+		<App />
+	</Provider>,
+	document.getElementById("root")
 );
 
 // If you want your app to work offline and load faster, you can change

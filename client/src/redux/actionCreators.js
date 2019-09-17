@@ -1,9 +1,10 @@
 export const setUser = (user = null) => ({ type: "SET_USER", user });
-export const setError = (message = "something went wrong", statusCode = null) => ({
+
+export const setError = (statusCode = null, message = null, requestTimeout = false) => ({
 	type: "SET_ERROR",
+	statusCode,
 	message,
-	statusCode
+	requestTimeout
 });
 
-
-
+export const resetError = () => ({ type: "RESET_ERROR" });
