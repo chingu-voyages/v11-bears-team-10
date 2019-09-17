@@ -24,7 +24,7 @@ function ProjectBoard() {
                   <FontAwesomeIcon icon="list-ul" />
                 </div>
                 <div
-                  className={`summary ${showTodos ? 'clicked' : ''}`}
+                  className={`summary ${showTodos ? "clicked" : ""}`}
                   onClick={() => {
                     setShowMessages(false);
                     setShowTodos(true);
@@ -37,24 +37,21 @@ function ProjectBoard() {
                 <div className="summary-icon flex-row-centered">
                   <FontAwesomeIcon icon="sticky-note" />
                 </div>
-								<div 
-									className={`summary ${showMessages ? 'clicked' : ''}`}
-									onClick={() => {
-										setShowTodos(false);
-                    setShowMessages(true);   
+                <div
+                  className={`summary ${showMessages ? "clicked" : ""}`}
+                  onClick={() => {
+                    setShowTodos(false);
+                    setShowMessages(true);
                   }}
-								>
+                >
                   <h3>Message Board</h3>
                 </div>
               </div>
             </section>
           </section>
-          <section
-            className="projects-shelf flex-row"
-            data-aos="fade-up"
-          >
-						{ showTodos? <TodosBoard /> : <MessageBoard />}
-					</section>
+          <section className="projects-shelf flex-row" data-aos="fade-up">
+            {showTodos ? <TodosBoard /> : <MessageBoard />}
+          </section>
         </div>
       </section>
     </>
