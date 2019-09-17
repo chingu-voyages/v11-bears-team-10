@@ -6,9 +6,11 @@ import AOS from "aos";
 
 import * as serviceWorker from "./serviceWorker";
 
+import "./stylesheets/css/styles.css";
 import "aos/dist/aos.css";
 import "./index.scss";
 import "./images/icons/icons";
+
 
 import App from "./App";
 
@@ -26,7 +28,7 @@ export const INITIAL_STATE = {
 
 ReactDOM.render(
 	<Provider store={configureAppStore(INITIAL_STATE)}>
-		<App />
+		<App  />
 	</Provider>,
 	document.getElementById("root")
 );

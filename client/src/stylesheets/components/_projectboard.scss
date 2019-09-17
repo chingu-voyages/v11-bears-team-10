@@ -2,3 +2,21 @@
   background: $body-color;
 }
 
+.projects-items {
+	@extend .summary-cards;
+  justify-content: unset;
+  .summary-icon {
+    flex-basis: 10%;
+    background: rgba(128, 128, 128, 0.479);
+  }
+  div:nth-child(2) {
+    margin-right: 7px;
+    cursor: pointer;
+  }
+
+  .clicked {
+    background: $theme-green;
+    color: white;
+	}
+	
+}
