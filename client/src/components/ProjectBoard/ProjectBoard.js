@@ -24,7 +24,7 @@ function ProjectBoard() {
                   <FontAwesomeIcon icon="list-ul" />
                 </div>
                 <div
-                  className="summary clicked"
+                  className={`summary ${showTodos ? 'clicked' : ''}`}
                   onClick={() => {
                     setShowMessages(false);
                     setShowTodos(true);
@@ -38,7 +38,7 @@ function ProjectBoard() {
                   <FontAwesomeIcon icon="sticky-note" />
                 </div>
 								<div 
-									className="summary"
+									className={`summary ${showMessages ? 'clicked' : ''}`}
 									onClick={() => {
 										setShowTodos(false);
                     setShowMessages(true);   
