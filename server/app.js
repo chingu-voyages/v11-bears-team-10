@@ -6,6 +6,7 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const passport = require('passport');
 const helmet = require('helmet');
+const cors = require('cors');
 
 const auth = require('./passport');
 
@@ -17,6 +18,7 @@ const authRouter = require('./routes/auth');
 const app = express();
 
 app.use(helmet());
+app.use(cors());
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -37,12 +39,9 @@ app.use(authRouter);
 app.use('/', indexRouter);
 
 // restrict access to other routes
-app.use(passport.authenticate('jwt', { session: false }), 
-(req, res, next) =>{
-  next()
-}
- 
-);
+app.use(passport.authenticate('jwt', { session: false }), (req, res, next) => {
+  next();
+});
 
 app.use('/user', userRouter);
 app.use('/project', projectRouter);

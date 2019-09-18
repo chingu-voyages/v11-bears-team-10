@@ -24,6 +24,22 @@
 }
 
 .nav-link.active {
-	background-color: #d5d5d545;
-	border-radius: 10%;
+	background-color: $secondary;
+	color: $light !important;
+	border-radius: 20px;
+}
+
+.avatar {
+	width: 40px;
+	height: 40px;
+
+	&-placeholder {
+		font-size: 40px;
+		color: $secondary;
+		transition: color 0.2s;
+
+		&:hover {
+			color: $dark;
+		}
+	}
 }

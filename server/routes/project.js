@@ -28,7 +28,7 @@ router.put('/:id', (req, res) => {
 /* DELETE project */
 router.delete('/:id', (req, res) => {
   const { id } = req.params;
-  Project.deleteProject(id, res);
+  Project.deleteProject(id, req, res);
 });
 
 module.exports = router;

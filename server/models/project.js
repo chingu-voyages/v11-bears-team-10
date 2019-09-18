@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-
 const { Schema } = mongoose;
 
 const todoListSchema = new Schema({
@@ -7,15 +6,14 @@ const todoListSchema = new Schema({
   description: String,
   date_create: { type: Date, default: Date.now },
   date_due: Date,
+  isClosed: { type: Boolean, default: false },
   assigned_users: [
     {
-      userId: { type: Schema.Types.ObjectId, required: true },
       username: { type: String, require: true }
     }
   ],
   notified_users: [
     {
-      userId: { type: Schema.Types.ObjectId, required: true },
       username: { type: String, require: true }
     }
   ]
@@ -26,7 +24,6 @@ const messageBoardSchema = new Schema({
   text: { type: String, required: true },
   date_create: { type: Date, default: Date.now },
   user: {
-    userId: { type: Schema.Types.ObjectId, required: true },
     username: { type: String, require: true }
   }
 });
@@ -38,12 +35,15 @@ const projectSchema = new Schema({
   date_create: { type: Date, default: Date.now },
   todos: [todoListSchema],
   message_board: [messageBoardSchema],
-  isFinished: { type: Boolean, default: false },
-  team: [{
-    userId: { type: Schema.Types.ObjectId, required: true },
-    username: { type: String, require: true }
-  }]
+  isClosed: { type: Boolean, default: false },
+  team: [
+    {
+      username: { type: String, require: true }
+    }
+  ]
 });
+
+
 
 const Project = mongoose.model('Project', projectSchema);
 

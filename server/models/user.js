@@ -40,7 +40,7 @@ const userSchema = new Schema({
   },
   projectList: [
     {
-      pr_id: Schema.Types.ObjectId,
+      _id: Schema.Types.ObjectId,
       title: String,
       nb_todos: {type: Number, default: 0},
       nb_msg: {type: Number, default: 0},
