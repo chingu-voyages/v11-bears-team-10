@@ -1,0 +1,32 @@
+.message-body{
+	@extend .todo-body;
+	// border-bottom-right-radius: 5px;
+  
+}
+
+.message-list {
+	@extend .projects-summary;
+	@extend .project-list;
+	// border-bottom-right-radius: 10px;
+	// border-top-right-radius: 10px;
+	.list-head{
+		justify-content: flex-start;
+		margin-top: -10px;
+		padding: 10px;
+	}
+  .creator {
+    background: white;
+		color: #ed0cef;
+		font-weight: bold;
+		border-radius: 50%;
+		padding: 7px;
+	}
+
+}
+
+// .close-message{
+// 	@extend .close-todo;
+// 	border-radius: 50%;
+// 	// right: -20;
+// 	left: 10;
+// }

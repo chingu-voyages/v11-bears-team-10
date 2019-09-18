@@ -1,44 +1,36 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
-import { BrowserRouter } from "react-router-dom";
-
 import configureAppStore from "./redux/store";
-import * as serviceWorker from "./serviceWorker";
 import AOS from "aos";
-import { library } from "@fortawesome/fontawesome-svg-core";
-import {
-  faHome,
-  faSearch,
-  faTrash,
-  faPlusCircle,
-	faUsers,
-	faComments,
-	faSitemap
-} from "@fortawesome/free-solid-svg-icons";
 
-import App from "./App";
-// import Dashboard from "./DashBoard";
+import * as serviceWorker from "./serviceWorker";
 
+import "./stylesheets/css/styles.css";
 import "aos/dist/aos.css";
 import "./index.scss";
+import "./images/icons/icons";
 
-//create a library to hold icons and brands
-library.add(faHome, faSearch, faTrash, faPlusCircle, faUsers, faComments, faSitemap);
+import App from "./App";
+
 AOS.init({});
 
+export const INITIAL_STATE = {
+	// user: null,
+	user: { name: "john doe" },
+	error: {
+		showError: false,
+		statusCode: null,
+		message: null,
+		requestTimeout: false
+	}
+};
+
 ReactDOM.render(
-  <Provider
-    store={configureAppStore({
-      user: null,
-      error: null // will be an object containing a message property , and a statusCode property
-    })}
-  >
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
-  </Provider>,
-  document.getElementById("root")
+	<Provider store={configureAppStore(INITIAL_STATE)}>
+		<App />
+	</Provider>,
+	document.getElementById("root")
 );
 
 // If you want your app to work offline and load faster, you can change
