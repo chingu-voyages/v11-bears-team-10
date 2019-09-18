@@ -13,8 +13,7 @@ import "./images/icons/icons";
 
 
 import App from "./App";
-import ProjectsBaord from './components/ProjectBoard/ProjectBoard'
-import Dashboard from './components/Dashboard'
+
 
 AOS.init({});
 
@@ -30,7 +29,7 @@ export const INITIAL_STATE = {
 
 ReactDOM.render(
 	<Provider store={configureAppStore(INITIAL_STATE)}>
-		<ProjectsBaord  />
+		<App  />
 	</Provider>,
 	document.getElementById("root")
 );
