@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 
 
-import Header from "./components/Header/Header";
-import Card from "./components/Card/Card";
-import AddProject from "./components/Card/AddProjectCard";
-import AddProjectForm from "./container/Modals/AddProjectForm";
+import Header from "./../components/Header/Header";
+import ProjectCard from "./../components/Card/Card";
+import AddProjectCard from "./../components/Card/AddProjectCard";
+import AddProjectForm from './../container/Modals/AddProjectForm';
 
 export default function DashBoards(props) {
   const [projectsData, setProjectsData] = useState({});
@@ -39,9 +39,9 @@ export default function DashBoards(props) {
             </section>
           </section>
           <section className="projects-shelf flex-row" data-aos="fade-up">
-            <AddProject handleShowModal={showForm} />
+            <AddProjectCard handleShowModal={showForm} />
             <AddProjectForm showForm={showModal} handleCloseForm={closeModal} />
-            <Card />
+            <ProjectCard />
           </section>
         </div>
       </section>

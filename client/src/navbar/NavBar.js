@@ -1,64 +1,58 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Link, withRouter } from "react-router-dom";
-import { Navbar, ButtonGroup } from "react-bootstrap";
+import { Link, NavLink } from "react-router-dom";
+import { Navbar, Nav, NavItem } from "react-bootstrap";
 
-import ProfileDropdown from "./ProfileDropdown";
+import ProfileSection from "./ProfileSection";
+import AuthenticationButtons from "./AuthenticationButtons";
 
-import { setUser, setError } from "../redux/actionCreators";
+import logo from "../images/logo.png";
 
 class NavBar extends React.Component {
-  logout = () =>
-    setTimeout(() => {
-      // logout the user and redirect to the home page
-      this.props.setUser(null);
-      this.props.history.replace("/");
+	render() {
+		return (
+			<Navbar
+				className="border border-botom-dark flex-column flex-md-row text-center"
+				bg="light"
+				expand="md"
+				sticky="top">
+				<div className="d-flex flex-nowrap w-sm-down-100">
+					<Link to="/">
+						<Navbar.Brand className="mr-auto">
+							<img alt="brand" src={logo} width="40" height="40" />
+						</Navbar.Brand>
+					</Link>
+					<Navbar.Toggle aria-controls="navbar-nav-collapse" className="ml-auto mr-2" />
+				</div>
 
-      // show an error message in the main section
-      //
-      // this.props.setError('unAuthorized',401);
-    }, 1000);
+				<Navbar.Collapse id="navbar-nav-collapse">
+					<Nav as="ul" className="ml-md-2">
+						<NavItem as="li" className="ml-md-2">
+							<NavLink to="/features" className="nav-link">
+								Features
+							</NavLink>
+						</NavItem>
+						<NavItem as="li" className="ml-md-2">
+							<NavLink to="/how-it-works" className="nav-link">
+								How it works
+							</NavLink>
+						</NavItem>
+						<NavItem as="li" className="ml-md-2">
+							<NavLink to="/contact-us" className="nav-link">
+								Contact us
+							</NavLink>
+						</NavItem>
+					</Nav>
 
-  render() {
-    return (
-      <Navbar
-        className="border border-botom-dark flex-column flex-md-row text-center"
-        bg="light"
-        expand="md"
-        sticky="top">
-        <div className="d-flex flex-nowrap w-sm-down-100">
-          <Link to="/">
-            <Navbar.Brand className="mr-auto">Test</Navbar.Brand>
-          </Link>
-          <Navbar.Toggle aria-controls="navbar-nav-collapse" className="ml-auto mr-2" />
-        </div>
-        <Navbar.Collapse id="navbar-nav-collapse">
-          {this.props.user ? (
-            <ProfileDropdown
-              className="ml-md-auto mt-2 mt-md-0"
-              user={this.props.user}
-              logout={this.logout}
-            />
-          ) : (
-            <ButtonGroup className="ml-md-auto mt-2 mt-md-0">
-              <Link to="/register" className="btn btn-outline-primary">
-                register
-              </Link>
-              <Link to="/login" className="btn btn-outline-primary">
-                login
-              </Link>
-            </ButtonGroup>
-          )}
-        </Navbar.Collapse>
-      </Navbar>
-    );
-  }
+					{this.props.user ? (
+						<ProfileSection user={this.props.user} />
+					) : (
+						<AuthenticationButtons />
+					)}
+				</Navbar.Collapse>
+			</Navbar>
+		);
+	}
 }
 
-export default withRouter(
-  connect(
-    state => ({ user: state.user }),
-    { setUser, setError }
-  )(NavBar)
-);
-
+export default connect(state => ({ user: state.user }))(NavBar);

@@ -1,9 +1,10 @@
+
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import "../../stylesheets/css/styles.css";
 
-function AddProject({handleShowModal}) {
+
+function AddProjectCard({handleShowModal}) {
   return (
     <div
       className="add-project flex-col-centered hvr-grow-shadow hvr-icon-rotate"
@@ -16,4 +17,4 @@ function AddProject({handleShowModal}) {
   );
 }
 
-export default AddProject;
+export default AddProjectCard;
