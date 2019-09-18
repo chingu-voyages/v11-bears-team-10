@@ -50,7 +50,7 @@ function ProjectBoard() {
             </section>
           </section>
           <section className="flex-col" data-aos="fade-up">
-            {showTodos ? <TodosBoard /> : <MessageBoard />}
+            {showMessages ? <MessageBoard /> : <TodosBoard />}
           </section>
         </div>
       </section>

@@ -14,6 +14,7 @@ import "./images/icons/icons";
 
 import App from "./App";
 import ProjectsBaord from './components/ProjectBoard/ProjectBoard'
+import Dashboard from './components/Dashboard'
 
 AOS.init({});
 

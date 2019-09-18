@@ -1,11 +1,16 @@
 import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-function TodoList() {
-  const [todoData, setTodoData] = useState({ title: "Test List Item" });
+import Todos from '../Todos'
+
+function TodoList({showTodoPortal}) {
+	const [todoData] = useState({ title: "Test List Item" });
+
 
   return (
-    <section className="flex-row todo-body" data-aos="fade-up">
+    <section className="flex-row todo-body" data-aos="fade-up"
+		 onClick={showTodoPortal}
+		>
       <div className="projects-summary flex-col project-list">
         <span className="flex-row">
           <span className="flex-col">

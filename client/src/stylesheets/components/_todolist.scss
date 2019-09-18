@@ -1,5 +1,6 @@
 .todo-body {
-  position: relative;
+	position: relative;
+	cursor: pointer;
 }
 
 .project-list {
@@ -52,7 +53,7 @@
   color: rgba(255, 255, 255, 0.63);
   padding: 5px;
   position: absolute;
-  right: 80px;
+  right: 54px;
 	cursor: pointer;
 }
 
@@ -63,6 +64,7 @@
 	@extend .projects-summary;
 	margin-bottom: 10px;
 	padding: 5px;
+	border-radius: 5px;
 	color: white;
 	.plus-todo{
 		font-size: 20px;

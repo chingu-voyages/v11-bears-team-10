@@ -1,0 +1,53 @@
+.todos-portal {
+  background: $theme-purple;
+  width: 30vw;
+  height: 50vh;
+  position: fixed;
+  z-index: 1000;
+  top: 10%;
+  right: 30%;
+  padding: 20px;
+}
+
+.portal-wrapper {
+  h3 {
+    color: $theme-green;
+    font-family: $roboto-mono;
+    font-size: 13px;
+    margin: unset;
+  }
+  hr {
+    height: 0.01em;
+    width: 100%;
+    color: #ecf4f3;
+    background: #ecf4f3;
+    margin-left: unset;
+  }
+  span {
+		color: #6d6d82;
+  }
+}
+
+.portal-form {
+  .todo-input {
+    width: 50%;
+    margin: 15px 1px;
+    border: unset;
+    outline-color: $theme-green;
+  }
+  button {
+    @include theme-button;
+    padding: 2px;
+  }
+}
+
+.checkboxes {
+  input {
+		margin-left: 1px;
+  }
+  span {
+		color: $theme-green;
+		margin-left: 10px;
+	}
+  align-items: flex-start;
+}
