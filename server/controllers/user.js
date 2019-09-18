@@ -5,12 +5,9 @@ const secret = process.env.SECRET || 'my secret';
 
 const findUsers = async res => {
   try {
-    const users = await User.find({});
-    if (users.length) {
-      res.status(200).json({ users });
-    } else {
-      res.status(400).json({ error: 'Not Found' });
-    }
+    const users = await User.find({}, 'username');
+    if (!users.length) return res.status(400).json({ error: 'Not Found' });
+    res.status(200).json({ users });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -19,11 +16,8 @@ const findUsers = async res => {
 const findUserById = async (id, res) => {
   try {
     const user = await User.findById(id);
-    if (user) {
-      res.status(200).json({ user });
-    } else {
-      res.status(404).json({ error: 'Not Found' });
-    }
+    if (!user) return res.status(404).json({ error: 'Not Found' });
+    res.status(200).json({ user });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -32,11 +26,8 @@ const findUserById = async (id, res) => {
 const findUsersByUsername = async (username, res) => {
   try {
     const user = await User.findOne({ username });
-    if (user) {
-      res.status(200).json({ user });
-    } else {
-      res.status(404).json({ error: 'Not Found' });
-    }
+    if (!user) return res.status(404).json({ error: 'Not Found' });
+    res.status(200).json({ user });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -45,11 +36,8 @@ const findUsersByUsername = async (username, res) => {
 const findUsersByEmail = async (email, res) => {
   try {
     const user = await User.findOne({ email });
-    if (user) {
-      res.status(200).json({ user });
-    } else {
-      res.status(404).json({ error: 'Not Found' });
-    }
+    if (!user) return res.status(404).json({ error: 'Not Found' });
+    res.status(200).json({ user });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -63,17 +51,17 @@ const createUser = async (req, res) => {
     user = await User.findOne({ email });
     if (user) return res.status(401).json({ error: 'Email already used' });
     const newUser = await User.create({ username, email, password });
-    const savedUser = await newUser.save();
-    const playload = { id: savedUser._id };
+    await newUser.save();
+    const playload = { id: newUser._id };
     const token = jwt.sign(playload, secret, { expiresIn: 60 * 60 * 24 });
-    return res.status(201).json({ user: savedUser, token });
+    return res.status(201).json({ user: newUser, token });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 };
 
 const UpdateUser = async (id, req, res) => {
-  if (id !== '' + req.user._id) {
+  if (!req.user._id.equals(id)) {
     return res.status(401).end();
   }
   const update = req.body;
@@ -87,11 +75,8 @@ const UpdateUser = async (id, req, res) => {
   }
   try {
     const user = await User.findByIdAndUpdate(id, update, { new: true });
-    if (user) {
-      res.status(200).json({ user });
-    } else {
-      res.status(404).json({ error: 'Not Found' });
-    }
+    if (!user) return res.status(404).json({ error: 'Not Found' });
+    res.status(200).json({ user });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -103,11 +88,8 @@ const deleteUser = async (id, req, res) => {
   }
   try {
     const user = await User.findByIdAndDelete(id);
-    if (user) {
-      res.status(200).json({ user });
-    } else {
-      res.status(404).json({ error: 'Not Found' });
-    }
+    if (!user) return res.status(404).json({ error: 'Not Found' });
+    res.status(200).json({ user });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
