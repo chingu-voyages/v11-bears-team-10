@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const ObjectId = mongoose.Types.ObjectId;
 const { Schema } = mongoose;
 
 const todoListSchema = new Schema({
@@ -44,28 +43,7 @@ const projectSchema = new Schema({
   ]
 });
 
-// todoListSchema.pre('save', function(next) {
-//   this.assigned_users = convertUserId(this.assigned_users);
-//   this.notified_users = convertUserId(this.notified_users);
-//   next();
-// });
 
-// messageBoardSchema.pre('save', function(next) {
-//   this.user = convertUserId([this.user]);
-//   next();
-// });
-
-// projectSchema.pre('save', function(next) {
-//   this.team = convertUserId(this.team);
-//   next();
-// });
-
-// function convertUserId(user) {
-//   return user.map(user => {
-//     user._id = ObjectId(user._id);
-//     return user;
-//   });
-// }
 
 const Project = mongoose.model('Project', projectSchema);
 

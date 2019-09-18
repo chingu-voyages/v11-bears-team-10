@@ -48,7 +48,7 @@ describe('TEST PROJECT Collection ', function() {
           user.id = docs[i]._id;
           user.token =
             'bearer ' +
-            jwt.sign({ id: userOne.id }, 'my secret', {
+            jwt.sign({ id: user.id }, 'my secret', {
               expiresIn: 60 * 60 * 24
             });
         });
@@ -170,16 +170,42 @@ describe('TEST PROJECT Collection ', function() {
         .put(`/project/${projectOne._id}`)
         .send(projectOne)
         .set({ Authorization: userOne.token })
-        .end((err, response) => {
+        .end(async (err, response) => {
           response.status.should.equal(200);
           const project = response.body.project;
+          const user = await User.findById(userTwo.id)
           project.team[0]._id.should.equal(projectOne.team[0]._id.toString());
+          user.projectList[0]._id.toString().should.equal(projectOne._id.toString())
           // console.log(project);
           projectOne = {...project}
           done();
         });
     });
   });
+
+  describe('TEST DELETE PROJECT - URI = /porject', function() {
+    it('DELETE PROJECT - DELETE PROJECT BY USER NOT ADMIN (UNAUTHORIZED)  - Route = /project/:project-id - should return 401', function(done) {
+      chai
+        .request(pmApp)
+        .delete(`/project/${projectOne._id}`)
+        .set({ Authorization: userTwo.token })
+        .end((err, response) => {
+          response.status.should.equal(401);
+          done();
+        });
+    });
+
+    it('DELETE PROJECT - DELETE PROJECT BY ADMIN OF THE PROJECT - Route = /project/:project-id - should return 200', function(done) {
+      chai
+        .request(pmApp)
+        .delete(`/project/${projectOne._id}`)
+        .set({ Authorization: userOne.token })
+        .end((err, response) => {
+          response.status.should.equal(200);
+          done();
+        });
+    });
+  })
 
   // after(function() {
   //   for (let i in mongoose.connection.collections) {
