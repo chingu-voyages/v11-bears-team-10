@@ -12,6 +12,8 @@ function Todos({ showForm, setOpen }) {
     ])
   });
 
+  const [strike, setStrike] = useState([false, 0]);
+
   Todos.handleClickOutside = () => setOpen();
 
   return showForm ? (
@@ -36,7 +38,11 @@ function Todos({ showForm, setOpen }) {
           {[...todoData.todos].map((todo, i) => {
             return (
               <div className="flex-row-centered">
-                <input type="checkbox" name={`todo-${i}`} value={todo} />{" "}
+                <input
+                  type="checkbox"
+                  name={`todo-${i}`}
+                  value={todo}
+                />{" "}
                 <span>todo</span>
               </div>
             );

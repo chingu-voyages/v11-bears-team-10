@@ -25,9 +25,9 @@ function TodosBaord() {
       <AddTodo showForm={showModal}  handleCloseForm={closeModal} />
       <TodoPortal showForm={showPortal} setOpen={hidePortal} />
       <TodoList showTodoPortal={displayPortal}  />
-      {/* <TodoList />
-      <TodoList />
-      <TodoList /> */}
+      <TodoList showTodoPortal={displayPortal} />
+      <TodoList  showTodoPortal={displayPortal}/>
+      <TodoList  showTodoPortal={displayPortal}/>
     </>
   );
 }

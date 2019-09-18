@@ -5,7 +5,7 @@
   position: fixed;
   z-index: 1000;
   top: 10%;
-  right: 30%;
+  right: 0%;
   padding: 20px;
 }
 
@@ -41,13 +41,23 @@
   }
 }
 
+
+
 .checkboxes {
   input {
 		margin-left: 1px;
-  }
+	}
+	input:checked{
+		color: $theme-green;
+	}
   span {
 		color: $theme-green;
 		margin-left: 10px;
 	}
   align-items: flex-start;
+}
+
+
+.strike-span{
+	text-decoration: line-through;
 }
