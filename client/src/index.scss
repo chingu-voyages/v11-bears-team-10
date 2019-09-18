@@ -1,15 +1,47 @@
 @import "../node_modules/bootstrap/scss/bootstrap.scss";
 @import "./stylesheets/main.scss";
 
+@mixin thinScrollbar($trackColor, $thumbColor) {
+	scrollbar-width: thin;
+	scrollbar-color: $thumbColor $trackColor;
+
+	&::-webkit-scrollbar {
+		width: 5px;
+	}
+
+	&::-webkit-scrollbar-track {
+		background-color: $trackColor;
+		border-radius: 10px;
+	}
+
+	&::-webkit-scrollbar-thumb {
+		background-color: $thumbColor;
+		border-radius: 10px;
+	}
+}
+
+body {
+	@include thinScrollbar($light, $secondary); // it worked on chrome , but not on firefox
+
+	overflow-x: hidden;
+
+	// prevent scroll bar from pushing elements to the left
+	margin-right: calc(100% - 100vw) !important;
+	#root > * {
+		padding-right: calc(100vw - 100% + #{$grid-gutter-width/2}) !important;
+	}
+}
+
 .navbar-brand:hover {
 	cursor: pointer;
 }
 
 .w-sm-down-100 {
 	@include media-breakpoint-down(sm) {
-		width: 100%;
+		width: 100% !important;
 	}
 }
+
 .w-md-50 {
 	@include media-breakpoint-up(md) {
 		width: 50% !important;
@@ -26,7 +58,7 @@
 .nav-link.active {
 	background-color: $secondary;
 	color: $light !important;
-	border-radius: 20px;
+	border-radius: 5px;
 }
 
 .avatar {
@@ -42,4 +74,9 @@
 			color: $dark;
 		}
 	}
+}
+
+form label.required:after {
+	color: red;
+	content: " *";
 }

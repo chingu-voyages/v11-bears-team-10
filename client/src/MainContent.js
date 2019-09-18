@@ -15,9 +15,9 @@ import LoginForm from "./components/LoginForm";
 import RegisterForm from "./components/RegisterForm";
 import ErrorInfo from "./errors/ErrorInfo";
 
-function MainContent({ user, error, resetError }) {
-	return error.showError ? (
-			<ErrorInfo {...error} resetError={resetError} />
+const MainContent = ({ user, error, resetError }) =>
+	error ? (
+		<ErrorInfo {...error} resetError={resetError} />
 	) : (
 		<Switch>
 			<Route path="/" exact component={LandingPage} />
@@ -47,7 +47,7 @@ function MainContent({ user, error, resetError }) {
 			<Route render={() => <ErrorInfo statusCode={404} />} />
 		</Switch>
 	);
-}
+
 export default connect(
 	({ user, error }) => ({ user, error }),
 	{ resetError }

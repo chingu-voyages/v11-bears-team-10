@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import configureAppStore from "./redux/store";
 import AOS from "aos";
+import axios from "axios";
 
 import * as serviceWorker from "./serviceWorker";
 
@@ -12,18 +13,29 @@ import "./index.scss";
 import "./images/icons/icons";
 
 import App from "./App";
+import { isStorageAvailable } from "./_helpers";
 
-AOS.init({});
+AOS.init();
+
+export const IS_STORAGE_AVAILABLE = isStorageAvailable();
+
+if (IS_STORAGE_AVAILABLE)
+	axios.interceptors.request.use(function(config) {
+		var authToken = localStorage.getItem("token");
+
+		if (authToken) config.headers.Authorization = "Bearer " + authToken;
+
+		return config;
+	});
+
+axios.defaults.baseURL = "https://v11-bears-team-10.herokuapp.com";
+
+axios.defaults.timeout = 10000;
 
 export const INITIAL_STATE = {
-	// user: null,
-	user: { name: "john doe" },
-	error: {
-		showError: false,
-		statusCode: null,
-		message: null,
-		requestTimeout: false
-	}
+	user: null,
+	// user: { userName: "john doe" },
+	error: null
 };
 
 ReactDOM.render(
