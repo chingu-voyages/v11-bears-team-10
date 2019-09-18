@@ -5,8 +5,20 @@
   position: fixed;
   z-index: 1000;
   top: 10%;
-  right: 0%;
+  right: -100%;
   padding: 20px;
+  -webkit-animation: slide 0.5s forwards;
+  -webkit-animation-delay: 2s;
+  animation: slide 0.5s forwards;
+  animation-delay: 0.1s;
+}
+
+@-webkit-keyframes slide {
+	100% { right: 0%; }
+}
+
+@keyframes slide {
+	100% { right: 0%; }
 }
 
 .portal-wrapper {
@@ -24,7 +36,7 @@
     margin-left: unset;
   }
   span {
-		color: #6d6d82;
+    color: #6d6d82;
   }
 }
 
@@ -41,23 +53,20 @@
   }
 }
 
-
-
 .checkboxes {
   input {
-		margin-left: 1px;
-	}
-	input:checked{
-		color: $theme-green;
-	}
+    margin-left: 1px;
+  }
+  input:checked {
+    color: $theme-green;
+  }
   span {
-		color: $theme-green;
-		margin-left: 10px;
-	}
+    color: $theme-green;
+    margin-left: 10px;
+  }
   align-items: flex-start;
 }
 
-
-.strike-span{
-	text-decoration: line-through;
+.strike-span {
+  text-decoration: line-through;
 }

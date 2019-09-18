@@ -4,6 +4,7 @@
 }
 
 .project-list {
+
   background: $theme-purple;
   padding-bottom: 5px;
   @include drop-shadow(rgba(0, 0, 0, 0.425));
@@ -48,7 +49,6 @@
 
 // close todo button
 .close-todo {
-  background: rgba(128, 128, 128, 0.322);
   height: 20px;
   color: rgba(255, 255, 255, 0.63);
   padding: 5px;
