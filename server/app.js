@@ -8,7 +8,7 @@ const passport = require('passport');
 const helmet = require('helmet');
 const cors = require('cors');
 
-const cors = require('cors')
+
 
 const auth = require('./passport');
 
@@ -19,7 +19,7 @@ const authRouter = require('./routes/auth');
 
 const app = express();
 
-app.use(cors())
+
 
 app.use(helmet());
 app.use(cors());
