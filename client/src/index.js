@@ -34,7 +34,6 @@ axios.defaults.timeout = 10000;
 
 export const INITIAL_STATE = {
 	user: null,
-	// user: { userName: "john doe" },
 	error: null
 };
 

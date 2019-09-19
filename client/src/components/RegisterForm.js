@@ -37,13 +37,16 @@ class RegisterForm extends Component {
 	onSubmit = () => {
 		const { username, email, password } = this.state.data;
 		if (username && email && password)
-			this.setState({ submitting: true }, () => this.props.register(this.state.data));
-		else
-			this.invalidate({
-				username: username ? null : "the user name is required",
-				email: email ? null : "the email is required",
-				password: password ? null : "the password is required"
-			});
+			this.setState({ submitting: true }, () =>
+				this.props.register(this.state.data, this.invalidate)
+			);
+		else {
+			const errors = {};
+			if (!username) errors.username = "the username is required";
+			if (!email) errors.email = "the email is required";
+			if (!password) errors.password = "the password is required";
+			this.invalidate(errors);
+		}
 	};
 
 	onKeyDown = ({ keyCode }) => keyCode === 13 && this.onSubmit();
@@ -65,14 +68,14 @@ class RegisterForm extends Component {
 
 					<Form.Group as={Row} controlId="username" className="my-4">
 						<Form.Label column xs={12} sm={3} className="required">
-							User name
+							Username
 						</Form.Label>
 						<Col xs={12} sm={6}>
 							<Form.Control
 								isInvalid={this.state.errors.username}
 								onChange={this.onChange}
 								value={this.state.username}
-								placeholder="user name"
+								placeholder="username"
 							/>
 							<Form.Control.Feedback type="invalid">
 								{this.state.errors.username}

@@ -2,17 +2,18 @@ import React, { useState } from "react";
 import { Nav, NavDropdown, Spinner } from "react-bootstrap";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import { setUser } from "../redux/actionCreators";
+import { logout } from "../redux/actionCreators";
 import Avatar from "../components/Avatar";
 
-function ProfileSection({ user, setUser }) {
+function ProfileSection({ user, logout }) {
 	const [isloggingOut, showSpinner] = useState(false);
 
-	const logout = () => {
+	const startLoggingOut = () => {
 		showSpinner(true);
-		setTimeout(() => {
-			setUser(null);
-		}, 1000);
+
+		// this will unset the user from the state
+		// so there's no need to hide the spinner later since this component will be unmounted
+		logout();
 	};
 
 	return (
@@ -37,7 +38,7 @@ function ProfileSection({ user, setUser }) {
 					my dashboard
 				</NavDropdown.Item>
 				<NavDropdown.Divider />
-				<NavDropdown.Item onClick={logout}>logout</NavDropdown.Item>
+				<NavDropdown.Item onClick={startLoggingOut}>logout</NavDropdown.Item>
 			</NavDropdown>
 		</Nav>
 	);
@@ -45,5 +46,5 @@ function ProfileSection({ user, setUser }) {
 
 export default connect(
 	null,
-	{ setUser }
+	{ logout }
 )(ProfileSection);
