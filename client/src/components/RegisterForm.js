@@ -1,7 +1,8 @@
 import React, { Component } from "react";
-import { Button, Form, Spinner, Row, Col } from "react-bootstrap";
+import { Button, Form, Spinner, Row, Col, Card } from "react-bootstrap";
 import { connect } from "react-redux";
-import { setUser, register } from "../redux/actionCreators";
+import { Link } from "react-router-dom";
+import { register } from "../redux/actionCreators";
 
 class RegisterForm extends Component {
 	constructor(props) {
@@ -57,16 +58,18 @@ class RegisterForm extends Component {
 				<Col
 					lg={8}
 					xs={12}
-					className="mx-auto"
+					className="mx-auto pt-5"
 					as={Form}
 					onKeyDown={this.onKeyDown}
 					data-aos="zoom-in">
-					<div className="my-5 text-center">
-						<small className="text-muted">join (project name here)</small>
+					<div className="mb-5 text-center">
+						<small className="text-muted">
+							join (project name here)
+						</small>
 						<h3>Create your account</h3>
 					</div>
 
-					<Form.Group as={Row} controlId="username" className="my-4">
+					<Row as={Form.Group} controlId="username" className="mb-4">
 						<Form.Label column xs={12} sm={3} className="required">
 							Username
 						</Form.Label>
@@ -74,16 +77,16 @@ class RegisterForm extends Component {
 							<Form.Control
 								isInvalid={this.state.errors.username}
 								onChange={this.onChange}
-								value={this.state.username}
+								value={this.state.data.username}
 								placeholder="username"
 							/>
 							<Form.Control.Feedback type="invalid">
 								{this.state.errors.username}
 							</Form.Control.Feedback>
 						</Col>
-					</Form.Group>
+					</Row>
 
-					<Form.Group as={Row} controlId="email" className="my-4">
+					<Row as={Form.Group} controlId="email" className="mb-4">
 						<Form.Label column xs={12} sm={3} className="required">
 							Email
 						</Form.Label>
@@ -91,7 +94,7 @@ class RegisterForm extends Component {
 							<Form.Control
 								isInvalid={this.state.errors.email}
 								onChange={this.onChange}
-								value={this.state.email}
+								value={this.state.data.email}
 								type="email"
 								placeholder="email address"
 							/>
@@ -99,9 +102,9 @@ class RegisterForm extends Component {
 								{this.state.errors.email}
 							</Form.Control.Feedback>
 						</Col>
-					</Form.Group>
+					</Row>
 
-					<Form.Group as={Row} controlId="password" className="my-4">
+					<Row as={Form.Group} controlId="password" className="mb-4">
 						<Form.Label column xs={12} sm={3} className="required">
 							Password
 						</Form.Label>
@@ -109,24 +112,25 @@ class RegisterForm extends Component {
 							<Form.Control
 								isInvalid={this.state.errors.password}
 								onChange={this.onChange}
-								value={this.state.password}
+								value={this.state.data.password}
 								type="password"
 								placeholder="password"
 							/>
 							<small className="text-muted">
 								Make sure it's at least 15 characters OR at least 8 characters
-								including a number and a lowercase letter.{" "}
+								including a number and a lowercase letter.
 							</small>
 							<Form.Control.Feedback type="invalid">
 								{this.state.errors.password}
 							</Form.Control.Feedback>
 						</Col>
-					</Form.Group>
+					</Row>
 
-					<div className="text-center my-5">
+					<Row className="mb-5">
 						<Button
 							disabled={this.state.submitting}
 							variant="primary"
+							className="mx-auto"
 							onClick={this.onSubmit}>
 							{this.state.submitting ? (
 								<Spinner
@@ -142,7 +146,17 @@ class RegisterForm extends Component {
 								"submit"
 							)}
 						</Button>
-					</div>
+					</Row>
+					<Row className="mb-5">
+						<Col xs={12} sm={{ span: 6, offset: 3 }}>
+							<Card>
+								<Card.Body className="p-2 text-center">
+									already have a (project name here) account ?
+									<Link to="/login"> Login</Link>
+								</Card.Body>
+							</Card>
+						</Col>
+					</Row>
 				</Col>
 			</Row>
 		);
@@ -151,5 +165,5 @@ class RegisterForm extends Component {
 
 export default connect(
 	null,
-	{ setUser, register }
+	{ register }
 )(RegisterForm);

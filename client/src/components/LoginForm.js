@@ -1,7 +1,8 @@
 import React from "react";
-import { Button, Form, Alert, Spinner, Row, Col } from "react-bootstrap";
+import { Button, Form, Alert, Spinner, Row, Col, Card } from "react-bootstrap";
 import { connect } from "react-redux";
-import { setUser, setError } from "../redux/actionCreators";
+import { Link } from "react-router-dom";
+import { login } from "../redux/actionCreators";
 
 class LoginForm extends React.Component {
 	constructor(props) {
@@ -10,20 +11,17 @@ class LoginForm extends React.Component {
 			submitting: false,
 			error_message: null,
 			data: {
-				email: "",
+				username: "",
 				password: ""
 			}
 		};
 	}
 
-	invalidate = (message = "invalid credentials") =>
-		this.setState({ submitting: false, error_message: message });
+	invalidate = (error_message = null) => this.setState({ submitting: false, error_message });
 
 	onSubmit = () =>
 		this.setState({ submitting: true, error_message: null }, () =>
-			setTimeout(() => {
-				this.props.setError(500);
-			}, 1000)
+			this.props.login(this.state.data, this.invalidate)
 		);
 
 	onChange = ({ target: { id, value } }) =>
@@ -33,47 +31,85 @@ class LoginForm extends React.Component {
 
 	render() {
 		return (
-			<Row className="my-5">
-				<Col md="5" xs="11" className="mx-auto" as={Form} onKeyDown={this.onKeyDown}>
+			<Row>
+				<Col
+					md={8}
+					xs={12}
+					className="mx-auto pt-5"
+					as={Form}
+					onKeyDown={this.onKeyDown}
+					data-aos="zoom-in">
+					<div className="mb-5 text-center">
+						<h3>login to your (project name here) account</h3>
+					</div>
+
 					{this.state.error_message && (
-						<Alert variant="danger">{this.state.error_message}</Alert>
+						<Row className="mb-5">
+							<Col xs={12} sm={{ span: 6, offset: 3 }}>
+								<Alert className="text-center my-0" variant="danger">
+									{this.state.error_message}
+								</Alert>
+							</Col>
+						</Row>
 					)}
-					<Form.Group controlId="email">
-						<Form.Label>Email</Form.Label>
-						<Form.Control
-							onChange={this.onChange}
-							value={this.state.data.email}
-							type="email"
-							placeholder="enter your email"
-						/>
-					</Form.Group>
-					<Form.Group controlId="password">
-						<Form.Label>Password</Form.Label>
-						<Form.Control
-							onChange={this.onChange}
-							value={this.state.data.password}
-							type="password"
-							placeholder="enter your password"
-						/>
-					</Form.Group>
-					<Button
-						variant="primary"
-						onClick={this.onSubmit}
-						disabled={this.state.submitting}>
-						{this.state.submitting ? (
-							<Spinner
-								className="mx-2"
-								as="span"
-								aria-hidden="true"
-								animation="border"
-								role="status"
-								size="sm">
-								<span className="sr-only">Logging in ...</span>
-							</Spinner>
-						) : (
-							"login"
-						)}
-					</Button>
+
+					<Row as={Form.Group} controlId="username" className="mb-4">
+						<Form.Label column xs={12} sm={3}>
+							Username
+						</Form.Label>
+						<Col xs={12} sm={6}>
+							<Form.Control
+								onChange={this.onChange}
+								value={this.state.data.username}
+								placeholder="username"
+							/>
+						</Col>
+					</Row>
+
+					<Row as={Form.Group} controlId="password" className="mb-4">
+						<Form.Label column xs={12} sm={3}>
+							Password
+						</Form.Label>
+						<Col xs={12} sm={6}>
+							<Form.Control
+								onChange={this.onChange}
+								value={this.state.data.password}
+								placeholder="password"
+							/>
+						</Col>
+					</Row>
+
+					<Row className="mb-5">
+						<Button
+							variant="primary"
+							className="mx-auto"
+							onClick={this.onSubmit}
+							disabled={this.state.submitting}>
+							{this.state.submitting ? (
+								<Spinner
+									className="mx-2"
+									as="span"
+									aria-hidden="true"
+									animation="border"
+									role="status"
+									size="sm">
+									<span className="sr-only">Logging in ...</span>
+								</Spinner>
+							) : (
+								"login"
+							)}
+						</Button>
+					</Row>
+					<Row className="mb-5">
+						<Col xs={12} sm={{ span: 6, offset: 3 }}>
+							<Card>
+								<Card.Body className="p-2 text-center">
+									New to (project name here) ?
+									<Link to="/register"> Create an account</Link>
+								</Card.Body>
+							</Card>
+						</Col>
+					</Row>
 				</Col>
 			</Row>
 		);
@@ -82,5 +118,5 @@ class LoginForm extends React.Component {
 
 export default connect(
 	null,
-	{ setUser, setError }
+	{ login }
 )(LoginForm);

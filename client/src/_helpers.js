@@ -1,3 +1,5 @@
+import HTTP_ERRORS from "./errors/HTTP_ERRORS";
+
 export function isStorageAvailable(type = "localStorage") {
 	var storage;
 	try {
@@ -22,4 +24,19 @@ export function isStorageAvailable(type = "localStorage") {
 			(storage && storage.length !== 0)
 		);
 	}
+}
+
+export function getErrorMessage(error) {
+	if (!error) return null;
+
+	var error_message = "";
+	if (error.statusCode) error_message += error.statusCode + " | ";
+
+	return (
+		error_message +
+		(error.message ||
+			(error.requestTimeout && "request timeout . try refreshing the page") ||
+			HTTP_ERRORS[error.statusCode] ||
+			"something went wrong try refreshing the page")
+	);
 }

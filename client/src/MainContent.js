@@ -13,12 +13,16 @@ import ContactUs from "./components/ContactUs";
 import Dashboard from "./components/Dashboard";
 import LoginForm from "./components/LoginForm";
 import RegisterForm from "./components/RegisterForm";
-import ErrorInfo from "./errors/ErrorInfo";
+import ErrorPage from "./errors/ErrorPage";
+import { Toast } from "react-bootstrap";
+import { getErrorMessage } from "./_helpers";
 
-const MainContent = ({ user, error, resetError }) =>
-	error ? (
-		<ErrorInfo {...error} resetError={resetError} />
-	) : (
+const MainContent = ({ user, error }) => (
+	<>
+		<Toast className="p-3 bg-danger text-light" show={!!error}>
+			{getErrorMessage(error)}
+		</Toast>
+
 		<Switch>
 			<Route path="/" exact component={LandingPage} />
 			<Route path="/features" component={Features} />
@@ -44,9 +48,10 @@ const MainContent = ({ user, error, resetError }) =>
 				component={RegisterForm}
 			/>
 
-			<Route render={() => <ErrorInfo statusCode={404} />} />
+			<Route render={() => <ErrorPage error={{ statusCode: 404 }} />} />
 		</Switch>
-	);
+	</>
+);
 
 export default connect(
 	({ user, error }) => ({ user, error }),
