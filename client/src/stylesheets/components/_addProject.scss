@@ -1,12 +1,12 @@
 
-#project-form{
+.project-form{
 	padding: 10px;
 	color: white;
 }
 
-#project-header{
-	background: $theme-green;
-	color: white;
+.project-header{
+	background: white;
+	color: $theme-purple;
 }
 
 #project-title{
@@ -30,6 +30,7 @@
 #close{
 	@include theme-button();
 	border-radius: unset;
+	// padding-bottom: 2px;
 }
 
 #save{
