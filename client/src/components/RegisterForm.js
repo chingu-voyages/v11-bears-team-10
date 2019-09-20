@@ -63,9 +63,7 @@ class RegisterForm extends Component {
 					onKeyDown={this.onKeyDown}
 					data-aos="zoom-in">
 					<div className="mb-5 text-center">
-						<small className="text-muted">
-							join (project name here)
-						</small>
+						<small className="text-muted">join {process.env.REACT_APP_NAME}</small>
 						<h3>Create your account</h3>
 					</div>
 
@@ -151,7 +149,7 @@ class RegisterForm extends Component {
 						<Col xs={12} sm={{ span: 6, offset: 3 }}>
 							<Card>
 								<Card.Body className="p-2 text-center">
-									already have a (project name here) account ?
+									already have a {process.env.REACT_APP_NAME} account ?
 									<Link to="/login"> Login</Link>
 								</Card.Body>
 							</Card>

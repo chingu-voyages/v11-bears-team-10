@@ -28,9 +28,9 @@ if (IS_STORAGE_AVAILABLE)
 		return config;
 	});
 
-axios.defaults.baseURL = "https://v11-bears-team-10.herokuapp.com";
+axios.defaults.baseURL = process.env.REACT_APP_BACKEND_API_BASE_URL;
 
-axios.defaults.timeout = 10000;
+axios.defaults.timeout = parseInt(process.env.REACT_APP_REQUEST_TIMEOUT);
 
 export const INITIAL_STATE = {
 	user: null,

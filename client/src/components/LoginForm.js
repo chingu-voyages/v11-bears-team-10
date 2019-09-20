@@ -40,7 +40,7 @@ class LoginForm extends React.Component {
 					onKeyDown={this.onKeyDown}
 					data-aos="zoom-in">
 					<div className="mb-5 text-center">
-						<h3>login to your (project name here) account</h3>
+						<h3>login to your {process.env.REACT_APP_NAME} account</h3>
 					</div>
 
 					{this.state.error_message && (
@@ -104,7 +104,7 @@ class LoginForm extends React.Component {
 						<Col xs={12} sm={{ span: 6, offset: 3 }}>
 							<Card>
 								<Card.Body className="p-2 text-center">
-									New to (project name here) ?
+									New to {process.env.REACT_APP_NAME} ?
 									<Link to="/register"> Create an account</Link>
 								</Card.Body>
 							</Card>
