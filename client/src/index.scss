@@ -1,6 +1,12 @@
 @import "../node_modules/bootstrap/scss/bootstrap.scss";
 @import "./stylesheets/main.scss";
 
+body{
+	display: flex;
+	flex-direction: column;
+	min-height: 100vh;
+}
+
 html{
 	overflow-y: scroll;
 }

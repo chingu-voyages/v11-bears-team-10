@@ -14,6 +14,8 @@ import "./images/icons/icons";
 import App from "./App";
 
 
+
+
 AOS.init({});
 
 export const INITIAL_STATE = {
