@@ -48,8 +48,8 @@ app.use(passport.authenticate('jwt', { session: false }), (req, res, next) => {
   next();
 });
 
-app.use('/user', userRouter);
-app.use('/project', projectRouter);
+app.use('/v1/users', userRouter);
+app.use('/v1/project', projectRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

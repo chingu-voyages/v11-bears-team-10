@@ -19,7 +19,7 @@ function AppHeader() {
 					</Nav.Link>
 				</Nav>
 				<Nav className="flex-row">
-					<Nav.Link href="#features">
+					{/* <Nav.Link href="#features"> */}
 						<div className="search-wrapper flex-row">
 							<FontAwesomeIcon icon="search" id="search" />
 							<input
@@ -29,7 +29,7 @@ function AppHeader() {
 								placeholder={`Search`}
 							/>
 						</div>
-					</Nav.Link>
+					{/* </Nav.Link> */}
 				</Nav>
 				<div className="user-nav">
 					<div>

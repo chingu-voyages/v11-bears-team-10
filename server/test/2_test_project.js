@@ -57,12 +57,12 @@ describe('TEST PROJECT Collection ', function() {
     });
   });
 
-  describe('TEST PROJECT CREATION - URI = /project', function() {
-    it('POST - Route = /project - User can create a project - should return 201', function(done) {
+  describe('TEST PROJECT CREATION - URI = /v1/project', function() {
+    it('POST - Route = /v1/project - User can create a project - should return 201', function(done) {
       // console.log('token =', userOne.token);
       chai
         .request(pmApp)
-        .post(`/project/${userOne.id}`)
+        .post(`/v1/project/${userOne.id}`)
         .set({ Authorization: userOne.token })
         .send({ title: 'project one', description: 'this is my first project' })
         .end((err, response) => {
@@ -72,7 +72,7 @@ describe('TEST PROJECT Collection ', function() {
 
           chai
             .request(pmApp)
-            .get(`/user/${userOne.id}`)
+            .get(`/v1/users/${userOne.id}`)
             .set({ Authorization: userOne.token })
             .end((err, response) => {
               response.status.should.equal(200);
@@ -85,11 +85,11 @@ describe('TEST PROJECT Collection ', function() {
     });
   });
 
-  describe('TEST GET PROJECT - URI = /project', function() {
-    it('GET ALL USER PROJECTS BY USER ID - Route = /project/user/:user-id - should return 200', function(done) {
+  describe('TEST GET PROJECT - URI = /v1/project', function() {
+    it('GET ALL USER PROJECTS BY USER ID - Route = /v1/project/user/:user-id - should return 200', function(done) {
       chai
         .request(pmApp)
-        .get(`/project/user/${userOne.id}`)
+        .get(`/v1/project/user/${userOne.id}`)
         .set({ Authorization: userOne.token })
         .end((err, response) => {
           response.status.should.equal(200);
@@ -103,10 +103,10 @@ describe('TEST PROJECT Collection ', function() {
           done();
         });
     });
-    it('GET PROJECT BY ID - Route = /project/:project-id - should return 200', function(done) {
+    it('GET PROJECT BY ID - Route = /v1/project/:project-id - should return 200', function(done) {
       chai
         .request(pmApp)
-        .get(`/project/${projectOne._id}`)
+        .get(`/v1/project/${projectOne._id}`)
         .set({ Authorization: userOne.token })
         .end((err, response) => {
           response.status.should.equal(200);
@@ -121,14 +121,14 @@ describe('TEST PROJECT Collection ', function() {
   });
 
   describe('TEST UPDATE PROJECT - URI = /porject', function() {
-    it('PUT PROJECT - ADD TODO LIST - Route = /project/:project-id - should return 200', function(done) {
+    it('PUT PROJECT - ADD TODO LIST - Route = /v1/project/:project-id - should return 200', function(done) {
       projectOne.todos.unshift({
         title: 'my new todo',
         description: 'awesom todo list'
       });
       chai
         .request(pmApp)
-        .put(`/project/${projectOne._id}`)
+        .put(`/v1/project/${projectOne._id}`)
         .send(projectOne)
         .set({ Authorization: userOne.token })
         .end((err, response) => {
@@ -142,11 +142,11 @@ describe('TEST PROJECT Collection ', function() {
         });
     });
 
-    it('PUT PROJECT - ADD A USER TO THE TEAM ARRAY - Route = /project/:project-id - should return 200', function(done) {
+    it('PUT PROJECT - ADD A USER TO THE TEAM ARRAY - Route = /v1/project/:project-id - should return 200', function(done) {
       projectOne.team.unshift({ _id: userTwo.id, username: userTwo.username });
       chai
         .request(pmApp)
-        .put(`/project/${projectOne._id}`)
+        .put(`/v1/project/${projectOne._id}`)
         .send(projectOne)
         .set({ Authorization: userOne.token })
         .end((err, response) => {
@@ -159,7 +159,7 @@ describe('TEST PROJECT Collection ', function() {
         });
     });
 
-    it('PUT PROJECT - ADD A USER TO ASSIGN ARRAY IN THE TODO LIST - Route = /project/:project-id - should return 200', function(done) {
+    it('PUT PROJECT - ADD A USER TO ASSIGN ARRAY IN THE TODO LIST - Route = /v1/project/:project-id - should return 200', function(done) {
       // console.log('projectone =', projectOne)
       projectOne.todos.find(todo => todo._id === todoID).assigned_users.unshift({
         _id: userTwo.id,
@@ -167,7 +167,7 @@ describe('TEST PROJECT Collection ', function() {
       });
       chai
         .request(pmApp)
-        .put(`/project/${projectOne._id}`)
+        .put(`/v1/project/${projectOne._id}`)
         .send(projectOne)
         .set({ Authorization: userOne.token })
         .end(async (err, response) => {
@@ -184,10 +184,10 @@ describe('TEST PROJECT Collection ', function() {
   });
 
   describe('TEST DELETE PROJECT - URI = /porject', function() {
-    it('DELETE PROJECT - DELETE PROJECT BY USER NOT ADMIN (UNAUTHORIZED)  - Route = /project/:project-id - should return 401', function(done) {
+    it('DELETE PROJECT - DELETE PROJECT BY USER NOT ADMIN (UNAUTHORIZED)  - Route = /v1/project/:project-id - should return 401', function(done) {
       chai
         .request(pmApp)
-        .delete(`/project/${projectOne._id}`)
+        .delete(`/v1/project/${projectOne._id}`)
         .set({ Authorization: userTwo.token })
         .end((err, response) => {
           response.status.should.equal(401);
@@ -195,10 +195,10 @@ describe('TEST PROJECT Collection ', function() {
         });
     });
 
-    it('DELETE PROJECT - DELETE PROJECT BY ADMIN OF THE PROJECT - Route = /project/:project-id - should return 200', function(done) {
+    it('DELETE PROJECT - DELETE PROJECT BY ADMIN OF THE PROJECT - Route = /v1/project/:project-id - should return 200', function(done) {
       chai
         .request(pmApp)
-        .delete(`/project/${projectOne._id}`)
+        .delete(`/v1/project/${projectOne._id}`)
         .set({ Authorization: userOne.token })
         .end((err, response) => {
           response.status.should.equal(200);

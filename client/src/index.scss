@@ -1,6 +1,10 @@
 @import "../node_modules/bootstrap/scss/bootstrap.scss";
 @import "./stylesheets/main.scss";
 
+html{
+	overflow-y: scroll;
+}
+
 .navbar-brand:hover {
 	cursor: pointer;
 }
