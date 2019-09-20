@@ -13,12 +13,13 @@ import ContactUs from "./components/ContactUs";
 import Dashboard from "./components/Dashboard";
 import LoginForm from "./components/LoginForm";
 import RegisterForm from "./components/RegisterForm";
-import ErrorInfo from "./errors/ErrorInfo";
+import ErrorPage from "./errors/ErrorPage";
+import ErrorToast from "./errors/ErrorToast";
 
-function MainContent({ user, error, resetError }) {
-	return error.showError ? (
-			<ErrorInfo {...error} resetError={resetError} />
-	) : (
+const MainContent = ({ user, error, resetError }) => (
+	<>
+		<ErrorToast error={error} resetError={resetError} delay={5000} />
+
 		<Switch>
 			<Route path="/" exact component={LandingPage} />
 			<Route path="/features" component={Features} />
@@ -44,10 +45,11 @@ function MainContent({ user, error, resetError }) {
 				component={RegisterForm}
 			/>
 
-			<Route render={() => <ErrorInfo statusCode={404} />} />
+			<Route render={() => <ErrorPage error={{ statusCode: 404 }} />} />
 		</Switch>
-	);
-}
+	</>
+);
+
 export default connect(
 	({ user, error }) => ({ user, error }),
 	{ resetError }

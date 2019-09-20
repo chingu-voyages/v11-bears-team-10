@@ -1,25 +1,24 @@
-import React from "react";
-import { Card, Button, Form, Spinner } from "react-bootstrap";
+import React, { Component } from "react";
+import { Button, Form, Spinner, Row, Col, Card } from "react-bootstrap";
 import { connect } from "react-redux";
-import { setUser } from "../redux/actionCreators";
+import { Link } from "react-router-dom";
+import { register } from "../redux/actionCreators";
 
-class RegisterForm extends React.Component {
+class RegisterForm extends Component {
 	constructor(props) {
 		super(props);
 
 		this.state = {
 			submitting: false,
 			data: {
-				name: "",
+				username: "",
 				email: "",
-				password: "",
-				password_confirmation: ""
+				password: ""
 			},
 			errors: {
-				name: "",
-				email: "",
-				password: "",
-				password_confirmation: ""
+				username: null,
+				email: null,
+				password: null
 			}
 		};
 	}
@@ -27,7 +26,7 @@ class RegisterForm extends React.Component {
 	onChange = ({ target: { id, value } }) =>
 		this.setState(prevState => ({
 			data: { ...prevState.data, [id]: value },
-			errors: { ...prevState.errors, [id]: "" }
+			errors: { ...prevState.errors, [id]: null }
 		}));
 
 	invalidate = (errors = {}) =>
@@ -36,102 +35,133 @@ class RegisterForm extends React.Component {
 			errors: { ...prevState.errors, ...errors }
 		}));
 
-	onSubmit = () =>
-		this.setState({ submitting: true }, () =>
-			setTimeout(() => {
-				this.props.setUser({ name: "john doe" });
-			}, 1000)
-		);
+	onSubmit = () => {
+		const { username, email, password } = this.state.data;
+		if (username && email && password)
+			this.setState({ submitting: true }, () =>
+				this.props.register(this.state.data, this.invalidate)
+			);
+		else {
+			const errors = {};
+			if (!username) errors.username = "the username is required";
+			if (!email) errors.email = "the email is required";
+			if (!password) errors.password = "the password is required";
+			this.invalidate(errors);
+		}
+	};
 
 	onKeyDown = ({ keyCode }) => keyCode === 13 && this.onSubmit();
 
 	render() {
 		return (
-			<Card onKeyDown={this.onKeyDown} className="w-md-50 my-4 mx-auto">
-				<Card.Body>
-					<Form>
-						<Form.Group controlId="name">
-							<Form.Label>Name</Form.Label>
+			<Row>
+				<Col
+					lg={8}
+					xs={12}
+					className="mx-auto pt-5"
+					as={Form}
+					onKeyDown={this.onKeyDown}
+					data-aos="zoom-in">
+					<div className="mb-5 text-center">
+						<small className="text-muted">join {process.env.REACT_APP_NAME}</small>
+						<h3>Create your account</h3>
+					</div>
+
+					<Row as={Form.Group} controlId="username" className="mb-4">
+						<Form.Label column xs={12} sm={3} className="required">
+							Username
+						</Form.Label>
+						<Col xs={12} sm={6}>
 							<Form.Control
-								isInvalid={this.state.errors.name.length}
+								isInvalid={this.state.errors.username}
 								onChange={this.onChange}
-								value={this.state.name}
-								placeholder="enter your name"
+								value={this.state.data.username}
+								placeholder="username"
 							/>
 							<Form.Control.Feedback type="invalid">
-								{this.state.errors.name}
+								{this.state.errors.username}
 							</Form.Control.Feedback>
-						</Form.Group>
+						</Col>
+					</Row>
 
-						<Form.Group controlId="email">
-							<Form.Label>Email</Form.Label>
+					<Row as={Form.Group} controlId="email" className="mb-4">
+						<Form.Label column xs={12} sm={3} className="required">
+							Email
+						</Form.Label>
+						<Col xs={12} sm={6}>
 							<Form.Control
-								isInvalid={this.state.errors.email.length}
+								isInvalid={this.state.errors.email}
 								onChange={this.onChange}
-								value={this.state.email}
+								value={this.state.data.email}
 								type="email"
-								placeholder="enter your email adress"
+								placeholder="email address"
 							/>
 							<Form.Control.Feedback type="invalid">
 								{this.state.errors.email}
 							</Form.Control.Feedback>
-						</Form.Group>
+						</Col>
+					</Row>
 
-						<Form.Group controlId="password">
-							<Form.Label>Password</Form.Label>
+					<Row as={Form.Group} controlId="password" className="mb-4">
+						<Form.Label column xs={12} sm={3} className="required">
+							Password
+						</Form.Label>
+						<Col xs={12} sm={6}>
 							<Form.Control
-								isInvalid={this.state.errors.password.length}
+								isInvalid={this.state.errors.password}
 								onChange={this.onChange}
-								value={this.state.password}
+								value={this.state.data.password}
 								type="password"
-								placeholder="enter your password"
+								placeholder="password"
 							/>
+							<small className="text-muted">
+								Make sure it's at least 15 characters OR at least 8 characters
+								including a number and a lowercase letter.
+							</small>
 							<Form.Control.Feedback type="invalid">
 								{this.state.errors.password}
 							</Form.Control.Feedback>
-						</Form.Group>
+						</Col>
+					</Row>
 
-						<Form.Group controlId="password_confirmation">
-							<Form.Label>Password confirmation</Form.Label>
-							<Form.Control
-								isInvalid={this.state.errors.password_confirmation.length}
-								onChange={this.onChange}
-								value={this.state.password_confirmation}
-								type="password"
-								placeholder="confirm your password"
-							/>
-							<Form.Control.Feedback type="invalid">
-								{this.state.errors.password_confirmation}
-							</Form.Control.Feedback>
-						</Form.Group>
-					</Form>
-				</Card.Body>
-				<Card.Footer>
-					<Button
-						disabled={this.state.submitting}
-						variant="primary"
-						onClick={this.onSubmit}>
-						{this.state.submitting ? (
-							<Spinner
-								className="mx-3"
-								as="span"
-								aria-hidden="true"
-								animation="border"
-								role="status"
-								size="sm">
-								<span className="sr-only">Submitting ...</span>
-							</Spinner>
-						) : (
-							"submit"
-						)}
-					</Button>
-				</Card.Footer>
-			</Card>
+					<Row className="mb-5">
+						<Button
+							disabled={this.state.submitting}
+							variant="primary"
+							className="mx-auto"
+							onClick={this.onSubmit}>
+							{this.state.submitting ? (
+								<Spinner
+									className="mx-3"
+									as="span"
+									aria-hidden="true"
+									animation="border"
+									role="status"
+									size="sm">
+									<span className="sr-only">Submitting ...</span>
+								</Spinner>
+							) : (
+								"submit"
+							)}
+						</Button>
+					</Row>
+					<Row className="mb-5">
+						<Col xs={12} sm={{ span: 6, offset: 3 }}>
+							<Card>
+								<Card.Body className="p-2 text-center">
+									already have a {process.env.REACT_APP_NAME} account ?
+									<Link to="/login"> Login</Link>
+								</Card.Body>
+							</Card>
+						</Col>
+					</Row>
+				</Col>
+			</Row>
 		);
 	}
 }
 
 export default connect(
 	null,
-	{ setUser }
+	{ register }
 )(RegisterForm);
