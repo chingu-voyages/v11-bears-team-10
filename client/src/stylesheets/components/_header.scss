@@ -18,6 +18,7 @@
 	span{
 		color: #080913c2;
 	}
+	flex-shrink: 0;
 }
 
 #brand-name{
@@ -30,6 +31,7 @@
 
 .search-wrapper {
 	position: relative;
+	margin-right: 20px;
 	
 	#search {
 		left: 14px;
@@ -41,7 +43,7 @@
 	}
 
 	#search-bar {
-		width: 245px;
+		width: 205px;
 		height: 40px;
 		background: #EBF5F4;
 		color: black;

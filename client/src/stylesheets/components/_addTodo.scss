@@ -1,0 +1,10 @@
+.todo-field{
+	margin-bottom: 20px;
+}
+
+.add-item-button{
+	@extend #close;
+	margin-left: -3px;
+	background: rgba(128, 128, 128, 0.418);
+	color: #202040e0;
+}

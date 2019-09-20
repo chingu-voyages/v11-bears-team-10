@@ -6,8 +6,8 @@ function AddProjectForm({ showForm, handleCloseForm }) {
 
   return (
     <>
-      <Modal show={showForm} onHide={handleCloseForm} id="project-form">
-        <Modal.Header closeButton id="project-header">
+      <Modal show={showForm} onHide={handleCloseForm} className="project-form">
+        <Modal.Header closeButton className="project-header">
           <Modal.Title id="project-title">Start A Project</Modal.Title>
         </Modal.Header>
         <Form>
@@ -30,7 +30,7 @@ function AddProjectForm({ showForm, handleCloseForm }) {
             <Button variant="secondary" onClick={handleCloseForm} id="close" className="hvr-shadow">
               Close
             </Button>
-            <Button variant="primary" onClick={handleCloseForm} id="save" className="hvr-shadow">
+            <Button variant="primary" onClick={handleCloseForm} id="save" type="submit" className="hvr-shadow">
               Save
             </Button>
           </Modal.Footer>

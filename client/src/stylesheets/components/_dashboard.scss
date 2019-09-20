@@ -26,10 +26,11 @@
 //dashboard
 .dashboard {
 	@include align-flex-item(column);
+	flex-direction: column;
+	height: 100vh;
 }
 .header {
 	background: #160f30;
-	// background: white;
 	display: flex;
 	justify-content: space-between;
 	height: 10vh;
@@ -59,11 +60,10 @@
 }
 
 .dash-body {
-  // border: 2px red solid;
   background: $body-color;
   @include align-flex-item(column);
   align-items: center;
-  justify-content: flex-start;
+	justify-content: flex-start;
 }
 
 .content {
@@ -71,7 +71,6 @@
 	@include align-flex-item(column);
 	width: 80vw;
 	padding: 50px;
-	// border: 3px red solid;
 }
 
 .add {
@@ -94,10 +93,8 @@
 	@include drop-shadow;
 	p {
 		margin-bottom: unset;
-		// font-size: 10px;
 	}
 	hr {
-		// @include divider(red);
 		height: 0.01em;
 		width: 65vw;
 		color: #ecf4f3;
@@ -116,16 +113,13 @@
   justify-content: space-between;
   margin: 0 4px;
   .summary {
-    // backdrop-filter:
     width: 20vw;
     padding: 10px;
     background: #e4f2f0c0;
   }
 }
 
-.projects-shelf {
-	flex-wrap: wrap;
-}
+
 
 
 .add-project{
@@ -137,4 +131,9 @@
 	border-radius: 5px;
 	color: white;
 }
+
+
+
+
+
 

@@ -11,6 +11,7 @@ import {
 	faStickyNote,
 	faTasks,
 	faRedoAlt,
+	faPlusSquare,
 	faUserCircle
 } from "@fortawesome/free-solid-svg-icons";
 
@@ -27,5 +28,6 @@ library.add(
 	faStickyNote,
 	faTasks,
 	faRedoAlt,
+	faPlusSquare,
 	faUserCircle
 );

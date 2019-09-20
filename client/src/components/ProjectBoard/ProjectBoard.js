@@ -4,12 +4,13 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Header from "../Header/Header";
 import TodosBoard from "../Todos/TodosBoard/TodosBoard";
 import MessageBoard from "../Messages/MessageBoard";
+import Footer from '../Footer/Footer'
 
 function ProjectBoard() {
   const [showMessages, setShowMessages] = useState(false);
   const [showTodos, setShowTodos] = useState(false);
   return (
-    <>
+    <div className="projectsbody">
       <Header />
       <section className="board-body flex-col-centered">
         <div className="content" data-aos="fade-in">
@@ -49,12 +50,13 @@ function ProjectBoard() {
               </div>
             </section>
           </section>
-          <section className="projects-shelf flex-row" data-aos="fade-up">
-            {showTodos ? <TodosBoard /> : <MessageBoard />}
+          <section className="flex-col" data-aos="fade-up">
+            {showMessages ? <MessageBoard /> : <TodosBoard />}
           </section>
         </div>
       </section>
-    </>
+			<Footer />
+    </div>
   );
 }
 
