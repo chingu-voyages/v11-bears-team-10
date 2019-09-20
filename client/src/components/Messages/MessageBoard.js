@@ -22,8 +22,8 @@ function MessageBoard() {
       </div>
 			<MessagePortal showForm={showPortal} setOpen={hidePortal} />
       <Message showMessagePortal={displayPortal}  />
-      <Message showMessagePortal={displayPortal} />
-      <Message showMessagePortal={displayPortal} />
+      {/* <Message showMessagePortal={displayPortal} />
+      <Message showMessagePortal={displayPortal} /> */}
     </>
   );
 }

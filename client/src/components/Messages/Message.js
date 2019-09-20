@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import onClickOutside from "react-onclickoutside";
 
 function Message({ showForm, setOpen }) {
@@ -6,7 +6,7 @@ function Message({ showForm, setOpen }) {
     title: "A new message",
   });
 
-  const [strike, setStrike] = useState([false, 0]);
+  // const [strike, setStrike] = useState([false, 0]);
 
   Message.handleClickOutside = () => setOpen();
 

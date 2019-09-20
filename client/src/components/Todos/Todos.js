@@ -36,11 +36,11 @@ function Todos({ showForm, setOpen }) {
         <div className="flex-col checkboxes">
           {[...todoData.todos].map((todo, i) => {
             return (
-              <div className="flex-row-centered">
+              <div className="flex-row-centered" key={`${todo}`}>
                 <input
                   type="checkbox"
                   name={`todo-${i}`}
-                  value={todo}
+									value={todo}
                 />{" "}
                 <span>todo</span>
               </div>

@@ -13,7 +13,7 @@ export default (Component) => {
 			return () => {
 				modalRoot.removeChild(element)
 			}
-		},[])
+		})
 	
 		return (
 			ReactDOM.createPortal(

@@ -1,8 +1,8 @@
-import React,{useState} from "react";
+import React from "react";
 import { Form, Modal, Button } from "react-bootstrap";
 
 function AddTodoList({ showForm, handleCloseForm }) {
-const [todo, setTodo] = useState('')
+// const [todo, setTodo] = useState('')
 
   return (
     <Modal
@@ -34,39 +34,6 @@ const [todo, setTodo] = useState('')
               placeholder="Add a description"
             />
           </Form.Group>
-          {/* <div
-					   onSubmit={(e) => {
-							e.preventdefault();
-							console.log("todo added")
-						}}
-					>
-            <Form.Group controlId="projectName">
-              <Form.Label className="form-labels">Todo</Form.Label>
-              <Form.Control
-                className="form-field todo-field"
-                type="text"
-								placeholder="Name Your todo list"
-								defaultValue={todo}
-								onChange={val => setTodo(val) }
-              />
-            </Form.Group>
-            <Button
-              variant="secondary"
-              // onClick={}
-							// id="close"
-							type="submit"
-              className="hvr-shadow add-item-button"
-            >
-              add todo
-            </Button>
-          </div> */}
-          {/* <Form.Check
-            custom
-            type={"checkbox"}
-            id={`custom-checkbox`}
-            label={`Check this custom checkbox`}
-          /> */}
-          {/* </Form.Group> */}
         </Modal.Body>
         <Modal.Footer>
           <Button

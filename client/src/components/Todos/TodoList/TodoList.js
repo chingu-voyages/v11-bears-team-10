@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import Todos from '../Todos'
 
 function TodoList({showTodoPortal}) {
 	const [todoData] = useState({ title: "Test List Item" });
