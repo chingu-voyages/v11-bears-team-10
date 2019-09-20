@@ -12,8 +12,8 @@ import "./index.scss";
 import "./images/icons/icons";
 
 import App from "./App";
-import Dashboard from './components/Dashboard'
-import ProjectsBoard from './components/ProjectBoard/ProjectBoard'
+
+
 
 
 AOS.init({});
@@ -31,7 +31,7 @@ export const INITIAL_STATE = {
 
 ReactDOM.render(
 	<Provider store={configureAppStore(INITIAL_STATE)}>
-		<ProjectsBoard />
+		<App />
 	</Provider>,
 	document.getElementById("root")
 );
