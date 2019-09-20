@@ -1,5 +1,15 @@
+.projectsbody{
+	@include align-flex-item(column);
+	flex-direction: column;
+	height: 100vh;
+}
+
 .board-body {
-  background: $body-color;
+	background: $body-color;
+	@include align-flex-item(column);
+  align-items: center;
+	justify-content: flex-start;
+	flex-grow: 1;
 }
 
 .projects-items {
