@@ -14,14 +14,11 @@ import Dashboard from "./components/Dashboard";
 import LoginForm from "./components/LoginForm";
 import RegisterForm from "./components/RegisterForm";
 import ErrorPage from "./errors/ErrorPage";
-import { Toast } from "react-bootstrap";
-import { getErrorMessage } from "./_helpers";
+import ErrorToast from "./errors/ErrorToast";
 
-const MainContent = ({ user, error }) => (
+const MainContent = ({ user, error, resetError }) => (
 	<>
-		<Toast className="p-3 bg-danger text-light" show={!!error}>
-			{getErrorMessage(error)}
-		</Toast>
+		<ErrorToast error={error} resetError={resetError} delay={5000} />
 
 		<Switch>
 			<Route path="/" exact component={LandingPage} />

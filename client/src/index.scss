@@ -80,3 +80,10 @@ form label.required:after {
 	color: red;
 	content: " *";
 }
+
+.fixed-bottom-right {
+	position: fixed;
+	bottom: 0;
+	right: 0;
+	z-index: $zindex-fixed;
+}

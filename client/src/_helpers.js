@@ -35,8 +35,8 @@ export function getErrorMessage(error) {
 	return (
 		error_message +
 		(error.message ||
-			(error.requestTimeout && "request timeout . try refreshing the page") ||
+			(error.requestTimeout && "request timeout ! try refreshing the page") ||
 			HTTP_ERRORS[error.statusCode] ||
-			"something went wrong try refreshing the page")
+			"something went wrong ! try refreshing the page")
 	);
 }

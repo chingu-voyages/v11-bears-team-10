@@ -41,7 +41,6 @@ export const register = (data, invalidate) => dispatch =>
 			} else dispatch(setError(null, null, e.code === "ECONNABORTED"));
 
 			invalidate();
-			setTimeout(dispatch, 3000, resetError());
 		});
 
 export const login = (data, invalidate) => dispatch =>
@@ -56,13 +55,16 @@ export const login = (data, invalidate) => dispatch =>
 		})
 		.catch(e => {
 			if (e.response) {
-				if (e.response.status === 401 || e.response.status === 400) {
-					return invalidate(e.response.data.error);
-				} else dispatch(setError(e.status));
+				const {
+					status,
+					data: { error }
+				} = e.response;
+
+				if (status === 401 || status === 400) return invalidate(error);
+				else dispatch(setError(status));
 			} else dispatch(setError(null, null, e.code === "ECONNABORTED"));
 
 			invalidate();
-			setTimeout(dispatch, 3000, resetError());
 		});
 
 export const logout = () => dispatch => {
