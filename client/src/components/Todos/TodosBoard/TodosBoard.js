@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import TodoList from "../TodoList/TodoList";
-import AddTodo from "../AddTodo";
+import AddTodoList from "../AddTodoList";
 import Todos from "../Todos";
 import Portal from "../../../HOC/portal/portal";
 
@@ -22,7 +22,7 @@ function TodosBaord() {
       <div className="add-todo  flex-col-centered" onClick={openForm}>
         <FontAwesomeIcon icon="plus-square" className="plus-todo" />
       </div>
-      <AddTodo showForm={showModal} handleCloseForm={closeModal} />
+      <AddTodoList showForm={showModal} handleCloseForm={closeModal} />
       <TodoPortal showForm={showPortal} setOpen={hidePortal} />
       <TodoList showTodoPortal={displayPortal} />
       <TodoList showTodoPortal={displayPortal} />

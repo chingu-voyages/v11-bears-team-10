@@ -1,7 +1,7 @@
 import React,{useState} from "react";
 import { Form, Modal, Button } from "react-bootstrap";
 
-function AddTodo({ showForm, handleCloseForm }) {
+function AddTodoList({ showForm, handleCloseForm }) {
 const [todo, setTodo] = useState('')
 
   return (
@@ -91,4 +91,4 @@ const [todo, setTodo] = useState('')
   );
 }
 
-export default AddTodo;
+export default AddTodoList;
