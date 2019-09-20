@@ -18,7 +18,7 @@ function Message({ showForm, setOpen }) {
           <hr />
           <span>
             {" "}
-            <strong>Last Update:</strong> Sept 16 2019 12:00AM{" "}
+            <strong>Last Updated:</strong> Sept 16 2019 12:00AM{" "}
           </span>
         </div>
       </div>
