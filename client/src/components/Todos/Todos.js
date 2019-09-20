@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from "react";
-import { Form, Modal, Button } from "react-bootstrap";
+import React, { useState } from "react";
 import onClickOutside from "react-onclickoutside";
 
 function Todos({ showForm, setOpen }) {
@@ -12,7 +11,7 @@ function Todos({ showForm, setOpen }) {
     ])
   });
 
-  const [strike, setStrike] = useState([false, 0]);
+  // const [strike, setStrike] = useState([false, 0]);
 
   Todos.handleClickOutside = () => setOpen();
 
@@ -37,11 +36,11 @@ function Todos({ showForm, setOpen }) {
         <div className="flex-col checkboxes">
           {[...todoData.todos].map((todo, i) => {
             return (
-              <div className="flex-row-centered">
+              <div className="flex-row-centered" key={`${todo}`}>
                 <input
                   type="checkbox"
                   name={`todo-${i}`}
-                  value={todo}
+									value={todo}
                 />{" "}
                 <span>todo</span>
               </div>

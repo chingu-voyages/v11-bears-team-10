@@ -7,7 +7,7 @@ import AddProjectCard from "./../components/Card/AddProjectCard";
 import AddProjectForm from './../container/Modals/AddProjectForm';
 
 export default function DashBoards(props) {
-  const [projectsData, setProjectsData] = useState({});
+  const [projectsData] = useState({});
   const [showModal, setShowModal] = useState(false);
 
   const showForm = () => setShowModal(true);
