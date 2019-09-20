@@ -1,24 +1,33 @@
-import React, { useState } from "react"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import React, { useState, useEffect } from "react";
+import onClickOutside from "react-onclickoutside";
 
-function Message() {
-  const [messageData, setMessageData] = useState({ title: "Message Title" })
+function Message({ showForm, setOpen }) {
+  const [messageData] = useState({
+    title: "A new message",
+  });
 
-  return (
-    <section className="flex-row message-body" data-aos="fade-up">
-      <div className="flex-col  message-list">
-        <span className="flex-row list-head">
-					<div className="creator">AV</div>
-          <span className="flex-col">
-            <h3>{messageData.title}</h3>
-            <span className="date">Sept 16 2019 12:00AM</span>
+  const [strike, setStrike] = useState([false, 0]);
+
+  Message.handleClickOutside = () => setOpen();
+
+  return showForm ? (
+    <>
+      <div className="flex-col todos-portal">
+        <div className="portal-wrapper flex-col">
+          <h3>{messageData.title}</h3>
+          <hr />
+          <span>
+            {" "}
+            <strong>Last Update:</strong> Sept 16 2019 12:00AM{" "}
           </span>
-        </span>
-        {/* <hr /> */}
+        </div>
       </div>
-      <div className="close-todo flex-col-centered">x</div>
-    </section>
-  );
+    </>
+  ) : null;
 }
 
-export default Message
+const clickOutsideConfig = {
+  handleClickOutside: () => Message.handleClickOutside
+};
+
+export default onClickOutside(Message, clickOutsideConfig);

@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from "react";
-import { Form, Modal, Button } from "react-bootstrap";
+import React, { useState } from "react";
 import onClickOutside from "react-onclickoutside";
 
 function Todos({ showForm, setOpen }) {
@@ -12,7 +11,7 @@ function Todos({ showForm, setOpen }) {
     ])
   });
 
-  const [strike, setStrike] = useState([false, 0]);
+  // const [strike, setStrike] = useState([false, 0]);
 
   Todos.handleClickOutside = () => setOpen();
 

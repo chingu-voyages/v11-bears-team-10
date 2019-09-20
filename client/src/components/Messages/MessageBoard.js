@@ -1,11 +1,17 @@
-import React from "react";
+import React, {useState} from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import Message from "../Messages/Message";
+import Message from "./MessageList/Message";
+import Portal from '../../HOC/portal/portal'
+import AddMessage from './Message'
 
-
+const MessagePortal = Portal(AddMessage)
 
 function MessageBoard() {
+	const [showPortal, setShowPortal] = useState(false);
+
+	const displayPortal = () => setShowPortal(true);
+  const hidePortal = () => setShowPortal(false);
   return (
     <>
       <div
@@ -14,9 +20,10 @@ function MessageBoard() {
       >
         <FontAwesomeIcon icon="plus-square" className="plus-todo" />
       </div>
-      <Message />
-      <Message />
-      <Message />
+			<MessagePortal showForm={showPortal} setOpen={hidePortal} />
+      <Message showMessagePortal={displayPortal}  />
+      <Message showMessagePortal={displayPortal} />
+      <Message showMessagePortal={displayPortal} />
     </>
   );
 }
