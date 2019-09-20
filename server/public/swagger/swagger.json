@@ -1,8 +1,8 @@
 {
-  "openapi": "3.0.0",
+  "openapi": "3.0.1",
   "info": {
-    "title": "Swagger Petstore",
-    "description": "This is a sample Petstore server.  You can find \nout more about Swagger at \n[http://swagger.io](http://swagger.io) or on \n[irc.freenode.net, #swagger](http://swagger.io/irc/).\n",
+    "title": "Project Manager",
+    "description": "This is a sample server Petstore server.  You can find out more about     Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/).      For this sample, you can use the api key `special-key` to test the authorization     filters.",
     "termsOfService": "http://swagger.io/terms/",
     "contact": {
       "email": "apiteam@swagger.io"
@@ -11,7 +11,7 @@
       "name": "Apache 2.0",
       "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "version": "1.0.0-oas3"
+    "version": "1.0.0"
   },
   "externalDocs": {
     "description": "Find out more about Swagger",
@@ -19,124 +19,236 @@
   },
   "servers": [
     {
-      "url": "https://v11-bears-team-10.herokuapp.com"
-    },
-    {
-      "url": "https://v11-bears-team-10.herokuapp.com/"
+      "url": "https://v11-bears-team-10.herokuapp.com/v1"
     }
   ],
   "tags": [
     {
-      "name": "v11-bears-team-10-Project-manager",
-      "description": "Chingu Voyage 11",
-      "externalDocs": {
-        "description": "github repo",
-        "url": "https://github.com/chingu-voyages/v11-bears-team-10"
-      }
+      "name": "users",
+      "description": "Operations about user"
+    },
+    {
+      "name": "project",
+      "description": "Operations about project"
     }
   ],
   "paths": {
     "/register": {
       "post": {
-        "tags": ["user"],
-        "summary": "Create a new user",
+        "tags": ["users"],
+        "summary": "Creates a user with given inputs",
         "operationId": "createUser",
         "requestBody": {
-          "description": "Registration Form",
+          "description": "Created user object",
           "content": {
-            "application/json": {
+            "application/x-www-form-urlencoded": {
               "schema": {
-                "$ref": "#/components/schemas/User"
+                "type": "object",
+                "required": ["username", "email", "password"],
+                "properties": {
+                  "username": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  }
+                }
               }
             }
-          },
-          "required": true
+          }
         },
         "responses": {
           "201": {
-            "description": "A new user was created successfuly"
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "user": {
+                      "type": "object",
+                      "properties": {
+                        "_id": {
+                          "type": "string"
+                        },
+                        "username": {
+                          "type": "string"
+                        },
+                        "email": {
+                          "type": "string"
+                        },
+                        "projectList": {
+                          "type": "array",
+                          "items": {
+                            "type": "object"
+                          }
+                        }
+                      }
+                    },
+                    "token": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
           },
           "401": {
-            "description": "Username or email already used"
+            "description": "UnAuthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
           },
           "500": {
-            "description": "Internal Server Error"
-          }
-        },
-        "security": [
-          {
-            "petstore_auth": ["write:pets", "read:pets"]
-          }
-        ]
-      }
-    },
-    "/user/createWithArray": {
-      "post": {
-        "tags": ["user"],
-        "summary": "Creates list of users with given input array",
-        "operationId": "createUsersWithArrayInput",
-        "requestBody": {
-          "$ref": "#/components/requestBodies/UserArray"
-        },
-        "responses": {
-          "default": {
-            "description": "successful operation"
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
     },
-    "/user/createWithList": {
+    "/login": {
       "post": {
-        "tags": ["user"],
-        "summary": "Creates list of users with given input array",
-        "operationId": "createUsersWithListInput",
-        "requestBody": {
-          "$ref": "#/components/requestBodies/UserArray"
-        },
-        "responses": {
-          "default": {
-            "description": "successful operation"
-          }
-        }
-      }
-    },
-    "/user/login": {
-      "get": {
-        "tags": ["user"],
-        "summary": "Logs user into the system",
+        "tags": ["users"],
+        "summary": "login a user with given inputs",
         "operationId": "loginUser",
-        "parameters": [
-          {
-            "name": "username",
-            "in": "query",
-            "description": "The user name for login",
-            "required": true,
-            "style": "form",
-            "explode": true,
-            "schema": {
-              "type": "string"
+        "requestBody": {
+          "description": "login user",
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "required": ["username", "password"],
+                "properties": {
+                  "username": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "user": {
+                      "type": "object",
+                      "properties": {
+                        "_id": {
+                          "type": "string"
+                        },
+                        "username": {
+                          "type": "string"
+                        },
+                        "email": {
+                          "type": "string"
+                        },
+                        "projectList": {
+                          "type": "array",
+                          "items": {
+                            "type": "object"
+                          }
+                        }
+                      }
+                    },
+                    "token": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
             }
           },
-          {
-            "name": "password",
-            "in": "query",
-            "description": "The password for login in clear text",
-            "required": true,
-            "style": "form",
-            "explode": true,
-            "schema": {
-              "type": "string"
+          "400": {
+            "description": "username or password incorret",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "UnAuthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
             }
           }
-        ],
+        }
+      }
+    },
+    "/users": {
+      "get": {
+        "tags": ["users"],
+        "summary": "Logs user into the system",
+        "description": "This can only be done by the logged in user.",
+        "operationId": "getnUsers",
         "responses": {
           "200": {
             "description": "successful operation",
             "headers": {
               "X-Rate-Limit": {
                 "description": "calls per hour allowed by the user",
-                "style": "simple",
-                "explode": false,
                 "schema": {
                   "type": "integer",
                   "format": "int32"
@@ -144,8 +256,6 @@
               },
               "X-Expires-After": {
                 "description": "date in UTC when token expires",
-                "style": "simple",
-                "explode": false,
                 "schema": {
                   "type": "string",
                   "format": "date-time"
@@ -153,12 +263,12 @@
               }
             },
             "content": {
-              "application/json": {
+              "application/xml": {
                 "schema": {
                   "type": "string"
                 }
               },
-              "application/xml": {
+              "application/json": {
                 "schema": {
                   "type": "string"
                 }
@@ -166,78 +276,45 @@
             }
           },
           "400": {
-            "description": "Invalid username/password supplied"
+            "description": "Invalid username/password supplied",
+            "content": {}
           }
         }
       }
     },
-    "/user/logout": {
+    "/users/{user-id}": {
       "get": {
-        "tags": ["user"],
+        "tags": ["users"],
         "summary": "Logs out current logged in user session",
         "operationId": "logoutUser",
-        "responses": {
-          "default": {
-            "description": "successful operation"
-          }
-        }
-      }
-    },
-    "/user/{username}": {
-      "get": {
-        "tags": ["user"],
-        "summary": "Get user by user name",
-        "operationId": "getUserByName",
         "parameters": [
           {
-            "name": "username",
+            "name": "user-id",
             "in": "path",
-            "description": "The name that needs to be fetched. Use user1 for testing.",
             "required": true,
-            "style": "simple",
-            "explode": false,
             "schema": {
               "type": "string"
             }
           }
         ],
         "responses": {
-          "200": {
+          "default": {
             "description": "successful operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/User"
-                }
-              },
-              "application/xml": {
-                "schema": {
-                  "$ref": "#/components/schemas/User"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid username supplied"
-          },
-          "404": {
-            "description": "User not found"
+            "content": {}
           }
         }
       },
       "put": {
-        "tags": ["user"],
+        "tags": ["users"],
         "summary": "Updated user",
         "description": "This can only be done by the logged in user.",
         "operationId": "updateUser",
         "parameters": [
           {
-            "name": "username",
+            "name": "user-id",
             "in": "path",
             "description": "name that need to be updated",
             "required": true,
-            "style": "simple",
-            "explode": false,
             "schema": {
               "type": "string"
             }
@@ -246,7 +323,7 @@
         "requestBody": {
           "description": "Updated user object",
           "content": {
-            "application/json": {
+            "*/*": {
               "schema": {
                 "$ref": "#/components/schemas/User"
               }
@@ -256,26 +333,26 @@
         },
         "responses": {
           "400": {
-            "description": "Invalid user supplied"
+            "description": "Invalid user supplied",
+            "content": {}
           },
           "404": {
-            "description": "User not found"
+            "description": "User not found",
+            "content": {}
           }
         }
       },
       "delete": {
-        "tags": ["user"],
+        "tags": ["users"],
         "summary": "Delete user",
         "description": "This can only be done by the logged in user.",
         "operationId": "deleteUser",
         "parameters": [
           {
-            "name": "username",
+            "name": "user-id",
             "in": "path",
             "description": "The name that needs to be deleted",
             "required": true,
-            "style": "simple",
-            "explode": false,
             "schema": {
               "type": "string"
             }
@@ -283,10 +360,219 @@
         ],
         "responses": {
           "400": {
-            "description": "Invalid username supplied"
+            "description": "Invalid username supplied",
+            "content": {}
           },
           "404": {
-            "description": "User not found"
+            "description": "User not found",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/users/username/{username}": {
+      "get": {
+        "tags": ["users"],
+        "summary": "Logs out current logged in user session",
+        "operationId": "findUserByUsername",
+        "parameters": [
+          {
+            "name": "username",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "successful operation",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/users/email/{email}": {
+      "get": {
+        "tags": ["users"],
+        "summary": "Logs out current logged in user session",
+        "operationId": "findUserByEmail",
+        "parameters": [
+          {
+            "name": "email",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "successful operation",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/project/user/{user-id}": {
+      "get": {
+        "tags": ["users"],
+        "summary": "Get user by user name",
+        "operationId": "getUserProjecstByID",
+        "parameters": [
+          {
+            "name": "user-id",
+            "in": "path",
+            "description": "The name that needs to be fetched. Use user1 for testing. ",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid username supplied",
+            "content": {}
+          },
+          "404": {
+            "description": "User not found",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/project/{project-id}": {
+      "get": {
+        "tags": ["project"],
+        "summary": "Creates list of users with given input array",
+        "operationId": "findePorjectById",
+        "parameters": [
+          {
+            "name": "project-id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "successful operation",
+            "content": {}
+          }
+        }
+      },
+      "put": {
+        "tags": ["project"],
+        "summary": "Updated user",
+        "description": "This can only be done by the logged in user.",
+        "operationId": "updateProject",
+        "parameters": [
+          {
+            "name": "project-id",
+            "in": "path",
+            "description": "name that need to be updated",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Updated user object",
+          "content": {
+            "*/*": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "400": {
+            "description": "Invalid user supplied",
+            "content": {}
+          },
+          "404": {
+            "description": "User not found",
+            "content": {}
+          }
+        }
+      },
+      "post": {
+        "tags": ["project"],
+        "summary": "Creates list of users with given input array",
+        "operationId": "createUsersWithListInput",
+        "parameters": [
+          {
+            "name": "project-id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "List of user object",
+          "content": {
+            "*/*": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "default": {
+            "description": "successful operation",
+            "content": {}
+          }
+        }
+      },
+      "delete": {
+        "tags": ["project"],
+        "summary": "Delete user",
+        "description": "This can only be done by the logged in user.",
+        "operationId": "deleteProject",
+        "parameters": [
+          {
+            "name": "project-id",
+            "in": "path",
+            "description": "The name that needs to be deleted",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Invalid username supplied",
+            "content": {}
+          },
+          "404": {
+            "description": "User not found",
+            "content": {}
           }
         }
       }
@@ -345,7 +631,17 @@
       "User": {
         "type": "object",
         "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
           "username": {
+            "type": "string"
+          },
+          "firstName": {
+            "type": "string"
+          },
+          "lastName": {
             "type": "string"
           },
           "email": {
@@ -353,6 +649,14 @@
           },
           "password": {
             "type": "string"
+          },
+          "phone": {
+            "type": "string"
+          },
+          "userStatus": {
+            "type": "integer",
+            "description": "User Status",
+            "format": "int32"
           }
         },
         "xml": {
@@ -433,22 +737,6 @@
             "type": "string"
           }
         }
-      }
-    },
-    "requestBodies": {
-      "UserArray": {
-        "description": "List of user object",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/components/schemas/User"
-              }
-            }
-          }
-        },
-        "required": true
       }
     },
     "securitySchemes": {
