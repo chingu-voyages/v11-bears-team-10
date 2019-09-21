@@ -1,8 +1,8 @@
 import axios from "axios";
 import Validation from "../validation";
-import { IS_STORAGE_AVAILABLE } from "../index";
 
-export const setUser = (user = null) => ({ type: "SET_USER", user });
+export const setUser = (user, authToken) => ({ type: "SET_USER", user, authToken });
+export const resetUser = () => ({ type: "RESET_USER" });
 
 export const setError = (statusCode = null, message = null, requestTimeout = false) => ({
 	type: "SET_ERROR",
@@ -24,13 +24,9 @@ export const register = (data, invalidate) => dispatch => {
 	if (validation.passes)
 		axios
 			.post("/register", data)
-			.then(response => {
-				if (IS_STORAGE_AVAILABLE) {
-					localStorage.setItem("token", response.data.token);
-					localStorage.setItem("user_id", response.data.user._id);
-				}
-				dispatch(setUser(response.data.user));
-			})
+
+			.then(response => dispatch(setUser(response.data.user, response.data.token)))
+
 			.catch(e => {
 				if (e.response) {
 					const {
@@ -66,13 +62,9 @@ export const login = (data, invalidate) => dispatch => {
 	if (validation.passes)
 		axios
 			.post("/login", data)
-			.then(response => {
-				if (IS_STORAGE_AVAILABLE) {
-					localStorage.setItem("token", response.data.token);
-					localStorage.setItem("user_id", response.data.user._id);
-				}
-				dispatch(setUser(response.data.user));
-			})
+
+			.then(response => dispatch(setUser(response.data.user, response.data.token)))
+
 			.catch(e => {
 				if (e.response) {
 					if (e.response.status === 401) return invalidate("invalid credentials");
@@ -84,10 +76,4 @@ export const login = (data, invalidate) => dispatch => {
 	else invalidate("username or password is empty");
 };
 
-export const logout = () => dispatch => {
-	if (IS_STORAGE_AVAILABLE) {
-		localStorage.removeItem("token");
-		localStorage.removeItem("user_id");
-	}
-	dispatch(setUser(null));
-};
+export const logout = () => dispatch => dispatch(resetUser());

@@ -1,5 +1,5 @@
 import React from "react";
-import ReactDOM from "react-dom";
+import { render } from "react-dom";
 import { Provider } from "react-redux";
 import configureAppStore from "./redux/store";
 import AOS from "aos";
@@ -13,28 +13,20 @@ import "./index.scss";
 import "./images/icons/icons";
 
 import App from "./App";
-import { isStorageAvailable } from "./_helpers";
+import { isStorageAvailable, getLocalStorageItems, removeLocalStorageItems } from "./_helpers";
+import AppPlaceholder from "./AppPlaceholder";
 
 AOS.init();
 
 export const IS_STORAGE_AVAILABLE = isStorageAvailable();
 
-if (IS_STORAGE_AVAILABLE)
-	axios.interceptors.request.use(function(config) {
-		var authToken = localStorage.getItem("token");
-
-		if (authToken) config.headers.Authorization = "Bearer " + authToken;
-
-		return config;
-	});
-
 axios.defaults.baseURL = process.env.REACT_APP_BACKEND_API_BASE_URL;
 
 axios.defaults.timeout = parseInt(process.env.REACT_APP_REQUEST_TIMEOUT);
 
-export const INITIAL_STATE = {
+const DEFAULT_INITIAL_STATE = {
 	user: null,
-
+	authToken: null,
 	/**
 	 * null if no error , or an object containing 0 or more of these properties :
 	 * message : string
@@ -45,12 +37,36 @@ export const INITIAL_STATE = {
 	error: null
 };
 
-ReactDOM.render(
-	<Provider store={configureAppStore(INITIAL_STATE)}>
-		<App />
-	</Provider>,
-	document.getElementById("root")
-);
+const renderApp = INITIAL_STATE =>
+	render(
+		<Provider store={configureAppStore(INITIAL_STATE)}>
+			<App />
+		</Provider>,
+		document.getElementById("root")
+	);
+
+const renderPlaceholder = () => render(<AppPlaceholder />, document.getElementById("root"));
+
+if (isStorageAvailable) {
+	renderPlaceholder();
+	const { user_id, authToken } = getLocalStorageItems("user_id", "authToken");
+	if (user_id && authToken)
+		axios
+			.get(`/users/${user_id}`, {
+				headers: {
+					Authorization: "Bearer " + authToken
+				}
+			})
+			.then(response => {
+				axios.defaults.headers.common["Authorization"] = authToken;
+				renderApp({ ...DEFAULT_INITIAL_STATE, authToken, user: response.data.user });
+			})
+			.catch(e => {
+				removeLocalStorageItems("authToken", "user_id");
+				renderApp(DEFAULT_INITIAL_STATE);
+			});
+	else renderApp(DEFAULT_INITIAL_STATE);
+} else renderApp(DEFAULT_INITIAL_STATE);
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.

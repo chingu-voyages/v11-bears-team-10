@@ -87,3 +87,14 @@ form label.required:after {
 	right: 0;
 	z-index: $zindex-fixed;
 }
+
+$spinner-size: 8;
+
+.big-spinner {
+	height: $spinner-size * 1rem;
+	width: $spinner-size * 1rem;
+}
+
+.h-100vh {
+	height: 100vh !important;
+}
