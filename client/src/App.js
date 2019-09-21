@@ -10,9 +10,9 @@ export default function App() {
 	return (
 		<BrowserRouter>
 			<NavBar />
-			<Container as="main">
+			{/* <Container as="main"> */}
 				<MainContent />
-			</Container>
+			{/* </Container> */}
 		</BrowserRouter>
 	);
 }
