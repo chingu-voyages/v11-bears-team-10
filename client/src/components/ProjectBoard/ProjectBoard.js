@@ -11,7 +11,7 @@ function ProjectBoard() {
   const [showTodos, setShowTodos] = useState(false);
   return (
     <div className="projectsbody">
-      <Header />
+      {/* <Header /> */}
       <section className="board-body flex-col-centered">
         <div className="content" data-aos="fade-in">
           <section className="projects-summary flex-col" data-aos="fade-up">

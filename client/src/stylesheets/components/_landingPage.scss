@@ -1,0 +1,34 @@
+.landing {
+  @include align-flex-item(column);
+  flex-direction: column;
+  height: 90vh;
+}
+
+.hero {
+  height: 90vh;
+  width: 100vw;
+  min-width: 100vw;
+  min-height: 90vh;
+	position: relative;
+	background-image: url('../../images/landing.png');
+	background-position: center;
+	content: "";
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: -2;
+	span{
+   font-family:  $roboto-mono;
+	}
+	h1{
+		font-family: 'Yanone Kaffeesatz', sans-serif;
+		font-size: 150px;
+	}
+}
+
+.hero-message{
+	margin-top: 100px;
+	margin-left: 100px;
+}
+
+	
