@@ -15,7 +15,7 @@ export default function DashBoards(props) {
 
   return (
       <div className="dashboard">
-        <Header />
+        {/* <Header /> */}
         <section className="dash-body flex-col-centered">
           <div className="content" data-aos="fade-in">
             <section className="projects-summary flex-col" data-aos="fade-up">
