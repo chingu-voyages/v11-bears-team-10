@@ -10,10 +10,12 @@ import logo from "../images/logo.png";
 
 const NavBar = ({ user }) => (
 	<Navbar
-		className="border border-botom-dark flex-column flex-md-row text-center"
-		bg="light"
+		// className="border border-botom-dark flex-column flex-md-row text-center app-nav"
+		className="flex-column flex-md-row text-center app-nav"
+		// bg="light"
 		expand="md"
-		sticky="top">
+		sticky="top"
+	>
 		<div className="d-flex flex-nowrap w-sm-down-100">
 			<Link to="/">
 				<Navbar.Brand className="mr-auto">

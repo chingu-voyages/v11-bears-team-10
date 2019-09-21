@@ -5,11 +5,18 @@ import { Link } from "react-router-dom";
 export default class AuthenticationButtons extends Component {
 	render() {
 		return (
-			<ButtonGroup className="ml-md-auto mt-2 mt-md-0 mr-md-2">
-				<Link to="/register" className="btn btn-outline-primary">
+			<ButtonGroup 
+			  className="ml-md-auto"
+			>
+				<Link to="/register" 
+					className="btn btn-outline-primary buttons"
+					id="login"
+				>
 					register
 				</Link>
-				<Link to="/login" className="btn btn-outline-primary">
+				<Link to="/login" className="btn btn-outline-primary buttons"
+				 id="register"
+				>
 					login
 				</Link>
 			</ButtonGroup>
