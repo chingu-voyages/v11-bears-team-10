@@ -1,0 +1,12 @@
+
+
+.buttons{
+	margin-right: 10px;
+	@include theme-button;
+	font-family: 'Yanone Kaffeesatz', sans-serif;
+	 letter-spacing: 1px;
+}
+
+#login{
+	background: $theme-purple;
+}
