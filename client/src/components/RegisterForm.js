@@ -16,9 +16,9 @@ class RegisterForm extends Component {
 				password: ""
 			},
 			errors: {
-				username: null,
-				email: null,
-				password: null
+				username: [],
+				email: [],
+				password: []
 			}
 		};
 	}
@@ -26,7 +26,7 @@ class RegisterForm extends Component {
 	onChange = ({ target: { id, value } }) =>
 		this.setState(prevState => ({
 			data: { ...prevState.data, [id]: value },
-			errors: { ...prevState.errors, [id]: null }
+			errors: { ...prevState.errors, [id]: [] }
 		}));
 
 	invalidate = (errors = {}) =>
@@ -35,20 +35,10 @@ class RegisterForm extends Component {
 			errors: { ...prevState.errors, ...errors }
 		}));
 
-	onSubmit = () => {
-		const { username, email, password } = this.state.data;
-		if (username && email && password)
-			this.setState({ submitting: true }, () =>
-				this.props.register(this.state.data, this.invalidate)
-			);
-		else {
-			const errors = {};
-			if (!username) errors.username = "the username is required";
-			if (!email) errors.email = "the email is required";
-			if (!password) errors.password = "the password is required";
-			this.invalidate(errors);
-		}
-	};
+	onSubmit = () =>
+		this.setState({ submitting: true }, () =>
+			this.props.register(this.state.data, this.invalidate)
+		);
 
 	onKeyDown = ({ keyCode }) => keyCode === 13 && this.onSubmit();
 
@@ -73,13 +63,15 @@ class RegisterForm extends Component {
 						</Form.Label>
 						<Col xs={12} sm={6}>
 							<Form.Control
-								isInvalid={this.state.errors.username}
+								isInvalid={!!this.state.errors.username.length}
 								onChange={this.onChange}
 								value={this.state.data.username}
 								placeholder="username"
 							/>
-							<Form.Control.Feedback type="invalid">
-								{this.state.errors.username}
+							<Form.Control.Feedback as="ul" type="invalid">
+								{this.state.errors.username.map(message => (
+									<li key={message}>{message}</li>
+								))}
 							</Form.Control.Feedback>
 						</Col>
 					</Row>
@@ -90,14 +82,16 @@ class RegisterForm extends Component {
 						</Form.Label>
 						<Col xs={12} sm={6}>
 							<Form.Control
-								isInvalid={this.state.errors.email}
+								isInvalid={!!this.state.errors.email.length}
 								onChange={this.onChange}
 								value={this.state.data.email}
 								type="email"
 								placeholder="email address"
 							/>
-							<Form.Control.Feedback type="invalid">
-								{this.state.errors.email}
+							<Form.Control.Feedback as="ul" type="invalid">
+								{this.state.errors.email.map(message => (
+									<li key={message}>{message}</li>
+								))}
 							</Form.Control.Feedback>
 						</Col>
 					</Row>
@@ -108,7 +102,7 @@ class RegisterForm extends Component {
 						</Form.Label>
 						<Col xs={12} sm={6}>
 							<Form.Control
-								isInvalid={this.state.errors.password}
+								isInvalid={!!this.state.errors.password.length}
 								onChange={this.onChange}
 								value={this.state.data.password}
 								type="password"
@@ -118,8 +112,10 @@ class RegisterForm extends Component {
 								Make sure it's at least 15 characters OR at least 8 characters
 								including a number and a lowercase letter.
 							</small>
-							<Form.Control.Feedback type="invalid">
-								{this.state.errors.password}
+							<Form.Control.Feedback as="ul" type="invalid">
+								{this.state.errors.password.map(message => (
+									<li key={message}>{message}</li>
+								))}
 							</Form.Control.Feedback>
 						</Col>
 					</Row>

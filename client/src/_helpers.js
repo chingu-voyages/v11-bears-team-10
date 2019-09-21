@@ -1,4 +1,4 @@
-import HTTP_ERRORS from "./errors/HTTP_ERRORS";
+import HTTP_ERRORS from "./errors/HTTP_ERRORS.json";
 
 export function isStorageAvailable(type = "localStorage") {
 	var storage;
@@ -29,14 +29,23 @@ export function isStorageAvailable(type = "localStorage") {
 export function getErrorMessage(error) {
 	if (!error) return null;
 
-	var error_message = "";
-	if (error.statusCode) error_message += error.statusCode + " | ";
+	var message_to_display = "";
+	if (error.statusCode) message_to_display += error.statusCode + " | ";
 
 	return (
-		error_message +
+		message_to_display +
 		(error.message ||
-			(error.requestTimeout && "request timeout ! try refreshing the page") ||
 			HTTP_ERRORS[error.statusCode] ||
+			(error.requestTimeout && "request timeout ! try refreshing the page") ||
 			"something went wrong ! try refreshing the page")
 	);
+}
+
+export function isArrayOfStrings(arr) {
+	if (!Array.isArray(arr) || !arr.length) return false;
+
+	// eslint-disable-next-line no-unused-vars
+	for (const elem of arr) if (!typeof elem === "string") return false;
+
+	return true;
 }

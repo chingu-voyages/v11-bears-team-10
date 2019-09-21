@@ -74,6 +74,7 @@ class LoginForm extends React.Component {
 							<Form.Control
 								onChange={this.onChange}
 								value={this.state.data.password}
+								type="password"
 								placeholder="password"
 							/>
 						</Col>

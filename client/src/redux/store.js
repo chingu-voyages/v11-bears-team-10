@@ -9,8 +9,8 @@ import rootReducer from "./reducers/index";
 
 
 export default function configureAppStore(preloadedState) {
-	const middleWares = [...middlewares, thunkMIddleware];
-	const middleWareEnhancers = applyMiddleware(...middleWares);
+	const middleWaresArr = [...middlewares, thunkMIddleware];
+	const middleWareEnhancers = applyMiddleware(...middleWaresArr);
 	const composedEnhancers = composeWithDevTools(middleWareEnhancers);
 
 	//create the store
