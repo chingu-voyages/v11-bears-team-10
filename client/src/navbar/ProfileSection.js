@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 
 import logout from "../redux/action_creators/logout";
 
-import Avatar from "../components/Avatar";
+import Avatar from "../reusable_components/Avatar";
 
 function ProfileSection({ user, logout }) {
 	const [isloggingOut, showSpinner] = useState(false);
