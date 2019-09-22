@@ -2,7 +2,8 @@ import React, { Component } from "react";
 import { Button, Form, Spinner, Row, Col, Card } from "react-bootstrap";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import { register } from "../redux/actionCreators";
+
+import register from "../redux/action_creators/register";
 
 class RegisterForm extends Component {
 	constructor(props) {
@@ -109,8 +110,8 @@ class RegisterForm extends Component {
 								placeholder="password"
 							/>
 							<small className="text-muted">
-								Make sure it's at least 15 characters OR at least 8 characters
-								including a number and a lowercase letter.
+								Make sure it has min 8 and max 20 characters, including at least one
+								number, lowercase and uppercase letter.
 							</small>
 							<Form.Control.Feedback as="ul" type="invalid">
 								{this.state.errors.password.map(message => (

@@ -4,7 +4,7 @@ import { Route, Switch } from "react-router-dom";
 
 import ProtectedRoute from "./ProtectedRoute";
 
-import { resetError } from "./redux/actionCreators";
+import resetError from "./redux/action_creators/resetError";
 
 import LandingPage from "./components/LandingPage";
 import HowItWorks from "./components/HowItWorks";
@@ -18,7 +18,7 @@ import ErrorToast from "./errors/ErrorToast";
 
 const MainContent = ({ user, error, resetError }) => (
 	<>
-		<ErrorToast error={error} resetError={resetError} delay={5000} />
+		<ErrorToast error={error} resetError={resetError} delay={3000} />
 
 		<Switch>
 			<Route path="/" exact component={LandingPage} />

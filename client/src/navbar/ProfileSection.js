@@ -2,7 +2,9 @@ import React, { useState } from "react";
 import { Nav, NavDropdown, Spinner } from "react-bootstrap";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import { logout } from "../redux/actionCreators";
+
+import logout from "../redux/action_creators/logout";
+
 import Avatar from "../components/Avatar";
 
 function ProfileSection({ user, logout }) {

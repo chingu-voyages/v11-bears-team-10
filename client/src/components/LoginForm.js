@@ -2,7 +2,8 @@ import React from "react";
 import { Button, Form, Alert, Spinner, Row, Col, Card } from "react-bootstrap";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import { login } from "../redux/actionCreators";
+
+import login from "../redux/action_creators/login";
 
 class LoginForm extends React.Component {
 	constructor(props) {
