@@ -1,7 +1,6 @@
 import axios from "axios";
 
 import Validation from "../../validation";
-// import setUser from "./setUser";
 import setError from "./setError";
 
 export function createProject(data) {
@@ -16,10 +15,7 @@ export function createProject(data) {
     axios
       .post(
         `/project/${data.userId}`,
-        {
-          title,
-          description
-        },
+        { title, description },
         {
           headers: {
             Authorization: "Bearer " + localStorage.getItem("authToken")
@@ -28,10 +24,11 @@ export function createProject(data) {
       )
 			.then(response =>
 				{
-					console.log("at project", response.data)
 					dispatch({
 						type: "ADD_PROJECT",
-						payload: response.data
+						payload: {
+							data: response.data
+						}
 					})
 				}
        
@@ -47,21 +44,34 @@ export function createProject(data) {
 
 
 
-// async function getData(){
-// 	const id = localStorage.getItem('user_id');
-// 	try {
-// 		const response = await axios.get(`/users/${id}`, 		{
-// 			headers: {
-// 				Authorization: "Bearer " + localStorage.getItem("authToken")
-// 			}
-// 		});
-// 		setData(response.data.user)
-// 	} catch (error) {
-// 		console.error(error);
-// 	}
-// }
-
-
-// useEffect(() => {
-// 	 getData()
-// },[])
+export function deleteProject(id){
+	return dispatch => {
+    axios
+      .delete(
+        `/project/${id}`,
+        {
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("authToken")
+					}
+        }
+      )
+			.then(response =>
+				{
+					dispatch({
+						type: "DELETE_PROJECT",
+						payload: {
+							data: response.data,
+							isProjectDeleted: true
+						}
+					})
+				}
+       
+      )
+      .catch(e => {
+        if (!e.response)
+          dispatch(setError({ requestTimeout: e.code === "ECONNABORTED" }));
+        else if (e.response.status !== 401)
+          dispatch(setError({ statusCode: e.response.status }));
+      });
+  };
+}

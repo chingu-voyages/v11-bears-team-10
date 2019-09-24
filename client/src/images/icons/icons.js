@@ -12,7 +12,8 @@ import {
 	faTasks,
 	faRedoAlt,
 	faPlusSquare,
-	faUserCircle
+	faUserCircle,
+	faClipboardList
 } from "@fortawesome/free-solid-svg-icons";
 
 //create a library to hold icons and brands
@@ -29,5 +30,6 @@ library.add(
 	faTasks,
 	faRedoAlt,
 	faPlusSquare,
-	faUserCircle
+	faUserCircle,
+	faClipboardList
 );
