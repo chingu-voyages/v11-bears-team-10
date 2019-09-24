@@ -57,8 +57,7 @@ export function deleteProject(id){
 					dispatch({
 						type: "DELETE_PROJECT",
 						payload: {
-							data: response.data,
-							isProjectDeleted: true
+							deleted: true
 						}
 					})
 				}
