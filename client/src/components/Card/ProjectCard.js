@@ -9,7 +9,7 @@ import "../../stylesheets/css/styles.css";
 function ProjectCard({project, deleteProject, getProject}) {
 	return (
 		<div className="flex-col app-card hvr-grow-shadow"
-		  onDoubleClick={(e) => {
+		  onDoubleClick={() => {
 				 getProject(project._id)
 			}}
 		>
@@ -31,7 +31,7 @@ function ProjectCard({project, deleteProject, getProject}) {
 				</div>
 			</div>
 			<div className="trash flex-col-centered">
-				<div onClick={() => {console.log('about to delete', project._id); deleteProject(project._id)}}>
+				<div onClick={() => { deleteProject(project._id) }}>
 					<FontAwesomeIcon icon="trash" className="bin" />
 				</div>
 			</div>
