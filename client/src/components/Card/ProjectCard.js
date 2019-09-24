@@ -2,12 +2,17 @@ import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { connect } from "react-redux";
 
-import { deleteProject } from '../../redux/action_creators/project'
+
+import { deleteProject, getProject } from '../../redux/action_creators/project'
 import "../../stylesheets/css/styles.css";
 
-function ProjectCard({project}) {
+function ProjectCard({project, deleteProject, getProject}) {
 	return (
-		<div className="flex-col app-card hvr-grow-shadow">
+		<div className="flex-col app-card hvr-grow-shadow"
+		  onDoubleClick={(e) => {
+				 getProject(project._id)
+			}}
+		>
 			<div className="project-card flex-col-centered">
 				<h4>{project.title}</h4>
 				<div className="flex-row-centered">
@@ -34,4 +39,4 @@ function ProjectCard({project}) {
 	);
 }
 
-export default connect(null, { deleteProject })(ProjectCard);
+export default connect(null, { deleteProject, getProject })(ProjectCard);

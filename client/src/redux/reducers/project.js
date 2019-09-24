@@ -3,7 +3,7 @@ const project = (state = null, action) => {
     case "ADD_PROJECT":
       return action.payload;
     case "DELETE_PROJECT":
-      return action.payload;
+			return action.payload;
     default:
       return state;
   }

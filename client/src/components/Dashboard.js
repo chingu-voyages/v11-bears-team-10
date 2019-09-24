@@ -10,7 +10,7 @@ import Footer from "./Footer/Footer";
 
 import setError from "./../redux/action_creators/setError";
 
-function DashBoard({ activeUser, newProject, isProjectDeleted }) {
+function DashBoard({ activeUser, newProject }) {
   const [dashboardUser, setDashBoardUser] = useState(activeUser);
 	const [showModal, setShowModal] = useState(false);
 
@@ -36,7 +36,7 @@ function DashBoard({ activeUser, newProject, isProjectDeleted }) {
 
   useEffect(() => {
     getData();
-  }, [activeUser, newProject, isProjectDeleted]);
+  }, [ newProject]);
 
   return (
     <div className="dashboard">
@@ -64,7 +64,6 @@ function DashBoard({ activeUser, newProject, isProjectDeleted }) {
             </section>
           </section>
           <section className="projects-shelf flex-row" data-aos="fade-up">
-            <AddProjectCard handleShowModal={showForm} />
             <AddProjectForm
               showForm={showModal}
               handleCloseForm={closeModal}
@@ -73,7 +72,8 @@ function DashBoard({ activeUser, newProject, isProjectDeleted }) {
             />
             {dashboardUser.projectList.map(project => {
                 return <ProjectCard project={project} key={`project${project._id}`} />;
-            })}
+						})}
+						<AddProjectCard handleShowModal={showForm} />
           </section>
         </div>
       </section>
