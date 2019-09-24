@@ -12,7 +12,8 @@ import setError from "./../redux/action_creators/setError";
 
 function DashBoard({ activeUser, newProject }) {
   const [dashboardUser, setDashBoardUser] = useState(activeUser);
-  const [showModal, setShowModal] = useState(false);
+	const [showModal, setShowModal] = useState(false);
+	// const [projects, setProjects] = userState([])
 
   const showForm = () => setShowModal(true);
   const closeModal = () => setShowModal(false);
@@ -24,8 +25,10 @@ function DashBoard({ activeUser, newProject }) {
         headers: {
           Authorization: "Bearer " + localStorage.getItem("authToken")
         }
-      });
-      setDashBoardUser(response.data.user);
+			});
+			console.log(response.data.user)
+			setDashBoardUser(response.data.user);
+		//	setProjects()
     } catch (e) {
       if (!e.response) setError({ requestTimeout: e.code === "ECONNABORTED" });
       else if (e.response.status !== 401)
@@ -67,10 +70,11 @@ function DashBoard({ activeUser, newProject }) {
             <AddProjectForm
               showForm={showModal}
               handleCloseForm={closeModal}
-              userId={localStorage.getItem("user_id")}
+							userId={localStorage.getItem("user_id")}
+							
             />
             {dashboardUser.projectList.map(project => {
-                return <ProjectCard project={project} />;
+                return <ProjectCard project={project} key={`project${project._id}`} />;
             })}
           </section>
         </div>
@@ -82,7 +86,7 @@ function DashBoard({ activeUser, newProject }) {
 
 const mapStateToProps = state => ({
   activeUser: state.user,
-  newProject: state.project
+	newProject: state.project
 });
 
 export default connect(
