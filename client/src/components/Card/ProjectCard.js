@@ -3,11 +3,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import "../../stylesheets/css/styles.css";
 
-function Card() {
+function ProjectCard({project}) {
 	return (
 		<div className="flex-col app-card hvr-grow-shadow">
 			<div className="project-card flex-col-centered">
-				<h4>{"Test Project"}</h4>
+				<h4>{project.title}</h4>
 				<div className="flex-row-centered">
 					<div className="badge-icon">
 						<FontAwesomeIcon icon="users" id="members" />
@@ -32,4 +32,4 @@ function Card() {
 	);
 }
 
-export default Card;
+export default ProjectCard;

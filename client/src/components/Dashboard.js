@@ -3,19 +3,16 @@ import axios from "axios";
 import { connect } from "react-redux";
 
 // import Header from "./../components/Header/Header";
-import ProjectCard from "./../components/Card/Card";
+import ProjectCard from "./Card/ProjectCard";
 import AddProjectCard from "./../components/Card/AddProjectCard";
 import AddProjectForm from "./../container/Modals/AddProjectForm";
 import Footer from "./Footer/Footer";
 
 import setError from "./../redux/action_creators/setError";
 
-
-
 function DashBoard({ activeUser, newProject }) {
   const [dashboardUser, setDashBoardUser] = useState(activeUser);
   const [showModal, setShowModal] = useState(false);
- 
 
   const showForm = () => setShowModal(true);
   const closeModal = () => setShowModal(false);
@@ -30,10 +27,9 @@ function DashBoard({ activeUser, newProject }) {
       });
       setDashBoardUser(response.data.user);
     } catch (e) {
-      if (!e.response)
-          setError({ requestTimeout: e.code === "ECONNABORTED" });
-        else if (e.response.status !== 401)
-         setError({ statusCode: e.response.status });
+      if (!e.response) setError({ requestTimeout: e.code === "ECONNABORTED" });
+      else if (e.response.status !== 401)
+        setError({ statusCode: e.response.status });
     }
   }
 
@@ -73,7 +69,9 @@ function DashBoard({ activeUser, newProject }) {
               handleCloseForm={closeModal}
               userId={localStorage.getItem("user_id")}
             />
-            <ProjectCard />
+            {dashboardUser.projectList.map(project => {
+                return <ProjectCard project={project} />;
+            })}
           </section>
         </div>
       </section>
@@ -89,5 +87,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  {  }
+  {}
 )(DashBoard);
