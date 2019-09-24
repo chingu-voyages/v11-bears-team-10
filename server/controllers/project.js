@@ -22,7 +22,7 @@ const findProject = async (id, res) => {
 };
 
 const createProject = async (userId, req, res) => {
-  const project = req.body;
+	const project = req.body;
   try {
     const newProject = await Project.create({
       admin: userId,

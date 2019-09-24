@@ -7,7 +7,7 @@ const user = (state = null, action) => {
 		case "RESET_USER":
 			localStorage.removeItem("user_id");
 			return null;
-
+			
 		default:
 			return state;
 	}

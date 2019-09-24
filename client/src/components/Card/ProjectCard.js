@@ -1,30 +1,32 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { connect } from "react-redux";
 
+import { deleteProject } from '../../redux/action_creators/project'
 import "../../stylesheets/css/styles.css";
 
-function Card() {
+function ProjectCard({project}) {
 	return (
 		<div className="flex-col app-card hvr-grow-shadow">
 			<div className="project-card flex-col-centered">
-				<h4>{"Test Project"}</h4>
+				<h4>{project.title}</h4>
 				<div className="flex-row-centered">
 					<div className="badge-icon">
 						<FontAwesomeIcon icon="users" id="members" />
-						<span className="badge">{0}</span>
+						<span className="badge">{project.nb_member}</span>
 					</div>
 					<div className="badge-icon">
 						<FontAwesomeIcon icon="comments" id="comments" />
-						<span className="badge">{0}</span>
+						<span className="badge">{project.nb_msg}</span>
 					</div>
 					<div className="badge-icon">
-						<FontAwesomeIcon icon="sitemap" id="teams" />
-						<span className="badge">{0}</span>
+						<FontAwesomeIcon icon="clipboard-list" id="teams" />
+						<span className="badge">{project.nb_todos}</span>
 					</div>
 				</div>
 			</div>
 			<div className="trash flex-col-centered">
-				<div onClick={() => console.log("delete this card on click")}>
+				<div onClick={() => {console.log('about to delete', project._id); deleteProject(project._id)}}>
 					<FontAwesomeIcon icon="trash" className="bin" />
 				</div>
 			</div>
@@ -32,4 +34,4 @@ function Card() {
 	);
 }
 
-export default Card;
+export default connect(null, { deleteProject })(ProjectCard);

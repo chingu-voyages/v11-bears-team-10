@@ -21,7 +21,8 @@ AOS.init();
 
 export const IS_STORAGE_AVAILABLE = isStorageAvailable();
 
-axios.defaults.headers.common["Content-Type"] = "application/json";
+// axios.defaults.headers.common["Content-Type"] = "application/json";
+axios.defaults.headers.common["Authorization"] = "application/json";
 
 axios.defaults.baseURL = process.env.REACT_APP_BACKEND_API_BASE_URL;
 
@@ -37,7 +38,8 @@ const DEFAULT_INITIAL_STATE = {
 	 * requestTimeout : bool
 	 *
 	 */
-	error: null
+	error: null,
+	project: null
 };
 
 const renderApp = INITIAL_STATE =>
