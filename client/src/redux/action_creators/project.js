@@ -16,19 +16,16 @@ export function createProject(data) {
       .post(
         `/project/${data.userId}`,
         { title, description },
-        {
-          headers: {
+        { headers: {
             Authorization: "Bearer " + localStorage.getItem("authToken")
-          }
-        }
+					} 
+				}
       )
 			.then(response =>
 				{
 					dispatch({
 						type: "ADD_PROJECT",
-						payload: {
-							data: response.data
-						}
+						payload: response.data
 					})
 				}
        
@@ -75,3 +72,33 @@ export function deleteProject(id){
       });
   };
 }
+
+
+export function getProject(id) {
+  return dispatch => {
+    axios
+      .get(
+        `/project/${id}`,
+        { 
+					headers: {
+            Authorization: "Bearer " + localStorage.getItem("authToken")
+					} 
+				}
+      )
+			.then(response =>
+				{
+					dispatch({
+						type: "GET_PROJECT",
+					})
+					window.location=`/project/${id}`			
+				}
+      )
+      .catch(e => {
+        if (!e.response)
+          dispatch(setError({ requestTimeout: e.code === "ECONNABORTED" }));
+        else if (e.response.status !== 401)
+          dispatch(setError({ statusCode: e.response.status }));
+      });
+  };
+}
+
