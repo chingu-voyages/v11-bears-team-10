@@ -10,7 +10,7 @@ import Footer from "./Footer/Footer";
 
 import setError from "./../redux/action_creators/setError";
 
-function DashBoard({ activeUser, newProject }) {
+function DashBoard({ activeUser, projectState }) {
   const [dashboardUser, setDashBoardUser] = useState(activeUser);
 	const [showModal, setShowModal] = useState(false);
 
@@ -26,6 +26,7 @@ function DashBoard({ activeUser, newProject }) {
           Authorization: "Bearer " + localStorage.getItem("authToken")
         }
 			});
+			console.log('fetched user data', response.data.user)
 			setDashBoardUser(response.data.user);
     } catch (e) {
       if (!e.response) setError({ requestTimeout: e.code === "ECONNABORTED" });
@@ -36,7 +37,7 @@ function DashBoard({ activeUser, newProject }) {
 
   useEffect(() => {
     getData();
-  }, [ newProject]);
+  }, [ projectState ]);
 
   return (
     <div className="dashboard">
@@ -84,7 +85,7 @@ function DashBoard({ activeUser, newProject }) {
 
 const mapStateToProps = state => ({
   activeUser: state.user,
-	newProject: state.project,
+	projectState: state.project,
 });
 
 export default connect(

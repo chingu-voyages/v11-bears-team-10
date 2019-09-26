@@ -15,7 +15,7 @@ function ProjectBoard(props) {
 	const id = props.match.params.id
 
   const [showMessages, setShowMessages] = useState(false);
-	const [showTodos, setShowTodos] = useState(false);
+	const [showTodos, setShowTodos] = useState(true);
 	const [data, setData] = useState(project)
 
 	async function getData() {
@@ -79,7 +79,15 @@ function ProjectBoard(props) {
             </section>
           </section>
           <section className="flex-col" data-aos="fade-up">
-            {showMessages ? <MessageBoard /> : <TodosBoard />}
+						{ 
+							showMessages 
+						  ? 
+						  <MessageBoard /> 
+					  	: 
+						  <TodosBoard 
+							  projectId = {data !== null ? data._id : ''}
+							/>
+						}
           </section>
         </div>
       </section>

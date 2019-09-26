@@ -57,11 +57,11 @@ export function deleteProject(id){
 					dispatch({
 						type: "DELETE_PROJECT",
 						payload: {
+							payload: response.data,
 							deleted: true
 						}
 					})
 				}
-       
       )
       .catch(e => {
         if (!e.response)
@@ -90,6 +90,39 @@ export function getProject(id) {
 						type: "GET_PROJECT",
 					})
 					window.location=`/project/${id}`			
+				}
+      )
+      .catch(e => {
+        if (!e.response)
+          dispatch(setError({ requestTimeout: e.code === "ECONNABORTED" }));
+        else if (e.response.status !== 401)
+          dispatch(setError({ statusCode: e.response.status }));
+      });
+  };
+}
+
+
+export function updateProject(data) {
+	let title = data.name;
+	let description = data.description;
+	console.log('to put')
+  return dispatch => {
+    axios
+      .put(
+				`/project/${data.projectId}`,
+				{ title, description },
+        { 
+					headers: {
+            Authorization: "Bearer " + localStorage.getItem("authToken")
+					} 
+				}
+      )
+			.then(response =>
+				{
+					dispatch({
+						type: "UPDATE_PROJECT",
+						payload: response.data
+					})	
 				}
       )
       .catch(e => {

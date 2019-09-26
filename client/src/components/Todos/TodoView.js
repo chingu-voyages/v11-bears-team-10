@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import onClickOutside from "react-onclickoutside";
 
-function Todos({ showForm, setOpen }) {
+function TodoView({ showForm, setOpen }) {
   const [todoData] = useState({
     title: "Test List Item",
     todos: new Set([
@@ -11,9 +11,8 @@ function Todos({ showForm, setOpen }) {
     ])
   });
 
-  // const [strike, setStrike] = useState([false, 0]);
 
-  Todos.handleClickOutside = () => setOpen();
+  TodoView.handleClickOutside = () => setOpen();
 
   return showForm ? (
     <>
@@ -30,7 +29,7 @@ function Todos({ showForm, setOpen }) {
           <label>Create Todo</label>
           <div>
             <input type="text" className="todo-input" />
-            <button type="submit">ADD TODO</button>
+            <button type="submit">ADD ITEM</button>
           </div>
         </form>
         <div className="flex-col checkboxes">
@@ -53,7 +52,7 @@ function Todos({ showForm, setOpen }) {
 }
 
 const clickOutsideConfig = {
-  handleClickOutside: () => Todos.handleClickOutside
+  handleClickOutside: () => TodoView.handleClickOutside
 };
 
-export default onClickOutside(Todos, clickOutsideConfig);
+export default onClickOutside(TodoView, clickOutsideConfig);
