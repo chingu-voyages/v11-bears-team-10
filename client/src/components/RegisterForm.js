@@ -45,7 +45,7 @@ class RegisterForm extends Component {
 
 	render() {
 		return (
-			<Container as="main">
+			<Container as="main" className="my-auto">
 				<Row>
 					<Col
 						lg={8}
@@ -125,12 +125,12 @@ class RegisterForm extends Component {
 						<Row className="mb-5">
 							<Button
 								disabled={this.state.submitting}
-								variant="primary"
+								variant="dark-purple"
 								className="mx-auto"
 								onClick={this.onSubmit}>
 								{this.state.submitting ? (
 									<Spinner
-										className="mx-3"
+										className="mx-2"
 										as="span"
 										aria-hidden="true"
 										animation="border"
@@ -144,16 +144,10 @@ class RegisterForm extends Component {
 							</Button>
 						</Row>
 
-						<Row className="mb-5">
-							<Col xs={12} sm={9} lg={6} className="mx-auto">
-								<Card>
-									<Card.Body className="p-2 text-center">
-										already have a {process.env.REACT_APP_NAME} account ?
-										<Link to="/login"> Login</Link>
-									</Card.Body>
-								</Card>
-							</Col>
-						</Row>
+						<div className="mb-5 text-center">
+							already have a {process.env.REACT_APP_NAME} account ?
+							<Link to="/login"> Login</Link>
+						</div>
 					</Col>
 				</Row>
 			</Container>

@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Form, Alert, Spinner, Row, Col, Card, Container } from "react-bootstrap";
+import { Button, Form, Alert, Spinner, Row, Col, Container } from "react-bootstrap";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 
@@ -32,7 +32,7 @@ class LoginForm extends React.Component {
 
 	render() {
 		return (
-			<Container as="main">
+			<Container as="main" className="my-auto">
 				<Row>
 					<Col
 						md={8}
@@ -84,7 +84,7 @@ class LoginForm extends React.Component {
 
 						<Row className="mb-5">
 							<Button
-								variant="primary"
+								variant="dark-purple"
 								className="mx-auto"
 								onClick={this.onSubmit}
 								disabled={this.state.submitting}>
@@ -104,16 +104,10 @@ class LoginForm extends React.Component {
 							</Button>
 						</Row>
 
-						<Row className="mb-5">
-							<Col xs={12} sm={9} lg={6} className="mx-auto">
-								<Card>
-									<Card.Body className="p-2 text-center">
-										New to {process.env.REACT_APP_NAME} ?
-										<Link to="/register"> Create an account</Link>
-									</Card.Body>
-								</Card>
-							</Col>
-						</Row>
+						<div className="mb-5 text-center">
+							New to {process.env.REACT_APP_NAME} ?
+							<Link to="/register"> Create an account</Link>
+						</div>
 					</Col>
 				</Row>
 			</Container>

@@ -1,42 +1,14 @@
-.landing {
-  @include align-flex-item(column);
-	flex-direction: column;
-	justify-content: center;
-	height: 91vh;
-}
-
 .hero {
-  height: 90vh;
-  width: 100vw;
-  //min-width: 100vw;
-  //min-height: 90vh;
-	position: relative;
-	background-image: url('../../images/landing.png');
+	background-image: url("../../images/landing.png");
 	background-position: center;
-	position: absolute;
-	top: 0;
-	left: 0;
-	z-index: -2;
-	span{
-   font-family:  $roboto-mono;
-	}
-	h1{
-		font-family: 'Yanone Kaffeesatz', sans-serif;
-		font-size: 150px;
-		margin-bottom: 5px;
-		padding: unset;
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-attachment: fixed;
+}
+
+.hero-message {
+	h1 {
+		font-family: "Yanone Kaffeesatz", sans-serif;
+		font-size: 6rem;
 	}
 }
-
-.hero-message{
-	margin-top: 100px;
-	margin-left: 100px;
-}
-
-.app-nav{
-	background: rgba(255, 255, 255, 0.055);
-	border: unset;
-	width: 100vw;
-}
-
-	

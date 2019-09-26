@@ -1,16 +1,4 @@
-import HTTP_ERRORS from "./errors/HTTP_ERRORS.json";
-import { IS_STORAGE_AVAILABLE } from "./index.js";
-
-export function isArrayOfStrings(arr) {
-	if (!Array.isArray(arr) || !arr.length) return false;
-
-	// eslint-disable-next-line no-unused-vars
-	for (const elem of arr) if (!typeof elem === "string") return false;
-
-	return true;
-}
-
-export function isStorageAvailable(type = "localStorage") {
+const IS_STORAGE_AVAILABLE = (function(type = "localStorage") {
 	var storage;
 	try {
 		storage = window[type];
@@ -34,48 +22,74 @@ export function isStorageAvailable(type = "localStorage") {
 			(storage && storage.length !== 0)
 		);
 	}
+})();
+
+export function isArrayOfStrings(arr) {
+	if (!Array.isArray(arr) || !arr.length) return false;
+
+	// eslint-disable-next-line no-unused-vars
+	for (const elem of arr) if (!typeof elem === "string") return false;
+
+	return true;
 }
 
 export function setLocalStorageItems(object) {
-	if (IS_STORAGE_AVAILABLE) {
-		if (typeof object === "object" && Object.keys(object))
-			// eslint-disable-next-line no-unused-vars
-			for (const key in object) localStorage.setItem(key, object[key]);
-		else throw Error("parameter passed to setLocalStorageItems must be an object");
-	} else console.error("localStorage is not supported in your browser");
+	if (!IS_STORAGE_AVAILABLE) return false;
+
+	if (typeof object === "object")
+		// eslint-disable-next-line no-unused-vars
+		for (const key in object) localStorage.setItem(key, object[key]);
+	else throw Error("parameter passed to setLocalStorageItems must be an object");
+
+	return true;
 }
 
 export function removeLocalStorageItems(...keys) {
-	if (IS_STORAGE_AVAILABLE) {
-		if (isArrayOfStrings(keys))
-			// eslint-disable-next-line no-unused-vars
-			for (const key of keys) localStorage.removeItem(key);
-		else throw Error("parameters passed to removeLocalStorageItems must be strings");
-	} else console.error("localStorage is not supported in your browser");
+	if (!IS_STORAGE_AVAILABLE) return false;
+
+	if (isArrayOfStrings(keys))
+		// eslint-disable-next-line no-unused-vars
+		for (const key of keys) localStorage.removeItem(key);
+	else throw Error("parameters passed to removeLocalStorageItems must be strings");
+
+	return true;
 }
 
 export function getLocalStorageItems(...keys) {
-	if (IS_STORAGE_AVAILABLE) {
-		if (isArrayOfStrings(keys)) {
-			const data = {};
-			// eslint-disable-next-line no-unused-vars
-			for (const key of keys) data[key] = localStorage.getItem(key);
-			return data;
-		} else throw Error("parameters passed to getLocalStorageItems must be strings");
-	} else console.error("localStorage is not supported in your browser");
+	if (!IS_STORAGE_AVAILABLE) return {};
+
+	if (!isArrayOfStrings(keys))
+		throw Error("parameters passed to getLocalStorageItems must be strings");
+
+	const data = {};
+	// eslint-disable-next-line no-unused-vars
+	for (const key of keys) data[key] = localStorage.getItem(key);
+	return data;
 }
 
-export function getErrorMessage(error) {
-	if (!error) return null;
+export function addClassName(target, className) {
+	if (!className) throw Error("invalid class name");
 
-	var message_to_display = "";
-	if (error.statusCode) message_to_display += error.statusCode + " | ";
+	const element = document.querySelector(target);
 
-	return (
-		message_to_display +
-		(error.message ||
-			HTTP_ERRORS[error.statusCode] ||
-			(error.requestTimeout && "request timeout ! try refreshing the page") ||
-			"something went wrong ! try refreshing the page")
-	);
+	if (!element.className) element.className = className;
+	else if (element.className.split(" ").indexOf(className) === -1)
+		element.className += " " + className;
+}
+
+export function removeClassName(target, className) {
+	if (!className) throw Error("invalid class name");
+
+	const element = document.querySelector(target);
+
+	if (element.className) {
+		const classList = element.className.split(" ");
+		const index = classList.indexOf(className);
+		if (index !== -1) {
+			classList.splice(index, 1);
+			const new_className = classList.join(" ");
+			if (new_className) element.className = new_className;
+			else element.removeAttribute("class");
+		}
+	}
 }

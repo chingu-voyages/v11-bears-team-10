@@ -1,51 +1,54 @@
 // @import url('https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap');
-@import url('https://fonts.googleapis.com/css?family=Roboto+Mono|Roboto:400,700|Yanone+Kaffeesatz:400,700&display=swap');
+@import url("https://fonts.googleapis.com/css?family=Roboto+Mono|Roboto:400,700|Yanone+Kaffeesatz:400,700&display=swap");
 
 // set flex with direction
 @mixin align-flex-item($direction) {
-  display: flex;
-  flex: {
-    direction: $direction;
-  }
+	display: flex;
+	flex: {
+		direction: $direction;
+	}
 }
 
 @mixin drop-shadow($shadow: rgba(0, 0, 0, 0.103)) {
-  box-shadow: 0px 1px 4px 0px $shadow;
+	box-shadow: 0px 1px 4px 0px $shadow;
 }
 
 @mixin show-delete-card($state: false) {
-  @if $state == false {
-    background: white;
-    font-weight: 200;
-    color: white;
-    padding: 5px;
-  } @else {
-    background: #00c4a7;
-  }
+	@if $state == false {
+		background: white;
+		font-weight: 200;
+		color: white;
+		padding: 5px;
+	} @else {
+		background: #00c4a7;
+	}
 }
-
-
 
 @mixin divider($color: black) {
 	color: $color;
-  background: $color;
-  height: 5px;
+	background: $color;
+	height: 5px;
 }
 
 @mixin title-font {
-	font-family:  'Roboto', sans-serif;
+	font-family: "Roboto", sans-serif;
 }
 
-
 //theme button
-@mixin  theme-button($backColor:#00c4a7, $testColor: white) {
-	background: $backColor;
-	padding: 5px;
-	border: none;
-	width: 100px;
-	color: $testColor;
-	font-weight: 400;
-	margin-left: 10px;
+@mixin theme-button($bgcolor: $primary, $color: $light, $borderColor: null) {
+	border: none !important;
+	color: $color;
+	font-family: "Yanone Kaffeesatz", "Helvetica Neue", Helvetica, Arial, sans-serif;
+	letter-spacing: 1px !important;
+	background-color: $bgcolor;
+	padding-right: 2rem;
+	padding-left: 2rem;
+
+	@if $borderColor {
+		&:focus {
+			box-shadow: 0 0 0 0.2rem $borderColor;
+		}
+	}
 }
 
 //spacings
@@ -53,4 +56,21 @@
 	justify-content: space-between;
 }
 
+@mixin thinScrollbar($trackColor, $thumbColor) {
+	scrollbar-width: thin;
+	scrollbar-color: $thumbColor $trackColor;
 
+	&::-webkit-scrollbar {
+		width: 5px;
+	}
+
+	&::-webkit-scrollbar-track {
+		background-color: $trackColor;
+		border-radius: 10px;
+	}
+
+	&::-webkit-scrollbar-thumb {
+		background-color: $thumbColor;
+		border-radius: 10px;
+	}
+}
