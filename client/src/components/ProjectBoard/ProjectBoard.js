@@ -10,12 +10,13 @@ import Footer from '../Footer/Footer'
 
 
 function ProjectBoard({project}) {
-
-
+  const [data, setData] = useState(project)
   const [showMessages, setShowMessages] = useState(false);
 	const [showTodos, setShowTodos] = useState(true);
 
-
+  useEffect(() => {
+    setData(project)
+	}, [project])
 	
   return (
     <div className="projectsbody">
@@ -24,7 +25,7 @@ function ProjectBoard({project}) {
         <div className="content" data-aos="fade-in">
           <section className="projects-summary flex-col" data-aos="fade-up">
             <span>
-              <h3>{project !== null ? project.title : ''}</h3>
+              <h3>{data !== null ? data.title : ''}</h3>
             </span>
             <hr />
             <section className="flex-row projects-items">
@@ -65,7 +66,7 @@ function ProjectBoard({project}) {
 						  <MessageBoard /> 
 					  	: 
 						  <TodosBoard 
-							  projectId = {project !== null ? project._id : ''}
+							  projectId = {data !== null ? data._id : ''}
 							/>
 						}
           </section>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 
 
@@ -12,11 +12,15 @@ import Footer from "./Footer/Footer";
 function DashBoard({ user, projects, newProject }) {
 
 	const [showModal, setShowModal] = useState(false);
-
+  const [teamProjects, setTeamProjects] = useState(projects)
 
 
   const showForm = () => setShowModal(true);
-  const closeModal = () => setShowModal(false);
+	const closeModal = () => setShowModal(false);
+	
+	useEffect(() => {
+       setTeamProjects(projects)
+	}, [projects])
 
   return (
     <div className="dashboard">
@@ -29,7 +33,7 @@ function DashBoard({ user, projects, newProject }) {
             <hr />
             <section className="flex-row summary-cards">
               <div className="summary">
-                <h1>{projects.length}</h1>
+                <h1>{teamProjects.length}</h1>
                 <h3>Projects</h3>
               </div>
               <div className="summary">
