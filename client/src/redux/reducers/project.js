@@ -1,9 +1,9 @@
 const project = (state = null, action) => {
   switch (action.type) {
     case "ADD_PROJECT":
-      return {...state, project: action.payload }
+      return action.payload 
     case "DELETE_PROJECT":
-			return {...state, project: action.payload }
+			return  action.payload 
     default:
       return state;
   }

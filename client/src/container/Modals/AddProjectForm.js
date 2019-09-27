@@ -27,7 +27,8 @@ function AddProjectForm({ showForm, handleCloseForm, userId, createProject }) {
 							description,
 						}
             createProject(data)
-				 }}
+				 }
+				}
 				>
           <Modal.Body>
             <Form.Group controlId="projectName" >
