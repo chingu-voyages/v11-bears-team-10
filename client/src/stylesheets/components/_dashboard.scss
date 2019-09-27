@@ -24,13 +24,14 @@
 .dashboard {
 	@include align-flex-item(column);
 	flex-direction: column;
-	height: 100vh;
+	// height: 100vh;
+	// border: green solid 2px;
 }
 .header {
 	background: #160f30;
 	display: flex;
 	justify-content: space-between;
-	height: 10vh;
+	// height: 10vh;
 	#find {
 		margin-left: 20px;
 	}
@@ -60,14 +61,18 @@
   background: $body-color;
   @include align-flex-item(column);
   align-items: center;
-	justify-content: flex-start;
+	justify-content: center;
+	// border: red solid 2px;
 }
 
 .content {
 	height: 80;
 	@include align-flex-item(column);
-	width: 80vw;
+	// width: 80vw;
 	padding: 50px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 
 .add {
@@ -82,7 +87,7 @@
 
 .projects-summary {
 	background: white;
-	width: 68vw;
+	// width: 68vw;
 	margin-bottom: 30px;
 	margin-left: 12px;
 	padding: 20px;

@@ -1,42 +1,23 @@
 import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import axios from "axios";
-import { connect } from "react-redux";
+import { connect, } from "react-redux";
 
-// import Header from "../Header/Header";
+
 import TodosBoard from "../Todos/TodosBoard/TodosBoard";
 import MessageBoard from "../Messages/MessageBoard";
 import Footer from '../Footer/Footer'
 
-import setError from "../../redux/action_creators/setError";
 
-function ProjectBoard(props) {
-	const {project} = props
-	const id = props.match.params.id
 
+function ProjectBoard({project}) {
+  const [data, setData] = useState(project)
   const [showMessages, setShowMessages] = useState(false);
 	const [showTodos, setShowTodos] = useState(true);
-	const [data, setData] = useState(project)
 
-	async function getData() {
-    try {
-      const response = await axios.get(`/project/${id}`, {
-        headers: {
-          Authorization: "Bearer " + localStorage.getItem("authToken")
-        }
-			});
-			setData(response.data.project);
-    } catch (e) {
-      if (!e.response) setError({ requestTimeout: e.code === "ECONNABORTED" });
-      else if (e.response.status !== 401)
-        setError({ statusCode: e.response.status });
-    }
-  }
-
-	useEffect(() => {
-		getData()
-	}, [])
-
+  useEffect(() => {
+    setData(project)
+	}, [project])
+	
   return (
     <div className="projectsbody">
       {/* <Header /> */}
