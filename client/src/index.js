@@ -7,22 +7,18 @@ import axios from "axios";
 
 import * as serviceWorker from "./serviceWorker";
 
-import "./stylesheets/css/styles.css";
-import "aos/dist/aos.css";
-import "./index.scss";
+import "./stylesheets/main.scss";
 import "./images/icons/icons";
 
 import App from "./App";
-import { isStorageAvailable, getLocalStorageItems, removeLocalStorageItems } from "./_helpers";
+import { getLocalStorageItems, removeLocalStorageItems } from "./_helpers";
 import AppPlaceholder from "./AppPlaceholder";
 import ErrorPage from "./errors/ErrorPage";
+import Footer from "./components/Footer/Footer";
 
 AOS.init();
 
-export const IS_STORAGE_AVAILABLE = isStorageAvailable();
-
-// axios.defaults.headers.common["Content-Type"] = "application/json";
-axios.defaults.headers.common["Authorization"] = "application/json";
+axios.defaults.headers.common["Content-Type"] = "application/json";
 
 axios.defaults.baseURL = process.env.REACT_APP_BACKEND_API_BASE_URL;
 
@@ -53,29 +49,34 @@ const renderApp = INITIAL_STATE =>
 const renderPlaceholder = () => render(<AppPlaceholder />, document.getElementById("root"));
 
 const renderErrorPage = error =>
-	render(<ErrorPage error={error} />, document.getElementById("root"));
+	render(
+		<>
+			<ErrorPage error={error} />
+			<Footer />
+		</>,
+		document.getElementById("root")
+	);
 
 // authentication before rendering the App component
-if (isStorageAvailable) {
-	const { user_id, authToken } = getLocalStorageItems("user_id", "authToken");
-	if (user_id && authToken) {
-		renderPlaceholder();
+const { user_id, authToken } = getLocalStorageItems("user_id", "authToken");
+// const { user_id, authToken } = { user_id: 5, authToken: 22 };
+if (user_id && authToken) {
+	renderPlaceholder();
 
-		axios
-			.get(`/users/${user_id}`, { headers: { Authorization: "Bearer " + authToken } })
+	axios
+		.get(`/users/${user_id}`, { headers: { Authorization: "Bearer " + authToken } })
 
-			.then(response => {
-				axios.defaults.headers.common["Authorization"] = authToken;
-				renderApp({ ...DEFAULT_INITIAL_STATE, authToken, user: response.data.user });
-			})
+		.then(response => {
+			axios.defaults.headers.common["Authorization"] = authToken;
+			renderApp({ ...DEFAULT_INITIAL_STATE, authToken, user: response.data.user });
+		})
 
-			.catch(e => {
-				if (e.response) {
-					removeLocalStorageItems("authToken", "user_id");
-					renderApp(DEFAULT_INITIAL_STATE);
-				} else renderErrorPage({ requestTimeout: e.code === "ECONNABORTED" });
-			});
-	} else renderApp(DEFAULT_INITIAL_STATE);
+		.catch(e => {
+			if (e.response) {
+				removeLocalStorageItems("authToken", "user_id");
+				renderApp(DEFAULT_INITIAL_STATE);
+			} else renderErrorPage({ requestTimeout: e.code === "ECONNABORTED" });
+		});
 } else renderApp(DEFAULT_INITIAL_STATE);
 
 // If you want your app to work offline and load faster, you can change

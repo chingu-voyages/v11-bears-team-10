@@ -1,12 +1,13 @@
+.navbar {
+	transition: background-color 0.3s;
 
-
-.buttons{
-	margin-right: 10px;
-	@include theme-button;
-	font-family: 'Yanone Kaffeesatz', sans-serif;
-	 letter-spacing: 1px;
+	&-brand:hover {
+		cursor: pointer;
+	}
 }
 
-#login{
-	background: $theme-purple;
+.nav-link.active {
+	background-color: $theme-purple;
+	color: $light !important;
+	border-radius: 5px;
 }

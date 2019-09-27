@@ -1,20 +1,20 @@
 import React, { Component } from "react";
-
-import backgroundImage from '../images/landing.png'
-import Footer from './Footer/Footer'
+import { addClassName, removeClassName } from "../_helpers";
 
 export default class LandingPage extends Component {
+	componentDidMount() {
+		addClassName("body", "hero");
+	}
+	componentWillUnmount() {
+		removeClassName("body", "hero");
+	}
+
 	render() {
 		return (
-			<div className="landing">
-				<section className="hero flex-col">
-					<div className="flex-col hero-message">
-						<h1>Koub.</h1>
-						<span>manage projects better</span>
-					</div>
-				</section>
-				<Footer />
-			</div>
-		)
+			<main data-aos="zoom-in" className="hero-message mt-5 ml-5 mb-auto mr-auto text-center">
+				<h1>{process.env.REACT_APP_NAME}</h1>
+				<h4 className="text-muted">manage projects better</h4>
+			</main>
+		);
 	}
 }

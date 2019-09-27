@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 
-function TodoList({showTodoPortal}) {
+function Todo({showTodoPortal}) {
 	const [todoData] = useState({ title: "Test List Item" });
 
 
@@ -29,4 +29,4 @@ function TodoList({showTodoPortal}) {
   );
 }
 
-export default TodoList;
+export default Todo;

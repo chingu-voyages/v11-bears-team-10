@@ -32,7 +32,10 @@ function ProfileSection({ user, logout }) {
 			)}
 
 			<Link to="/dashboard" role="image">
-				<Avatar />
+				<Avatar
+					src="https://placeimg.com/640/480/any"
+					alt={user.username.substring(0, 2)}
+				/>
 			</Link>
 
 			<NavDropdown alignRight title={user.username} id="basic-nav-dropdown">

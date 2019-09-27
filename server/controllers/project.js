@@ -1,3 +1,5 @@
+const mongoose = require('mongoose')
+
 const Project = require('../models/project');
 const User = require('../models/user');
 
@@ -64,7 +66,8 @@ const deleteProject = async (id, req, res) => {
 
     await User.findByIdAndUpdate(project.admin, {
       $pull: { projectList: { _id: project._id } }
-    });
+		});
+		
     res.status(200).json({ project });
   } catch (error) {
     res.status(500).json({ error: error.message });

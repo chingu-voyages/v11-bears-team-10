@@ -1,16 +1,10 @@
-.app-footer{
+footer {
 	margin-top: auto;
-	height: 13vh;
-	width: 100vw;
+	margin-bottom: 0;
+	color: white;
+	background: rgb(1, 16, 56);
 
-	.top{
-		height: 13vh;
-		background: rgb(1, 16, 56);
-		span{
-			color: white;
-			a{
-				text-decoration: none;
-			}
-		}
+	a {
+		text-decoration: none;
 	}
 }

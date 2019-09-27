@@ -17,11 +17,12 @@ import LoginForm from "./components/LoginForm";
 import RegisterForm from "./components/RegisterForm";
 import ErrorPage from "./errors/ErrorPage";
 import ErrorToast from "./errors/ErrorToast";
+import Footer from "./components/Footer/Footer";
 
 function App({ user, project, error, resetError }) {
 	return (
 		<BrowserRouter>
-			<ErrorToast error={error} resetError={resetError} delay={3000} />
+			<ErrorToast error={error} onClose={resetError} delay={3000} />
 			<NavBar user={user} />
 
 			<Switch>
@@ -58,6 +59,7 @@ function App({ user, project, error, resetError }) {
 
 				<Route render={() => <ErrorPage error={{ statusCode: 404 }} />} />
 			</Switch>
+			<Footer />
 		</BrowserRouter>
 	);
 }
