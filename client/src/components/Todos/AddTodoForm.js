@@ -25,13 +25,10 @@ const handleNameChange = e => setName(e.target.value)
 			  onSubmit={(e) => {
 					e.preventDefault();
 					const data = {
-						// projectId,
 						name,
 						description,
 					}
-					console.log('PROJECT DATA', projectData)
-					console.log('OTHER DATA', data)
-				 //	updateProject(projectData)
+				 updateProject(Object.assign(projectData, data))
 			 }}
 			>
         <Modal.Body>

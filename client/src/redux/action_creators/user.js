@@ -3,11 +3,11 @@ import axios from "axios";
 import setError from "./setError";
 
 export function fetchUpdatedUser(id) {
-  return dispatch => {
+  return (dispatch, getState) => {
     axios
       .get(`/users/${id}`, {
         headers: {
-          Authorization: "Bearer " + localStorage.getItem("authToken")
+          Authorization: "Bearer " + getState().authToken
         }
       })
       .then(response => {
