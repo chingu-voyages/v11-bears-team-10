@@ -28,12 +28,11 @@ function ProjectBoard({projectList,project, match}) {
 
   return (
     <div className="projectsbody">
-      {/* <Header /> */}
       <section className="board-body flex-col-centered">
         <div className="content" data-aos="fade-in">
           <section className="projects-summary flex-col" data-aos="fade-up">
             <span>
-              <h3>{data !== null ? data.title : ''}</h3>
+              <h3>{data.title}</h3>
             </span>
             <hr />
             <section className="flex-row projects-items">
