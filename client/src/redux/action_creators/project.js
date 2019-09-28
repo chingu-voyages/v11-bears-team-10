@@ -87,14 +87,14 @@ export function getProject(id) {
 }
 
 export function updateProject(data) {
-  let title = data.name;
-  let description = data.description;
+  // let title = data.name;
+  // let description = data.description;
   console.log("to put");
   return dispatch => {
     axios
       .put(
-        `/project/${data.projectId}`,
-        { title, description },
+        `/project/${data._id}`,
+        { data },
         {
           headers: {
             Authorization: "Bearer " + localStorage.getItem("authToken")
