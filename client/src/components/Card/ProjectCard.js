@@ -3,14 +3,14 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { connect } from "react-redux";
 
 
-import { deleteProject, getProject } from '../../redux/action_creators/project'
+import { deleteProject } from '../../redux/action_creators/project'
 import "../../stylesheets/css/styles.css";
 
-function ProjectCard({project, deleteProject, getProject}) {
+function ProjectCard({project, deleteProject}) {
 	return (
 		<div className="flex-col app-card hvr-grow-shadow"
 		  onDoubleClick={() => {
-				 getProject(project._id)
+				window.location = `/project/${project._id}`
 			}}
 		>
 			<div className="project-card flex-col-centered">
@@ -39,4 +39,4 @@ function ProjectCard({project, deleteProject, getProject}) {
 	);
 }
 
-export default connect(null, { deleteProject, getProject })(ProjectCard);
+export default connect(null, { deleteProject })(ProjectCard);

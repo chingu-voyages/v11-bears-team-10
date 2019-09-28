@@ -9,14 +9,17 @@ import Footer from '../Footer/Footer'
 
 
 
-function ProjectBoard({project}) {
-  const [data, setData] = useState(project)
+function ProjectBoard({projectList, match}) {
+  const [data, setData] = useState({})
   const [showMessages, setShowMessages] = useState(false);
 	const [showTodos, setShowTodos] = useState(true);
 
   useEffect(() => {
-    setData(project)
-	}, [project])
+		const id = match.params.id
+		//get the rest of project data from user projects array
+		const data = projectList.some(item =>  item._id === id)
+		setData(data)
+	}, [])
 	
   return (
     <div className="projectsbody">
@@ -66,7 +69,7 @@ function ProjectBoard({project}) {
 						  <MessageBoard /> 
 					  	: 
 						  <TodosBoard 
-							  projectId = {data !== null ? data._id : ''}
+							  project = {data !== null ? data : ''}
 							/>
 						}
           </section>
@@ -78,7 +81,7 @@ function ProjectBoard({project}) {
 }
 
 const mapStateToProps = state => ({
-	project : state.project,
+	projectList: state.user.projectList
 })
 
 export default connect(mapStateToProps)(ProjectBoard);

@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 
 import { updateProject } from '../../redux/action_creators/project'
 
-function AddTodoForm({ showForm, handleCloseForm, projectId }) {
+function AddTodoForm({ showForm, handleCloseForm, projectData }) {
 const [name, setName] = useState('')
 const [description, setDescription] = useState('')
 
@@ -25,12 +25,13 @@ const handleNameChange = e => setName(e.target.value)
 			  onSubmit={(e) => {
 					e.preventDefault();
 					const data = {
-						projectId,
+						// projectId,
 						name,
 						description,
 					}
-					console.log(data)
-					updateProject(data)
+					console.log('PROJECT DATA', projectData)
+					console.log('OTHER DATA', data)
+				 //	updateProject(projectData)
 			 }}
 			>
         <Modal.Body>

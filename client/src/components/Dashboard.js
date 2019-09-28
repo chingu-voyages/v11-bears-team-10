@@ -1,20 +1,21 @@
-import React, { useState, useEffect } from "react";
-import { connect } from "react-redux";
+import React, { useState, useEffect } from "react"
+import { connect } from "react-redux"
 
-import ProjectCard from "./Card/ProjectCard";
-import AddProjectCard from "./../components/Card/AddProjectCard";
-import AddProjectForm from "./../container/Modals/AddProjectForm";
-import Footer from "./Footer/Footer";
-import { fetchUpdatedUser } from "./../redux/action_creators/user";
+import ProjectCard from "./Card/ProjectCard"
+import AddProjectCard from "./../components/Card/AddProjectCard"
+import AddProjectForm from "./../container/Modals/AddProjectForm"
+import Footer from "./Footer/Footer"
+import { fetchUpdatedUser } from "./../redux/action_creators/user"
 
 function DashBoard({ user, newProject, fetchUpdatedUser }) {
-  const [showModal, setShowModal] = useState(false);
-  const showForm = () => setShowModal(true);
-  const closeModal = () => setShowModal(false);
+	const [showModal, setShowModal] = useState(false)
+	
+  const showForm = () => setShowModal(true)
+  const closeModal = () => setShowModal(false)
 
   useEffect(() => {
     function getData() {
-      let id = localStorage.getItem("user_id");
+      let id = localStorage.getItem("user_id")
       fetchUpdatedUser(id);
     }
     getData();
