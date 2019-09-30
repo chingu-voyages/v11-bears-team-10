@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Button, Form, Spinner, Row, Col, Card, Container } from "react-bootstrap";
+import { Button, Form, Spinner, Row, Col, Container } from "react-bootstrap";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 

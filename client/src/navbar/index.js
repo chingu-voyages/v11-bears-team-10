@@ -55,7 +55,7 @@ export default class NavBar extends Component {
 
 	onToggle = expanded => this.setState({ expanded });
 
-	shrink = () => this.onToggle(false);
+	shrink = () => this.state.expanded && this.onToggle(false);
 
 	render() {
 		return (
@@ -69,7 +69,6 @@ export default class NavBar extends Component {
 				onToggle={this.onToggle}
 				expand="md"
 				expanded={this.state.expanded}
-				onSelect={this.shrink}
 				sticky="top">
 				<div className="d-flex flex-nowrap w-sm-down-100">
 					<Link to="/">
@@ -82,17 +81,17 @@ export default class NavBar extends Component {
 
 				<Navbar.Collapse id="navbar-nav-collapse">
 					<Nav as="ul" className="pl-md-2">
-						<NavItem as="li" className="ml-md-2 my-md-0 my-2">
+						<NavItem as="li" className="ml-md-2 my-md-0 my-2" onClick={this.shrink}>
 							<NavLink to="/features" className="nav-link">
 								Features
 							</NavLink>
 						</NavItem>
-						<NavItem as="li" className="ml-md-2 my-md-0 my-2">
+						<NavItem as="li" className="ml-md-2 my-md-0 my-2" onClick={this.shrink}>
 							<NavLink to="/how-it-works" className="nav-link">
 								How it works
 							</NavLink>
 						</NavItem>
-						<NavItem as="li" className="ml-md-2 my-md-0 my-2">
+						<NavItem as="li" className="ml-md-2 my-md-0 my-2" onClick={this.shrink}>
 							<NavLink to="/contact-us" className="nav-link">
 								Contact us
 							</NavLink>
