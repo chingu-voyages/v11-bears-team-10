@@ -1,0 +1,14 @@
+.hero {
+	background-image: url("../../images/landing.png");
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-attachment: fixed;
+}
+
+.hero-message {
+	h1 {
+		font-family: "Yanone Kaffeesatz", sans-serif;
+		font-size: 6rem;
+	}
+}

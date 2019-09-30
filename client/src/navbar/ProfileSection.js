@@ -1,58 +1,55 @@
-import React from "react";
-import { Nav, NavDropdown, Spinner, Dropdown } from "react-bootstrap";
+import React, { useState } from "react";
+import { Nav, NavDropdown, Spinner } from "react-bootstrap";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import { setUser } from "../redux/actionCreators";
-import Avatar from "../components/Avatar";
 
-class ProfileSection extends React.Component {
-	constructor(props) {
-		super(props);
+import logout from "../redux/action_creators/logout";
 
-		this.state = {
-			isloggingOut: false
-		};
-	}
+import Avatar from "../reusable_components/Avatar";
 
-	toggleDropdown = (...a) => console.log(a);
+function ProfileSection({ user, logout }) {
+	const [isloggingOut, showSpinner] = useState(false);
 
-	logout = () =>
-		this.setState({ isloggingOut: true }, () =>
-			setTimeout(() => {
-				this.props.setUser(null);
-			}, 1000)
-		);
+	const startLoggingOut = () => {
+		showSpinner(true);
 
-	render() {
-		return (
-			<Nav className="ml-md-auto mt-2 mt-md-0">
-				{this.state.isloggingOut && (
-					<Spinner
-						className="my-auto"
-						aria-hidden="true"
-						animation="border"
-						role="status"
-						size="sm">
-						<span className="sr-only">Logging out ...</span>
-					</Spinner>
-				)}
+		// this will unset the user from the state
+		// so there's no need to hide the spinner later since this component will be unmounted
+		logout();
+	};
 
-				<Link to="/dashboard" role="image">
-					<Avatar />
-				</Link>
+	return (
+		<Nav className="ml-md-auto mt-2 mt-md-0 mr-md-2">
+			{isloggingOut && (
+				<Spinner
+					className="my-auto"
+					aria-hidden="true"
+					animation="border"
+					role="status"
+					size="sm">
+					<span className="sr-only">Logging out ...</span>
+				</Spinner>
+			)}
 
-				<NavDropdown alignRight title={this.props.user.name} id="basic-nav-dropdown">
-					<NavDropdown.Item as={Link} role="button" to="/dashboard">
-						my dashboard
-					</NavDropdown.Item>
-					<NavDropdown.Divider />
-					<NavDropdown.Item onClick={this.logout}>logout</NavDropdown.Item>
-				</NavDropdown>
-			</Nav>
-		);
-	}
+			<Link to="/dashboard" role="image">
+				<Avatar
+					src="https://placeimg.com/640/480/any"
+					alt={user.username.substring(0, 2)}
+				/>
+			</Link>
+
+			<NavDropdown alignRight title={user.username} id="basic-nav-dropdown">
+				<NavDropdown.Item as={Link} role="button" to="/dashboard">
+					my dashboard
+				</NavDropdown.Item>
+				<NavDropdown.Divider />
+				<NavDropdown.Item onClick={startLoggingOut}>logout</NavDropdown.Item>
+			</NavDropdown>
+		</Nav>
+	);
 }
+
 export default connect(
 	null,
-	{ setUser }
+	{ logout }
 )(ProfileSection);

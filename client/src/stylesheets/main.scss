@@ -1,15 +1,119 @@
-@import './components/dashboard';
-@import './components/card';
-@import './components/addProject';
-@import './components/header';
+@import "../../node_modules/bootstrap/scss/bootstrap.scss";
+@import "../../node_modules/aos/dist/aos.css";
+@import "./css/styles.css";
 
-@import './components/todolist';
-@import './components/projectboard';
-@import './components/message';
-@import './components/addTodo';
-@import './components/todos';
+@import "./helpers/variables";
+@import "./helpers/mixins";
 
+@import "./components/dashboard";
+@import "./components/card";
+@import "./components/addProject";
+@import "./components/header";
+@import "./components/footer";
 
+@import "./components/todolist";
+@import "./components/projectboard";
+@import "./components/message";
+@import "./components/addTodo";
+@import "./components/todos";
 
+@import "./components/landingPage";
+@import "./components/navbar";
 
+html {
+	scroll-behavior: smooth;
+	@media (prefers-reduced-motion: reduce) {
+		scroll-behavior: auto;
+	}
+}
 
+body {
+	@include thinScrollbar($light, $secondary); // it worked on chrome , but not on firefox
+	overflow-x: hidden;
+
+	#root {
+		// prevent scroll bar from pushing elements to the left
+		margin-right: calc(100% - 100vw) !important;
+
+		min-height: 100vh;
+		display: flex;
+		flex-direction: column;
+	}
+}
+
+.w-sm-down-100 {
+	@include media-breakpoint-down(sm) {
+		width: 100% !important;
+	}
+}
+
+.w-md-50 {
+	@include media-breakpoint-up(md) {
+		width: 50% !important;
+	}
+}
+
+.avatar {
+	width: 40px;
+	height: 40px;
+
+	&-placeholder {
+		font-size: 40px;
+		color: $secondary;
+		transition: color 0.2s;
+
+		&:hover {
+			color: $dark;
+		}
+	}
+}
+
+form label.required:after {
+	color: red;
+	content: " *";
+}
+
+.fixed-bottom-right {
+	position: fixed;
+	bottom: 0;
+	right: 0;
+	z-index: $zindex-fixed;
+}
+
+$spinner-size: 8;
+
+.big-spinner {
+	height: $spinner-size * 1rem;
+	width: $spinner-size * 1rem;
+}
+
+.h-100vh {
+	height: 100vh !important;
+}
+
+.btn.btn- {
+	&dark-purple {
+		@include theme-button($theme-purple);
+
+		&:hover {
+			background-color: lighten($theme-purple, 10%);
+		}
+	}
+
+	&dark-green {
+		@include theme-button($theme-green);
+
+		&:hover {
+			background-color: lighten($theme-green, 2%);
+		}
+	}
+}
+
+.bg-transparent {
+	background-color: transparent !important;
+}
+
+// fix a react-bootstrap animation bug
+.navbar-collapse {
+	flex-basis: unset;
+}

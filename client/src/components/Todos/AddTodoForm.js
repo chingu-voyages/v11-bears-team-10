@@ -1,29 +1,45 @@
-import React from "react";
+import React,{ useState } from "react";
 import { Form, Modal, Button } from "react-bootstrap";
+import { connect } from "react-redux";
 
-function AddTodoList({ showForm, handleCloseForm }) {
-// const [todo, setTodo] = useState('')
+import { updateProject } from '../../redux/action_creators/project'
+
+function AddTodoForm({ showForm, handleCloseForm, projectData }) {
+const [name, setName] = useState('')
+const [description, setDescription] = useState('')
+
+const handleDescrChange = e => setDescription(e.target.value)
+const handleNameChange = e => setName(e.target.value)
 
   return (
     <Modal
       show={showForm}
       onHide={handleCloseForm}
       dialogClassName="modal-40w"
-      aria-labelledby="contained-modal-title-vcenter"
-      // centered
       className="project-form"
     >
       <Modal.Header closeButton className="project-header">
         <Modal.Title>Add Checklist</Modal.Title>
       </Modal.Header>
-      <Form>
+      <Form
+			  onSubmit={(e) => {
+					e.preventDefault();
+					const data = {
+						name,
+						description,
+					}
+				 updateProject(projectData, data)
+			 }}
+			>
         <Modal.Body>
           <Form.Group controlId="projectName">
             <Form.Label className="form-labels">Title</Form.Label>
             <Form.Control
               className="form-field todo-field"
               type="text"
-              placeholder="Name Your todo list"
+							placeholder="Name Your todo list"
+							defaultValue={name}
+							onChange={handleNameChange}
             />
           </Form.Group>
 					<Form.Group controlId="projectName">
@@ -31,7 +47,9 @@ function AddTodoList({ showForm, handleCloseForm }) {
             <Form.Control
               className="form-field todo-field"
               type="text"
-              placeholder="Add a description"
+							placeholder="Add a description"
+							onChange={handleDescrChange}
+            />
             />
           </Form.Group>
         </Modal.Body>
@@ -48,7 +66,8 @@ function AddTodoList({ showForm, handleCloseForm }) {
             variant="primary"
             onClick={handleCloseForm}
             id="save"
-            className="hvr-shadow"
+						className="hvr-shadow"
+						type="submit"
           >
             Save
           </Button>
@@ -58,4 +77,4 @@ function AddTodoList({ showForm, handleCloseForm }) {
   );
 }
 
-export default AddTodoList;
+export default connect(null, { updateProject })( AddTodoForm);

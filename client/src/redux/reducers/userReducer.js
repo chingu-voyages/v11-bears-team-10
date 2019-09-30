@@ -1,8 +1,15 @@
-const user = (state = {}, action) => {
+const user = (state = null, action) => {
 	switch (action.type) {
 		case "SET_USER":
-			return action.user;
+			localStorage.setItem("user_id", action.user._id);
+			return action.user
 
+		case "RESET_USER":
+			localStorage.removeItem("user_id");
+			return null
+		case 'FETCH_USER':
+			return action.payload
+			
 		default:
 			return state;
 	}

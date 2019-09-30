@@ -1,21 +1,38 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { connect, } from "react-redux";
 
-import Header from "../Header/Header";
-import TodosBoard from "../Todos/TodosBoard/TodosBoard";
-import MessageBoard from "../Messages/MessageBoard";
 
-function ProjectBoard() {
+import TodosBoard from "../../Todos/TodosBoard/TodosBoard";
+import MessageBoard from "../../Messages/MessageBoard";
+import Footer from '../../Footer/Footer'
+
+
+
+function ProjectBoard({projectList,project, match}) {
+  const [data, setData] = useState({})
   const [showMessages, setShowMessages] = useState(false);
-  const [showTodos, setShowTodos] = useState(false);
+	const [showTodos, setShowTodos] = useState(true);
+
+  useEffect(() => {
+		const id = match.params.id
+		//get the rest of project data from user projects array
+		const data = projectList.filter(item =>  item._id === id)
+		setData(data[0])
+	}, [])
+	
+	//see when projects data changes
+	useEffect(() =>{
+     console.log('project data after todo', project)
+	}, [project])
+
   return (
-    <>
-      <Header />
+    <div className="projectsbody">
       <section className="board-body flex-col-centered">
         <div className="content" data-aos="fade-in">
           <section className="projects-summary flex-col" data-aos="fade-up">
             <span>
-              <h3>Project Name</h3>
+              <h3>{data.title}</h3>
             </span>
             <hr />
             <section className="flex-row projects-items">
@@ -50,12 +67,26 @@ function ProjectBoard() {
             </section>
           </section>
           <section className="flex-col" data-aos="fade-up">
-            {showMessages ? <MessageBoard /> : <TodosBoard />}
+						{ 
+							showMessages 
+						  ? 
+						  <MessageBoard /> 
+					  	: 
+						  <TodosBoard 
+							  project = {data}
+							/>
+						}
           </section>
         </div>
       </section>
-    </>
+			<Footer />
+    </div>
   );
 }
 
-export default ProjectBoard;
+const mapStateToProps = state => ({
+	projectList: state.user.projectList,
+	project: state.project
+})
+
+export default connect(mapStateToProps)(ProjectBoard);

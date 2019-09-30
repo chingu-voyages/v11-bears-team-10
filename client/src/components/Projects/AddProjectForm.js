@@ -1,8 +1,16 @@
-import React from "react";
+import React,{useState} from "react";
 import { Modal, Button, Form } from "react-bootstrap";
+import { connect } from "react-redux";
+
+import { createProject } from '../../redux/action_creators/project'
 
 
-function AddProjectForm({ showForm, handleCloseForm }) {
+function AddProjectForm({ showForm, handleCloseForm, userId, createProject }) {
+	const [title, setTitle] = useState('')
+	const [description, setDescription] = useState('')
+
+	const handleDescrChange = e => setDescription(e.target.value)
+  const handleTitleChange = e => setTitle(e.target.value)
 
   return (
     <>
@@ -10,11 +18,28 @@ function AddProjectForm({ showForm, handleCloseForm }) {
         <Modal.Header closeButton className="project-header">
           <Modal.Title id="project-title">Start A Project</Modal.Title>
         </Modal.Header>
-        <Form>
+        <Form
+				 onSubmit={(e) => {
+					  e.preventDefault();
+            const data = {
+							userId,
+							title,
+							description,
+						}
+            createProject(data)
+				 }
+				}
+				>
           <Modal.Body>
             <Form.Group controlId="projectName" >
               <Form.Label className="form-labels">Project Name</Form.Label>
-              <Form.Control className="form-field" type="text" placeholder="Name Your Project" />
+							<Form.Control 
+								className="form-field" 
+								type="text" 
+								placeholder="Name Your Project" 
+								defaultValue={title}
+								onChange={handleTitleChange}
+							/>
             </Form.Group>
             <Form.Group controlId="textArea" className="forms">
               <Form.Label className="form-labels">Project Description</Form.Label>
@@ -22,7 +47,9 @@ function AddProjectForm({ showForm, handleCloseForm }) {
 								as="textarea"
 								className="form-field"
                 placeholder="Add a project description"
-                rows="3"
+								rows="3"
+								defaultValue={description}
+								onChange={handleDescrChange}
               />
             </Form.Group>
           </Modal.Body>
@@ -40,4 +67,6 @@ function AddProjectForm({ showForm, handleCloseForm }) {
   );
 }
 
-export default AddProjectForm;
+
+
+export default  connect(null, {createProject})(AddProjectForm)

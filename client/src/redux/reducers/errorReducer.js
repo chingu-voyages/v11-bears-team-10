@@ -1,17 +1,10 @@
-import { INITIAL_STATE } from "../..";
-
-const error = (state = {}, action) => {
+const error = (state = null, action) => {
 	switch (action.type) {
 		case "SET_ERROR":
-			return {
-				showError: true,
-				statusCode: action.statusCode,
-				message: action.message,
-				requestTimeout: action.requestTimeout
-			};
+			return action.error;
 
 		case "RESET_ERROR":
-			return INITIAL_STATE.error;
+			return null;
 
 		default:
 			return state;

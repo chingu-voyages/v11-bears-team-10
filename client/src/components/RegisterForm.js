@@ -1,25 +1,25 @@
-import React from "react";
-import { Card, Button, Form, Spinner } from "react-bootstrap";
+import React, { Component } from "react";
+import { Button, Form, Spinner, Row, Col, Card, Container } from "react-bootstrap";
 import { connect } from "react-redux";
-import { setUser } from "../redux/actionCreators";
+import { Link } from "react-router-dom";
 
-class RegisterForm extends React.Component {
+import register from "../redux/action_creators/register";
+
+class RegisterForm extends Component {
 	constructor(props) {
 		super(props);
 
 		this.state = {
 			submitting: false,
 			data: {
-				name: "",
+				username: "",
 				email: "",
-				password: "",
-				password_confirmation: ""
+				password: ""
 			},
 			errors: {
-				name: "",
-				email: "",
-				password: "",
-				password_confirmation: ""
+				username: [],
+				email: [],
+				password: []
 			}
 		};
 	}
@@ -27,7 +27,7 @@ class RegisterForm extends React.Component {
 	onChange = ({ target: { id, value } }) =>
 		this.setState(prevState => ({
 			data: { ...prevState.data, [id]: value },
-			errors: { ...prevState.errors, [id]: "" }
+			errors: { ...prevState.errors, [id]: [] }
 		}));
 
 	invalidate = (errors = {}) =>
@@ -38,100 +38,124 @@ class RegisterForm extends React.Component {
 
 	onSubmit = () =>
 		this.setState({ submitting: true }, () =>
-			setTimeout(() => {
-				this.props.setUser({ name: "john doe" });
-			}, 1000)
+			this.props.register(this.state.data, this.invalidate)
 		);
 
 	onKeyDown = ({ keyCode }) => keyCode === 13 && this.onSubmit();
 
 	render() {
 		return (
-			<Card onKeyDown={this.onKeyDown} className="w-md-50 my-4 mx-auto">
-				<Card.Body>
-					<Form>
-						<Form.Group controlId="name">
-							<Form.Label>Name</Form.Label>
-							<Form.Control
-								isInvalid={this.state.errors.name.length}
-								onChange={this.onChange}
-								value={this.state.name}
-								placeholder="enter your name"
-							/>
-							<Form.Control.Feedback type="invalid">
-								{this.state.errors.name}
-							</Form.Control.Feedback>
-						</Form.Group>
+			<Container as="main" className="my-auto">
+				<Row>
+					<Col
+						lg={8}
+						xs={12}
+						className="mx-auto pt-5"
+						as={Form}
+						onKeyDown={this.onKeyDown}
+						data-aos="zoom-in">
+						<div className="mb-5 text-center">
+							<small className="text-muted">join {process.env.REACT_APP_NAME}</small>
+							<h3>Create your account</h3>
+						</div>
 
-						<Form.Group controlId="email">
-							<Form.Label>Email</Form.Label>
-							<Form.Control
-								isInvalid={this.state.errors.email.length}
-								onChange={this.onChange}
-								value={this.state.email}
-								type="email"
-								placeholder="enter your email adress"
-							/>
-							<Form.Control.Feedback type="invalid">
-								{this.state.errors.email}
-							</Form.Control.Feedback>
-						</Form.Group>
+						<Row as={Form.Group} controlId="username" className="mb-4">
+							<Form.Label column xs={12} sm={3} className="required">
+								Username
+							</Form.Label>
+							<Col xs={12} sm={9} lg={6}>
+								<Form.Control
+									isInvalid={!!this.state.errors.username.length}
+									onChange={this.onChange}
+									value={this.state.data.username}
+									placeholder="username"
+								/>
+								<Form.Control.Feedback as="ul" type="invalid">
+									{this.state.errors.username.map(message => (
+										<li key={message}>{message}</li>
+									))}
+								</Form.Control.Feedback>
+							</Col>
+						</Row>
 
-						<Form.Group controlId="password">
-							<Form.Label>Password</Form.Label>
-							<Form.Control
-								isInvalid={this.state.errors.password.length}
-								onChange={this.onChange}
-								value={this.state.password}
-								type="password"
-								placeholder="enter your password"
-							/>
-							<Form.Control.Feedback type="invalid">
-								{this.state.errors.password}
-							</Form.Control.Feedback>
-						</Form.Group>
+						<Row as={Form.Group} controlId="email" className="mb-4">
+							<Form.Label column xs={12} sm={3} className="required">
+								Email
+							</Form.Label>
+							<Col xs={12} sm={9} lg={6}>
+								<Form.Control
+									isInvalid={!!this.state.errors.email.length}
+									onChange={this.onChange}
+									value={this.state.data.email}
+									type="email"
+									placeholder="email address"
+								/>
+								<Form.Control.Feedback as="ul" type="invalid">
+									{this.state.errors.email.map(message => (
+										<li key={message}>{message}</li>
+									))}
+								</Form.Control.Feedback>
+							</Col>
+						</Row>
 
-						<Form.Group controlId="password_confirmation">
-							<Form.Label>Password confirmation</Form.Label>
-							<Form.Control
-								isInvalid={this.state.errors.password_confirmation.length}
-								onChange={this.onChange}
-								value={this.state.password_confirmation}
-								type="password"
-								placeholder="confirm your password"
-							/>
-							<Form.Control.Feedback type="invalid">
-								{this.state.errors.password_confirmation}
-							</Form.Control.Feedback>
-						</Form.Group>
-					</Form>
-				</Card.Body>
-				<Card.Footer>
-					<Button
-						disabled={this.state.submitting}
-						variant="primary"
-						onClick={this.onSubmit}>
-						{this.state.submitting ? (
-							<Spinner
-								className="mx-3"
-								as="span"
-								aria-hidden="true"
-								animation="border"
-								role="status"
-								size="sm">
-								<span className="sr-only">Submitting ...</span>
-							</Spinner>
-						) : (
-							"submit"
-						)}
-					</Button>
-				</Card.Footer>
-			</Card>
+						<Row as={Form.Group} controlId="password" className="mb-4">
+							<Form.Label column xs={12} sm={3} className="required">
+								Password
+							</Form.Label>
+							<Col xs={12} sm={9} lg={6}>
+								<Form.Control
+									isInvalid={!!this.state.errors.password.length}
+									onChange={this.onChange}
+									value={this.state.data.password}
+									type="password"
+									placeholder="password"
+								/>
+								<small className="text-muted">
+									Make sure it has min 8 and max 20 characters, including at least
+									one number, lowercase and uppercase letter.
+								</small>
+								<Form.Control.Feedback as="ul" type="invalid">
+									{this.state.errors.password.map(message => (
+										<li key={message}>{message}</li>
+									))}
+								</Form.Control.Feedback>
+							</Col>
+						</Row>
+
+						<Row className="mb-5">
+							<Button
+								disabled={this.state.submitting}
+								variant="dark-purple"
+								className="mx-auto"
+								onClick={this.onSubmit}>
+								{this.state.submitting ? (
+									<Spinner
+										className="mx-2"
+										as="span"
+										aria-hidden="true"
+										animation="border"
+										role="status"
+										size="sm">
+										<span className="sr-only">Submitting ...</span>
+									</Spinner>
+								) : (
+									"submit"
+								)}
+							</Button>
+						</Row>
+
+						<div className="mb-5 text-center">
+							already have a {process.env.REACT_APP_NAME} account ?
+							<Link to="/login"> Login</Link>
+						</div>
+					</Col>
+				</Row>
+			</Container>
 		);
 	}
 }
 
 export default connect(
 	null,
-	{ setUser }
+	{ register }
 )(RegisterForm);

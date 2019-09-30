@@ -1,3 +1,5 @@
+const mongoose = require('mongoose')
+
 const Project = require('../models/project');
 const User = require('../models/user');
 
@@ -15,14 +17,14 @@ const findProject = async (id, res) => {
   try {
     const project = await Project.findById(id);
     if (!project) return res.status(404).json({ error: 'Not Found' });
-    res.status(200).json({ project });
+		res.status(200).json({ project });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 };
 
 const createProject = async (userId, req, res) => {
-  const project = req.body;
+	const project = req.body;
   try {
     const newProject = await Project.create({
       admin: userId,
@@ -64,7 +66,8 @@ const deleteProject = async (id, req, res) => {
 
     await User.findByIdAndUpdate(project.admin, {
       $pull: { projectList: { _id: project._id } }
-    });
+		});
+		
     res.status(200).json({ project });
   } catch (error) {
     res.status(500).json({ error: error.message });

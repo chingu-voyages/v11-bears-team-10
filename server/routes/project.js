@@ -21,7 +21,8 @@ router.post('/:userId', (req, res) => {
 
 /* PUT project */
 router.put('/:id', (req, res) => {
-  const { id } = req.params;
+	const { id } = req.params;
+	console.log("putting", id)
   Project.updateProject(id, req, res);
 });
 
