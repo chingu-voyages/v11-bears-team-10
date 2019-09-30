@@ -38,6 +38,27 @@ export function createProject(data) {
   };
 }
 
+export function getProject(id){
+  return (dispatch, getState) =>{
+    dispatch({type: 'SET_PROJECT', payload: null})
+    axios.get(`/project/${id}`, {
+      headers: {
+        Authorization: "Bearer " + getState().authToken
+      }
+    })
+    .then(response =>{
+      dispatch({type: 'SET_PROJECT', payload: response.data.project})
+    })
+    .catch(e => {
+      console.log('error =', e)
+      if (!e.response)
+        dispatch(setError({ requestTimeout: e.code === "ECONNABORTED" }));
+      else if (e.response.status !== 401)
+        dispatch(setError({ statusCode: e.response.status }));
+    });
+  }
+}
+
 export function deleteProject(id) {
   return (dispatch, getState) => {
     axios
