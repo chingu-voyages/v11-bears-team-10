@@ -14,7 +14,7 @@ import App from "./App";
 import { getLocalStorageItems, removeLocalStorageItems } from "./_helpers";
 import AppPlaceholder from "./AppPlaceholder";
 import ErrorPage from "./errors/ErrorPage";
-import Footer from "./components/Footer/Footer";
+import Footer from "./components/Footer";
 
 AOS.init();
 

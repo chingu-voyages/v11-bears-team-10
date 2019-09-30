@@ -37,7 +37,7 @@ function renderProjectCards(projects) {
 
 export default function ProjectsList({ projects }) {
 	return (
-		<section id="project-list" className="p-3 mb-3 rounded" data-aos="fade-up">
+		<section id="project-list" className="p-3 mb-3 bg-white rounded" data-aos="fade-up">
 			<Row noGutters>
 				<h1 className="my-auto">Projects</h1>
 				<Button variant="dark-purple" className="ml-auto">

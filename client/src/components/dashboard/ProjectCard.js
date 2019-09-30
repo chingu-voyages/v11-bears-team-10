@@ -13,7 +13,7 @@ function ProjectCard({ project, history }) {
 			onClick={onClick.bind(null, history, project._id)}
 			className="project-card border border-secondary rounded p-3"
 			data-aos="fade-down">
-			<h2 className="text-center text-truncate mb-2">{project.title}</h2>
+			<h2 className="text-center text-truncate mb-3">{project.title}</h2>
 			<Row noGutters>
 				<Col xs={12} xl={6} className="text-center mb-3">
 					<small className="text-muted">
