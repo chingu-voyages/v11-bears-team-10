@@ -3,10 +3,11 @@ import axios from "axios";
 import Validation from "../../validation";
 import setError from "./setError";
 
+
 export function createProject(data) {
   let title = data.title;
   let description = data.description;
-  return dispatch => {
+  return (dispatch, getState) => {
     const validation = new Validation(data, {
       title: "min:4",
       description: "min:4"
@@ -16,53 +17,18 @@ export function createProject(data) {
       .post(
         `/project/${data.userId}`,
         { title, description },
-        { headers: {
-            Authorization: "Bearer " + localStorage.getItem("authToken")
-					} 
-				}
-      )
-			.then(response =>
-				{
-					dispatch({
-						type: "ADD_PROJECT",
-						payload: response.data
-					})
-				}
-       
-      )
-      .catch(e => {
-        if (!e.response)
-          dispatch(setError({ requestTimeout: e.code === "ECONNABORTED" }));
-        else if (e.response.status !== 401)
-          dispatch(setError({ statusCode: e.response.status }));
-      });
-  };
-}
-
-
-
-export function deleteProject(id){
-	return dispatch => {
-    axios
-      .delete(
-        `/project/${id}`,
         {
           headers: {
-            Authorization: "Bearer " + localStorage.getItem("authToken")
-					}
+            Authorization: "Bearer " + getState().authToken
+          }
         }
       )
-			.then(response =>
-				{
-					dispatch({
-						type: "DELETE_PROJECT",
-						payload: {
-							payload: response.data,
-							deleted: true
-						}
-					})
-				}
-      )
+      .then(response => {
+        dispatch({
+          type: "ADD_PROJECT",
+					payload: response.data
+        });
+      })
       .catch(e => {
         if (!e.response)
           dispatch(setError({ requestTimeout: e.code === "ECONNABORTED" }));
@@ -72,26 +38,23 @@ export function deleteProject(id){
   };
 }
 
-
-export function getProject(id) {
-  return dispatch => {
+export function deleteProject(id) {
+  return (dispatch, getState) => {
     axios
-      .get(
-        `/project/${id}`,
-        { 
-					headers: {
-            Authorization: "Bearer " + localStorage.getItem("authToken")
-					} 
-				}
-      )
-			.then(response =>
-				{
-					dispatch({
-						type: "GET_PROJECT",
-					})
-					window.location=`/project/${id}`			
-				}
-      )
+      .delete(`/project/${id}`, {
+        headers: {
+          Authorization: "Bearer " + getState().authToken
+        }
+      })
+      .then(response => {
+        dispatch({
+          type: "DELETE_PROJECT",
+          payload: {
+            payload: response.data,
+            deleted: true
+          }
+        });
+      })
       .catch(e => {
         if (!e.response)
           dispatch(setError({ requestTimeout: e.code === "ECONNABORTED" }));
@@ -102,29 +65,29 @@ export function getProject(id) {
 }
 
 
-export function updateProject(data) {
-	let title = data.name;
-	let description = data.description;
-	console.log('to put')
-  return dispatch => {
+
+export function updateProject(project, data) {
+
+		let title = data.name
+		let description=  data.description
+	
+  return (dispatch, getState) => {
     axios
       .put(
-				`/project/${data.projectId}`,
-				{ title, description },
-        { 
-					headers: {
-            Authorization: "Bearer " + localStorage.getItem("authToken")
-					} 
-				}
+        `/project/${data._id}`,
+       { title, description },
+        {
+          headers: {
+            Authorization: "Bearer " + getState().authToken
+          }
+        }
       )
-			.then(response =>
-				{
-					dispatch({
-						type: "UPDATE_PROJECT",
-						payload: response.data
-					})	
-				}
-      )
+      .then(response => {
+        dispatch({
+          type: "UPDATE_PROJECT",
+          payload: response.data
+        });
+      })
       .catch(e => {
         if (!e.response)
           dispatch(setError({ requestTimeout: e.code === "ECONNABORTED" }));
@@ -133,4 +96,3 @@ export function updateProject(data) {
       });
   };
 }
-

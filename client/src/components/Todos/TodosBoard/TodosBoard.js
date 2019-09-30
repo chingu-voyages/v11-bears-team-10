@@ -8,7 +8,7 @@ import Portal from "../../../HOC/portal/portal";
 
 const TodoPortal = Portal(TodoView);
 
-function TodosBaord({projectId}) {
+function TodosBaord({project}) {
   const [showModal, setShowModal] = useState(false);
   const [showPortal, setShowPortal] = useState(false);
 
@@ -22,7 +22,7 @@ function TodosBaord({projectId}) {
       <div className="add-todo  flex-col-centered" onClick={openForm}>
         <FontAwesomeIcon icon="plus-square" className="plus-todo" />
       </div>
-      <AddTodo showForm={showModal} handleCloseForm={closeModal} projectId={projectId} />
+      <AddTodo showForm={showModal} handleCloseForm={closeModal} projectData={project} />
       <TodoPortal showForm={showPortal} setOpen={hidePortal} />
       <Todo showTodoPortal={displayPortal} />
     </>

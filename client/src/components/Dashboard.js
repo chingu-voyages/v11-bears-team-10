@@ -1,26 +1,25 @@
-import React, { useState, useEffect } from "react";
-import { connect } from "react-redux";
+import React, { useState, useEffect } from "react"
+import { connect } from "react-redux"
 
+import ProjectCard from "./Card/ProjectCard"
+import AddProjectCard from "./../components/Card/AddProjectCard"
+import AddProjectForm from "./Todos/AddTodoForm"
+import Footer from "./Footer/Footer"
+import { fetchUpdatedUser } from "./../redux/action_creators/user"
 
-import ProjectCard from "./Card/ProjectCard";
-import AddProjectCard from "./../components/Card/AddProjectCard";
-import AddProjectForm from "./../container/Modals/AddProjectForm";
-import Footer from "./Footer/Footer";
-
-
-
-function DashBoard({ user, projects, newProject }) {
-
-	const [showModal, setShowModal] = useState(false);
-  const [teamProjects, setTeamProjects] = useState(projects)
-
-
-  const showForm = () => setShowModal(true);
-	const closeModal = () => setShowModal(false);
+function DashBoard({ user, newProject, fetchUpdatedUser }) {
+	const [showModal, setShowModal] = useState(false)
 	
-	useEffect(() => {
-       setTeamProjects(projects)
-	}, [projects])
+  const showForm = () => setShowModal(true)
+  const closeModal = () => setShowModal(false)
+
+  useEffect(() => {
+    function getData() {
+      let id = localStorage.getItem("user_id")
+      fetchUpdatedUser(id);
+    }
+    getData();
+  }, [newProject, fetchUpdatedUser]);
 
   return (
     <div className="dashboard">
@@ -33,15 +32,15 @@ function DashBoard({ user, projects, newProject }) {
             <hr />
             <section className="flex-row summary-cards">
               <div className="summary">
-                <h1>{teamProjects.length}</h1>
+                <h1>{user.projectList.length}</h1>
                 <h3>Projects</h3>
               </div>
               <div className="summary">
-                <h1>{user.totalConnections || 0}</h1>
+                <h1>{0}</h1>
                 <h3>Connections</h3>
               </div>
               <div className="summary">
-                <h1>{user.finishedProjects || 0}</h1>
+                <h1>{0}</h1>
                 <h3>Finished Projects</h3>
               </div>
             </section>
@@ -50,13 +49,14 @@ function DashBoard({ user, projects, newProject }) {
             <AddProjectForm
               showForm={showModal}
               handleCloseForm={closeModal}
-							userId={localStorage.getItem("user_id")}
-							
+              userId={localStorage.getItem("user_id")}
             />
-            {projects.map(project => {
-                return <ProjectCard project={project} key={`project${project._id}`} />;
-						})}
-						<AddProjectCard handleShowModal={showForm} />
+            {user.projectList.map(project => {
+              return (
+                <ProjectCard project={project} key={`project${project._id}`} />
+              );
+            })}
+            <AddProjectCard handleShowModal={showForm} />
           </section>
         </div>
       </section>
@@ -66,11 +66,11 @@ function DashBoard({ user, projects, newProject }) {
 }
 
 const mapStateToProps = state => ({
-	user: state.user,
-	projects: state.user.projectList,
-	newProject: state.project,
+  user: state.user,
+  newProject: state.project
 });
 
 export default connect(
-	mapStateToProps
+  mapStateToProps,
+  { fetchUpdatedUser }
 )(DashBoard);

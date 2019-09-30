@@ -15,14 +15,14 @@ const userOne = {
   id: '',
   username: 'yakhousam',
   email: 'yakhousam@mymail.com',
-  password: 'mypassword',
+  password: 'myPassword1@',
   token: ''
 };
 const userTwo = {
   id: '',
   username: 'yakhousam2',
   email: 'yakhousam2@mymail.com',
-  password: 'mypassword2',
+  password: 'myPassword2@',
   token: ''
 };
 
@@ -81,6 +81,41 @@ describe('TEST User collectiion', function() {
         });
     });
   })
+  describe('VALIDATE REGISTRATION FIELDS', function(){
+    it('POST - /v1/register - Valide Email - should return 201', function(done) {
+      const email = 'valideemail@mail.com'  
+      chai
+        .request(pmApp)
+        .post('/v1/register')
+        .send({ username: 'testEmail', email,  password: 'Abcd1234@_' })
+        .end((err, response) => {
+          should.equal(201, response.status);
+          done();
+        });
+    });
+    it('POST - /v1/register - Valide Username - should return 201', function(done) {
+      const username =  'testUsername'
+      chai
+        .request(pmApp)
+        .post('/v1/register')
+        .send({ username , email: 'validusername@mail.com' , password: 'Abcd1234@_' })
+        .end((err, response) => {
+          should.equal(201, response.status);
+          done();
+        });
+    });
+    it('POST - /v1/register - Valide password - should return 201', function(done) {
+      const password =  'Abcdffff1@'
+      chai
+        .request(pmApp)
+        .post('/v1/register')
+        .send({ username: 'testPassword' , email: 'validpassword@mail.com' , password })
+        .end((err, response) => {
+          should.equal(201, response.status);
+          done();
+        });
+    });
+  })
 
   describe('TEST LOGIN - URI = /v1/login', function(){
     it('POST - /v1/login - User that has an account can login - should return 200 ', function(done) {
@@ -101,7 +136,7 @@ describe('TEST User collectiion', function() {
       chai
         .request(pmApp)
         .post('/v1/login')
-        .send({username: 'BobMarley', password:'heaven'})
+        .send({username: 'BobMarley', password:'@Heaven1'})
         .end((err, response) => {
           response.status.should.equal(401);
           done();

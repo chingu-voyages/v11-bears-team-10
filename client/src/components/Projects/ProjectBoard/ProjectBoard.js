@@ -3,29 +3,36 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { connect, } from "react-redux";
 
 
-import TodosBoard from "../Todos/TodosBoard/TodosBoard";
-import MessageBoard from "../Messages/MessageBoard";
-import Footer from '../Footer/Footer'
+import TodosBoard from "../../Todos/TodosBoard/TodosBoard";
+import MessageBoard from "../../Messages/MessageBoard";
+import Footer from '../../Footer/Footer'
 
 
 
-function ProjectBoard({project}) {
-  const [data, setData] = useState(project)
+function ProjectBoard({projectList,project, match}) {
+  const [data, setData] = useState({})
   const [showMessages, setShowMessages] = useState(false);
 	const [showTodos, setShowTodos] = useState(true);
 
   useEffect(() => {
-    setData(project)
-	}, [project])
+		const id = match.params.id
+		//get the rest of project data from user projects array
+		const data = projectList.filter(item =>  item._id === id)
+		setData(data[0])
+	}, [])
 	
+	//see when projects data changes
+	useEffect(() =>{
+     console.log('project data after todo', project)
+	}, [project])
+
   return (
     <div className="projectsbody">
-      {/* <Header /> */}
       <section className="board-body flex-col-centered">
         <div className="content" data-aos="fade-in">
           <section className="projects-summary flex-col" data-aos="fade-up">
             <span>
-              <h3>{data !== null ? data.title : ''}</h3>
+              <h3>{data.title}</h3>
             </span>
             <hr />
             <section className="flex-row projects-items">
@@ -66,7 +73,7 @@ function ProjectBoard({project}) {
 						  <MessageBoard /> 
 					  	: 
 						  <TodosBoard 
-							  projectId = {data !== null ? data._id : ''}
+							  project = {data}
 							/>
 						}
           </section>
@@ -78,7 +85,8 @@ function ProjectBoard({project}) {
 }
 
 const mapStateToProps = state => ({
-	project : state.project,
+	projectList: state.user.projectList,
+	project: state.project
 })
 
 export default connect(mapStateToProps)(ProjectBoard);
