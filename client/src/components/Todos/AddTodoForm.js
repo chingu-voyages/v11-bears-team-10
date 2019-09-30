@@ -28,7 +28,7 @@ const handleNameChange = e => setName(e.target.value)
 						name,
 						description,
 					}
-				 updateProject(Object.assign(projectData, data))
+				 updateProject(projectData, data)
 			 }}
 			>
         <Modal.Body>

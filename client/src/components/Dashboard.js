@@ -3,7 +3,7 @@ import { connect } from "react-redux"
 
 import ProjectCard from "./Card/ProjectCard"
 import AddProjectCard from "./../components/Card/AddProjectCard"
-import AddProjectForm from "./../container/Modals/AddProjectForm"
+import AddProjectForm from "./Todos/AddTodoForm"
 import Footer from "./Footer/Footer"
 import { fetchUpdatedUser } from "./../redux/action_creators/user"
 

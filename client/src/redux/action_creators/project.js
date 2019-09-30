@@ -67,13 +67,15 @@ export function deleteProject(id) {
 
 
 export function updateProject(project, data) {
-	let title = data.name;
-  let description = data.description;
+
+		let title = data.name
+		let description=  data.description
+	
   return (dispatch, getState) => {
     axios
       .put(
         `/project/${data._id}`,
-        { project, title, description },
+       { title, description },
         {
           headers: {
             Authorization: "Bearer " + getState().authToken
