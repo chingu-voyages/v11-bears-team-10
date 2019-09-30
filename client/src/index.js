@@ -27,14 +27,23 @@ axios.defaults.timeout = parseInt(process.env.REACT_APP_REQUEST_TIMEOUT);
 const DEFAULT_INITIAL_STATE = {
 	user: null,
 	authToken: null,
+
 	/**
 	 * null if no error , or an object containing 0 or more of these properties :
 	 * message : string
 	 * statusCode : int
 	 * requestTimeout : bool
-	 *
 	 */
 	error: null,
+
+	/**
+	 * possible values :
+	 * - null : project list is not fetched yet from the server , need to do an axios request .
+	 * - false : something went wrong when trying to fetch the projects list .
+	 * - array : an array of projects .
+	 */
+	projects: null,
+
 	project: null
 };
 
@@ -59,7 +68,7 @@ const renderErrorPage = error =>
 
 // authentication before rendering the App component
 const { user_id, authToken } = getLocalStorageItems("user_id", "authToken");
-// const { user_id, authToken } = { user_id: 5, authToken: 22 };
+
 if (user_id && authToken) {
 	renderPlaceholder();
 
@@ -67,7 +76,7 @@ if (user_id && authToken) {
 		.get(`/users/${user_id}`, { headers: { Authorization: "Bearer " + authToken } })
 
 		.then(response => {
-			axios.defaults.headers.common["Authorization"] = authToken;
+			axios.defaults.headers.common["Authorization"] = "Bearer " + authToken;
 			renderApp({ ...DEFAULT_INITIAL_STATE, authToken, user: response.data.user });
 		})
 

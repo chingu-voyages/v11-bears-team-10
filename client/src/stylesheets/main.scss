@@ -6,9 +6,7 @@
 @import "./helpers/mixins";
 
 @import "./components/dashboard";
-@import "./components/card";
 @import "./components/addProject";
-@import "./components/header";
 @import "./components/footer";
 
 @import "./components/todolist";
@@ -20,6 +18,8 @@
 @import "./components/landingPage";
 @import "./components/navbar";
 
+$enable-responsive-font-sizes: true;
+
 html {
 	scroll-behavior: smooth;
 	@media (prefers-reduced-motion: reduce) {
@@ -30,6 +30,11 @@ html {
 body {
 	@include thinScrollbar($light, $secondary); // it worked on chrome , but not on firefox
 	overflow-x: hidden;
+	background-image: url("../images/landing.png");
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-attachment: fixed;
 
 	#root {
 		// prevent scroll bar from pushing elements to the left

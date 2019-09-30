@@ -3,15 +3,15 @@ import { Spinner } from "react-bootstrap";
 
 export default function AppPlaceholder() {
 	return (
-		<div className="h-100vh d-flex flex-column">
+		<>
 			<Spinner
 				animation="border"
 				variant="primary"
-				className="m-auto big-spinner"
+				className="mt-auto mb-5 mx-auto  big-spinner"
 				role="status">
 				<span className="sr-only">Authenticating...</span>
 			</Spinner>
-			<h2 className="m-auto text-secondary">Authenticating ...</h2>
-		</div>
+			<h2 className="mb-auto mt-5 mx-auto text-secondary">Authenticating ...</h2>
+		</>
 	);
 }
