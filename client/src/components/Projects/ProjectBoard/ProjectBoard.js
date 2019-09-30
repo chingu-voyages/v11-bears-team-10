@@ -3,9 +3,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { connect, } from "react-redux";
 
 
-import TodosBoard from "../Todos/TodosBoard/TodosBoard";
-import MessageBoard from "../Messages/MessageBoard";
-import Footer from '../Footer/Footer'
+import TodosBoard from "../../Todos/TodosBoard/TodosBoard";
+import MessageBoard from "../../Messages/MessageBoard";
+import Footer from '../../Footer/Footer'
 
 
 

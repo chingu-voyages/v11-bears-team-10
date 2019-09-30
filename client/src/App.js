@@ -12,7 +12,7 @@ import HowItWorks from "./components/HowItWorks";
 import Features from "./components/Features";
 import ContactUs from "./components/ContactUs";
 import Dashboard from "./components/Dashboard";
-import ProjectBoard from './components/ProjectBoard/ProjectBoard'
+import ProjectBoard from './components/Projects/ProjectBoard/ProjectBoard'
 import LoginForm from "./components/LoginForm";
 import RegisterForm from "./components/RegisterForm";
 import ErrorPage from "./errors/ErrorPage";
