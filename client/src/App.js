@@ -15,7 +15,7 @@ import LoginForm from "./components/LoginForm";
 import RegisterForm from "./components/RegisterForm";
 import Footer from "./components/Footer";
 import Dashboard from "./components/dashboard";
-import ProjectPage from "./components/project_page";
+import ProjectPage from "./components/Projects/ProjectBoard/ProjectBoard";
 import ErrorPage from "./errors/ErrorPage";
 import ErrorToast from "./errors/ErrorToast";
 
