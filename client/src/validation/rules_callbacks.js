@@ -28,18 +28,5 @@ export default {
 		);
 	},
 
-	password: (attribute, value) => {
-		const errors = [];
-
-		if (!/^[a-z0-9]+$/i.test(value)) errors.push("must contain only alphanumeric characters");
-
-		if (!/[a-z]/.test(value)) errors.push("must contain at least one lowercase letter");
-
-		if (!/[A-Z]/.test(value)) errors.push("must contain at least one uppercase letter");
-
-		if (!/[0-9]/.test(value)) errors.push("must contain at least one number");
-
-		if (errors.length) return errors;
-		return true;
-	}
+	required: (attribute, value) => !!value || `${attribute} is required`
 };

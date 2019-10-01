@@ -70,6 +70,11 @@ class RegisterForm extends Component {
 									value={this.state.data.username}
 									placeholder="username"
 								/>
+
+								<small className="text-muted">
+									Make sure it has min 4 characters, and it's alphanumeric
+								</small>
+
 								<Form.Control.Feedback as="ul" type="invalid">
 									{this.state.errors.username.map(message => (
 										<li key={message}>{message}</li>
@@ -110,10 +115,12 @@ class RegisterForm extends Component {
 									type="password"
 									placeholder="password"
 								/>
+
 								<small className="text-muted">
-									Make sure it has min 8 and max 20 characters, including at least
-									one number, lowercase and uppercase letter.
+									Make sure it has min 8 characters, including at least one
+									number, special character ,lowercase and uppercase letter.
 								</small>
+
 								<Form.Control.Feedback as="ul" type="invalid">
 									{this.state.errors.password.map(message => (
 										<li key={message}>{message}</li>

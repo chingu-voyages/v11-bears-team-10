@@ -3,15 +3,15 @@ import Validation from "../../validation";
 import setUser from "./setUser";
 import setError from "./setError";
 
-export default function login(data, invalidate) {
+export default function login(data, invalidate, invalidCredentials) {
 	return dispatch => {
 		const validation = new Validation(data, {
-			username: "min:1",
-			password: "min:1"
+			username: "required",
+			password: "required"
 		});
 		validation.validate();
 
-		if (!validation.passes) return invalidate("username or password is empty");
+		if (!validation.passes) return invalidate(validation.errors);
 
 		axios
 			.post("/login", data)
@@ -19,13 +19,18 @@ export default function login(data, invalidate) {
 			.then(response => dispatch(setUser(response.data.user, response.data.token)))
 
 			.catch(e => {
-				if (!e.response) dispatch(setError({ requestTimeout: e.code === "ECONNABORTED" }));
-				else if (e.response.status !== 401)
-					dispatch(setError({ statusCode: e.response.status }));
+				if (!e.response)
+					return dispatch(setError({ requestTimeout: e.code === "ECONNABORTED" }));
 
-				invalidate(
-					e.response && e.response.status === 401 ? "invalid credentials" : undefined
-				);
+				if (e.response.status === 401) return invalidCredentials();
+
+				if (e.response.status === 422)
+					e.response.data.errors.forEach(error =>
+						validation.addErrors(error.msg, error.param)
+					);
+				else dispatch(setError({ statusCode: e.response.status }));
+
+				invalidate(validation.errors);
 			});
 	};
 }
