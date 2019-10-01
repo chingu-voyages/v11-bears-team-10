@@ -11,13 +11,13 @@ import LandingPage from "./components/LandingPage";
 import HowItWorks from "./components/HowItWorks";
 import Features from "./components/Features";
 import ContactUs from "./components/ContactUs";
-import Dashboard from "./components/dashboard";
-import ProjectBoard from './components/Projects/ProjectBoard/ProjectBoard'
 import LoginForm from "./components/LoginForm";
 import RegisterForm from "./components/RegisterForm";
+import Footer from "./components/Footer";
+import Dashboard from "./components/dashboard";
+import ProjectPage from "./components/project_page";
 import ErrorPage from "./errors/ErrorPage";
 import ErrorToast from "./errors/ErrorToast";
-import Footer from "./components/Footer";
 
 function App({ user, error, resetError }) {
 	return (
@@ -35,7 +35,7 @@ function App({ user, error, resetError }) {
 					path="/project/:id"
 					redirectIf={!user}
 					redirectTo="/login"
-					component={ProjectBoard}
+					component={ProjectPage}
 				/>
 				<ProtectedRoute
 					path="/dashboard"

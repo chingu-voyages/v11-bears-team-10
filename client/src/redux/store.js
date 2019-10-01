@@ -9,12 +9,9 @@ import middlewares from "./middlewares";
 import reducers from "./reducers";
 
 export default function configureAppStore(preloadedState) {
-	const middleWaresArr = [...middlewares, thunkMIddleware];
-	const middleWareEnhancers = applyMiddleware(...middleWaresArr);
+	const middleWareEnhancers = applyMiddleware(thunkMIddleware, ...middlewares);
 	const composedEnhancers = composeWithDevTools(middleWareEnhancers);
 
 	//create the store
 	return createStore(combineReducers(reducers), preloadedState, composedEnhancers);
-	// const store = createStore(combineReducers(reducers), applyMiddleware(thunkMIddleware));
-	// return store;
 }
