@@ -6,7 +6,7 @@ const todoListSchema = new Schema({
   description: String,
   date_create: { type: Date, default: Date.now },
   date_due: Date,
-  isClosed: { type: Boolean, default: false },
+  completed: { type: Boolean, default: false },
   assigned_users: [
     {
       username: { type: String, require: true }
@@ -35,7 +35,7 @@ const projectSchema = new Schema({
   date_create: { type: Date, default: Date.now },
   todos: [todoListSchema],
   message_board: [messageBoardSchema],
-  isClosed: { type: Boolean, default: false },
+  completed: { type: Boolean, default: false },
   team: [
     {
       username: { type: String, require: true }

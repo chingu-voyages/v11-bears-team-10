@@ -1,4 +1,3 @@
-const mongoose = require('mongoose')
 
 const Project = require('../models/project');
 const User = require('../models/user');
@@ -81,17 +80,19 @@ async function updateUserProjectList(res, project, users = []) {
         const nb_todos = project.todos.length;
         const nb_msg = project.message_board.length;
         const nb_member = project.team.length + 1;
+        const completed = project.completed;
         const user = await User.findById(userId);
         const userPrj = user.projectList.id(project._id);
         if (userPrj) {
-          userPrj.set({ nb_todos, nb_msg, nb_member });
+          userPrj.set({ title: project.title, nb_todos, nb_msg, nb_member, completed });
         } else {
           user.projectList.push({
             _id: project._id,
             title: project.title,
             nb_todos,
             nb_msg,
-            nb_member
+            nb_member,
+            completed
           });
         }
         await user.save();

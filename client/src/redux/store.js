@@ -15,4 +15,6 @@ export default function configureAppStore(preloadedState) {
 
 	//create the store
 	return createStore(combineReducers(reducers), preloadedState, composedEnhancers);
+	// const store = createStore(combineReducers(reducers), applyMiddleware(thunkMIddleware));
+	// return store;
 }
