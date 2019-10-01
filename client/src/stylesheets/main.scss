@@ -8,15 +8,14 @@
 @import "./components/dashboard";
 @import "./components/addProject";
 @import "./components/footer";
-
 @import "./components/todolist";
 @import "./components/projectboard";
 @import "./components/message";
 @import "./components/addTodo";
 @import "./components/todos";
-
 @import "./components/landingPage";
 @import "./components/navbar";
+@import "./components/errorPage";
 
 $enable-responsive-font-sizes: true;
 
@@ -121,4 +120,11 @@ $spinner-size: 8;
 // fix a react-bootstrap animation bug
 .navbar-collapse {
 	flex-basis: unset;
+}
+
+.bottom-shadow {
+	&,
+	&-on-hover:hover {
+		box-shadow: 0px 3px 5px -1px rgba(black, 0.25);
+	}
 }
