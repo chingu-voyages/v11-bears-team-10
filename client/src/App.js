@@ -17,7 +17,7 @@ import LoginForm from "./components/LoginForm";
 import RegisterForm from "./components/RegisterForm";
 import ErrorPage from "./errors/ErrorPage";
 import ErrorToast from "./errors/ErrorToast";
-import Footer from "./components/Footer/Footer";
+import Footer from "./components/Footer";
 
 function App({ user, error, resetError }) {
 	return (

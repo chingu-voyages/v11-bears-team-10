@@ -115,10 +115,6 @@
 	}
 }
 
-#project-list {
-	background-color: white;
-}
-
 .project-card {
 	cursor: pointer;
 
@@ -127,7 +123,7 @@
 	}
 
 	h2 {
-		@include font-size(1.4rem);
+		@include font-size(1.2rem);
 	}
 
 	p {
@@ -156,9 +152,11 @@
 		#team-members {
 			color: #8105d8;
 		}
+
 		#messages {
 			color: #3b064d;
 		}
+		
 		#todos {
 			color: #ed0cef;
 		}
