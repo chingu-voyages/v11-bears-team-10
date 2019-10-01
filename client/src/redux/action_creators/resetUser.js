@@ -1,3 +1,2 @@
-export default function resetUser() {
-	return { type: "RESET_USER" };
-}
+const resetUser = () => ({ type: "RESET_USER" });
+export default resetUser;

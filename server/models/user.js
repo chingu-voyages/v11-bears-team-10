@@ -44,7 +44,8 @@ const userSchema = new Schema({
       title: String,
       nb_todos: {type: Number, default: 0},
       nb_msg: {type: Number, default: 0},
-      nb_member: {type: Number, default: 0}
+      nb_member: {type: Number, default: 0},
+      completed: { type: Boolean, default: false }
     }
   ]
 });

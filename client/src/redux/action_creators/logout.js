@@ -1,5 +1,4 @@
 import resetUser from "./resetUser";
 
-export default function logout() {
-	return dispatch => dispatch(resetUser());
-}
+const logout = () => dispatch => dispatch(resetUser());
+export default logout;

@@ -1,38 +1,28 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { connect, } from "react-redux";
-
-
+import { connect } from "react-redux";
+import { getProject } from "../../../redux/action_creators/project";
 import TodosBoard from "../../Todos/TodosBoard/TodosBoard";
 import MessageBoard from "../../Messages/MessageBoard";
-import Footer from '../../Footer/Footer'
 
-
-
-function ProjectBoard({projectList,project, match}) {
-  const [data, setData] = useState({})
-  const [showMessages, setShowMessages] = useState(false);
-	const [showTodos, setShowTodos] = useState(true);
+function ProjectBoard(props) {
+  const { project, dispatch} = props;
+  const { id } = props.match.params;
 
   useEffect(() => {
-		const id = match.params.id
-		//get the rest of project data from user projects array
-		const data = projectList.filter(item =>  item._id === id)
-		setData(data[0])
-	}, [])
-	
-	//see when projects data changes
-	useEffect(() =>{
-     console.log('project data after todo', project)
-	}, [project])
+    console.log('use effect getproject')
+    dispatch(getProject(id));
+  }, [id, dispatch]);
 
-  return (
+  return !project ? (
+    <div>loading...</div>
+  ) : (
     <div className="projectsbody">
       <section className="board-body flex-col-centered">
         <div className="content" data-aos="fade-in">
           <section className="projects-summary flex-col" data-aos="fade-up">
             <span>
-              <h3>{data.title}</h3>
+              <h3>{project.title}</h3>
             </span>
             <hr />
             <section className="flex-row projects-items">
@@ -41,11 +31,11 @@ function ProjectBoard({projectList,project, match}) {
                   <FontAwesomeIcon icon="list-ul" />
                 </div>
                 <div
-                  className={`summary ${showTodos ? "clicked" : ""}`}
-                  onClick={() => {
-                    setShowMessages(false);
-                    setShowTodos(true);
-                  }}
+                  // className={`summary ${showTodos ? "clicked" : ""}`}
+                  //   onClick={() => {
+                  //     setShowMessages(false);
+                  //     setShowTodos(true);
+                  //   }}
                 >
                   <h3>Todos</h3>
                 </div>
@@ -55,38 +45,33 @@ function ProjectBoard({projectList,project, match}) {
                   <FontAwesomeIcon icon="sticky-note" />
                 </div>
                 <div
-                  className={`summary ${showMessages ? "clicked" : ""}`}
-                  onClick={() => {
-                    setShowTodos(false);
-                    setShowMessages(true);
-                  }}
+                  // className={`summary ${showMessages ? "clicked" : ""}`}
+                  //   onClick={() => {
+                  //     setShowTodos(false);
+                  //     setShowMessages(true);
+                  //   }}
                 >
                   <h3>Message Board</h3>
                 </div>
               </div>
             </section>
           </section>
-          <section className="flex-col" data-aos="fade-up">
-						{ 
-							showMessages 
-						  ? 
-						  <MessageBoard /> 
-					  	: 
-						  <TodosBoard 
-							  project = {data}
-							/>
-						}
-          </section>
+          {/* <section className="flex-col" data-aos="fade-up">
+            {showMessages ? (
+              <MessageBoard />
+            ) : (
+              <TodosBoard project={project.todos} />
+            )}
+          </section> */}
         </div>
       </section>
-			<Footer />
     </div>
   );
 }
+const mapStatToProps = state => {
+  return {
+    project: state.project
+  };
+};
 
-const mapStateToProps = state => ({
-	projectList: state.user.projectList,
-	project: state.project
-})
-
-export default connect(mapStateToProps)(ProjectBoard);
+export default connect(mapStatToProps)(ProjectBoard);
