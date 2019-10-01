@@ -3,16 +3,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Row, Col } from "react-bootstrap";
 import { withRouter} from "react-router-dom";
 
-// function onClick(history, project_id) {
-// 	history.push("/project/" + project_id);
-// }
-
-function ProjectCard({ project }) {
+function ProjectCard({ project, history }) {
 	return (
-		// <Link to={`/project/${project._id}`}>
 		<div
 			className="project-card border border-secondary rounded p-3"
-			onClick={()=> history.pushState(`/project/${project._id}`)}
+			onClick={()=> history.push(`/project/${project._id}`)}
 			data-aos="fade-down">
 			<h2 className="text-center text-truncate mb-3">{project.title}</h2>
 			<Row noGutters>
@@ -38,9 +33,7 @@ function ProjectCard({ project }) {
 				</Col>
 			</Row>
 		</div>
-		// </Link>
 	);
 }
 
 export default withRouter(ProjectCard);
-// export default ProjectCard;
