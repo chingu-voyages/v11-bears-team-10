@@ -1,5 +1,6 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
 import { Row, Col } from "react-bootstrap";
 import { withRouter} from "react-router-dom";
 
@@ -8,29 +9,22 @@ function ProjectCard({ project, history }) {
 		<div
 			className="project-card border border-secondary rounded p-3"
 			onClick={()=> history.push(`/project/${project._id}`)}
+
 			data-aos="fade-down">
-			<h2 className="text-center text-truncate mb-3">{project.title}</h2>
+			<h2 className="text-center text-truncate mb-4">{project.title}</h2>
 			<Row noGutters>
-				<Col xs={12} xl={6} className="text-center mb-3">
-					<small className="text-muted">
-						<span>created at : </span>
-						{project.date_create.substring(0, 10)}
-					</small>
-				</Col>
-				<Col xs={12} xl={6} className="text-right">
-					<i className="mr-4">
-						<FontAwesomeIcon icon="users" id="team-members" />
-						<span>{project.team.length}</span>
-					</i>
-					<i className="mr-4">
-						<FontAwesomeIcon icon="comments" id="messages" />
-						<span>{project.message_board.length}</span>
-					</i>
-					<i>
-						<FontAwesomeIcon icon="clipboard-list" id="todos" />
-						<span>{project.todos.length}</span>
-					</i>
-				</Col>
+				<i className="ml-auto mr-3">
+					<FontAwesomeIcon icon="users" id="team-members" />
+					<span>{project.nb_member}</span>
+				</i>
+				<i className="ml-0 mr-3">
+					<FontAwesomeIcon icon="comments" id="messages" />
+					<span>{project.nb_msg}</span>
+				</i>
+				<i className="ml-0 mr-3">
+					<FontAwesomeIcon icon="clipboard-list" id="todos" />
+					<span>{project.nb_todos}</span>
+				</i>
 			</Row>
 		</div>
 	);

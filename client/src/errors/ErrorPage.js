@@ -1,17 +1,10 @@
 import React from "react";
-import { Button } from "react-bootstrap";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import getErrorMessage from "./getErrorMessage";
 
-export default function ErrorPage({ error, resetError }) {
+export default function ErrorPage({ error }) {
 	return (
-		<>
-			<h1 className="m-auto text-muted">{getErrorMessage(error)}</h1>
-			{resetError && (
-				<Button variant="outline-secondary" className="m-auto" onClick={resetError}>
-					<FontAwesomeIcon icon="redo-alt" />
-				</Button>
-			)}
-		</>
+		<h1 id="error-page-message" className="m-auto p-4 text-light rounded-lg">
+			{getErrorMessage(error)}
+		</h1>
 	);
 }

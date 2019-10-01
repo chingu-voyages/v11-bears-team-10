@@ -36,14 +36,6 @@ const DEFAULT_INITIAL_STATE = {
 	 */
 	error: null,
 
-	/**
-	 * possible values :
-	 * - null : project list is not fetched yet from the server , need to do an axios request .
-	 * - false : something went wrong when trying to fetch the projects list .
-	 * - array : an array of projects .
-	 */
-	projects: null,
-
 	project: null
 };
 
