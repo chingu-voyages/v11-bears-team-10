@@ -8,9 +8,9 @@ An application to help you to manage projects professionally
 
 
 ### Developers
-*[Soufiane yakoubi]()
-*[Ykhousam](https://github.com/yakhousam)
-*[Jidemobell](https://github.com/jidemobell)
-*[Femi](https://github.com/femicodes)
+* [Soufiane yakoubi]()
+* [Ykhousam](https://github.com/yakhousam)
+* [Jidemobell](https://github.com/jidemobell)
+* [Femi](https://github.com/femicodes)
 
 
