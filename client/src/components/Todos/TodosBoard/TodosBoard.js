@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import TodoList from "../TodoList/TodoList";
-import AddTodoList from "../AddTodoList";
-import Todos from "../Todos";
+import Todo from "../Todos/Todo";
+import AddTodo from "../AddTodoForm";
+import TodoView from "../TodoView";
 import Portal from "../../../HOC/portal/portal";
 
-const TodoPortal = Portal(Todos);
+const TodoPortal = Portal(TodoView);
 
-function TodosBaord() {
+function TodosBaord({project}) {
   const [showModal, setShowModal] = useState(false);
   const [showPortal, setShowPortal] = useState(false);
 
@@ -22,12 +22,9 @@ function TodosBaord() {
       <div className="add-todo  flex-col-centered" onClick={openForm}>
         <FontAwesomeIcon icon="plus-square" className="plus-todo" />
       </div>
-      <AddTodoList showForm={showModal} handleCloseForm={closeModal} />
+      <AddTodo showForm={showModal} handleCloseForm={closeModal} projectData={project} />
       <TodoPortal showForm={showPortal} setOpen={hidePortal} />
-      <TodoList showTodoPortal={displayPortal} />
-      {/* <TodoList showTodoPortal={displayPortal} />
-      <TodoList showTodoPortal={displayPortal} />
-      <TodoList showTodoPortal={displayPortal} /> */}
+      <Todo showTodoPortal={displayPortal} />
     </>
   );
 }

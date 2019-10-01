@@ -1,6 +1,3 @@
-@import "../helpers/variables";
-@import "../helpers/mixins";
-
 //helpers
 .flex-row {
 	@include align-flex-item(row);
@@ -22,34 +19,6 @@
 	align-items: center;
 }
 
-
-//dashboard
-.dashboard {
-	@include align-flex-item(column);
-}
-.header {
-	background: #160f30;
-	// background: white;
-	display: flex;
-	justify-content: space-between;
-	height: 10vh;
-	#find {
-		margin-left: 20px;
-	}
-	.logout {
-		background: #00c4a7;
-		padding: 5px;
-		border: none;
-		width: 100px;
-		color: whitesmoke;
-		font-weight: 400;
-		margin-left: 10px;
-	}
-	span {
-		color: white;
-	}
-}
-
 .center-nav {
 	justify-content: space-between;
 }
@@ -59,19 +28,21 @@
 }
 
 .dash-body {
-  // border: 2px red solid;
-  background: $body-color;
-  @include align-flex-item(column);
-  align-items: center;
-  justify-content: flex-start;
+	background: $body-color;
+	@include align-flex-item(column);
+	align-items: center;
+	justify-content: center;
+	// border: red solid 2px;
 }
 
 .content {
 	height: 80;
 	@include align-flex-item(column);
-	width: 80vw;
+	// width: 80vw;
 	padding: 50px;
-	// border: 3px red solid;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 
 .add {
@@ -85,50 +56,22 @@
 }
 
 .projects-summary {
-	background: white;
-	width: 68vw;
-	margin-bottom: 30px;
-	margin-left: 12px;
-	padding: 20px;
-	justify-content: flex-start;
 	@include drop-shadow;
-	p {
-		margin-bottom: unset;
-		// font-size: 10px;
-	}
-	hr {
-		// @include divider(red);
-		height: 0.01em;
-		width: 65vw;
-		color: #ecf4f3;
-		background: #ecf4f3;
-		margin-left: unset;
-	}
-	h2,
-	h3,
-	h5 {
-		font-size: 13px;
-		margin: unset;
-	}
 }
 
 .summary-cards {
-  justify-content: space-between;
-  margin: 0 4px;
-  .summary {
-    // backdrop-filter:
-    width: 20vw;
-    padding: 10px;
-    background: #e4f2f0c0;
-  }
+	justify-content: space-between;
+	margin: 0 4px;
+	.summary {
+		width: 20vw;
+		padding: 10px;
+		background: #e4f2f0c0;
+	}
 }
 
-
-
-
-.add-project{
+.add-project {
 	height: 25vh;
-  width: 18rem;
+	width: 18rem;
 	margin: 15px;
 	background: #00c4a7;
 	font-size: 40px;
@@ -136,3 +79,86 @@
 	color: white;
 }
 
+// --------------------------------------------------------------------------------------------------------------------|
+// ---------------------------------------- soufiane's dashboard styles -----------------------------------------------|
+// --------------------------------------------------------------------------------------------------------------------|
+
+#dashboard {
+	flex: 1;
+	background-color: rgba(#011038, 0.15);
+
+	@include media-breakpoint-up(sm) {
+		border-radius: 0.25rem !important; // the same as .rounded from bootstrap
+	}
+
+	&,
+	> section {
+		box-shadow: 0px 3px 5px -1px rgba(black, 0.25);
+	}
+
+	#projects-summary {
+		h2 {
+			background-color: #e4f2f0c0;
+		}
+	}
+
+	h1 {
+		@include font-size(1.1rem);
+	}
+
+	#projects-summary h2 {
+		@include font-size(2rem);
+
+		span {
+			@include font-size(0.85rem);
+		}
+	}
+}
+
+.project-card {
+	cursor: pointer;
+
+	&:hover {
+		box-shadow: 0px 3px 5px 0px rgba(black, 0.25);
+	}
+
+	h2 {
+		@include font-size(1.2rem);
+	}
+
+	p {
+		@include font-size(0.8rem);
+	}
+
+	i {
+		@include font-size(1.4rem);
+		font-style: normal;
+		position: relative;
+
+		span {
+			text-align: center;
+			background-color: #00c4a7;
+			border-radius: 50%;
+			@include font-size(0.6rem);
+			position: absolute;
+			left: -5px;
+			top: -5px;
+			width: 1.1rem;
+			height: 1.1rem;
+			line-height: 1.1rem;
+			color: white;
+		}
+
+		#team-members {
+			color: #8105d8;
+		}
+
+		#messages {
+			color: #3b064d;
+		}
+		
+		#todos {
+			color: #ed0cef;
+		}
+	}
+}

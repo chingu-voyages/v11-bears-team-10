@@ -1,3 +1,4 @@
+
 const Project = require('../models/project');
 const User = require('../models/user');
 
@@ -15,14 +16,14 @@ const findProject = async (id, res) => {
   try {
     const project = await Project.findById(id);
     if (!project) return res.status(404).json({ error: 'Not Found' });
-    res.status(200).json({ project });
+		res.status(200).json({ project });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 };
 
 const createProject = async (userId, req, res) => {
-  const project = req.body;
+	const project = req.body;
   try {
     const newProject = await Project.create({
       admin: userId,
@@ -64,7 +65,8 @@ const deleteProject = async (id, req, res) => {
 
     await User.findByIdAndUpdate(project.admin, {
       $pull: { projectList: { _id: project._id } }
-    });
+		});
+		
     res.status(200).json({ project });
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -78,17 +80,19 @@ async function updateUserProjectList(res, project, users = []) {
         const nb_todos = project.todos.length;
         const nb_msg = project.message_board.length;
         const nb_member = project.team.length + 1;
+        const completed = project.completed;
         const user = await User.findById(userId);
         const userPrj = user.projectList.id(project._id);
         if (userPrj) {
-          userPrj.set({ nb_todos, nb_msg, nb_member });
+          userPrj.set({ title: project.title, nb_todos, nb_msg, nb_member, completed });
         } else {
           user.projectList.push({
             _id: project._id,
             title: project.title,
             nb_todos,
             nb_msg,
-            nb_member
+            nb_member,
+            completed
           });
         }
         await user.save();

@@ -1,29 +1,28 @@
 import React from "react";
-import { Button, Form, Alert, Spinner, Card } from "react-bootstrap";
+import { Button, Form, Alert, Spinner, Row, Col, Container } from "react-bootstrap";
 import { connect } from "react-redux";
-import { setUser, setError } from "../redux/actionCreators";
+import { Link } from "react-router-dom";
+
+import login from "../redux/action_creators/login";
 
 class LoginForm extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
 			submitting: false,
-			error_message: "",
+			error_message: null,
 			data: {
-				email: "",
+				username: "",
 				password: ""
 			}
 		};
 	}
 
-	invalidate = (message = "invalid credentials") =>
-		this.setState({ submitting: false, error_message: message });
+	invalidate = (error_message = null) => this.setState({ submitting: false, error_message });
 
 	onSubmit = () =>
-		this.setState({ submitting: true, error_message: "" }, () =>
-			setTimeout(() => {
-				this.props.setError(500);
-			}, 1000)
+		this.setState({ submitting: true, error_message: null }, () =>
+			this.props.login(this.state.data, this.invalidate)
 		);
 
 	onChange = ({ target: { id, value } }) =>
@@ -33,56 +32,90 @@ class LoginForm extends React.Component {
 
 	render() {
 		return (
-			<Card onKeyDown={this.onKeyDown} className="w-md-50 my-4 mx-auto">
-				<Card.Body>
-					<Form>
+			<Container as="main" className="my-auto">
+				<Row>
+					<Col
+						md={8}
+						xs={12}
+						className="mx-auto pt-5"
+						as={Form}
+						onKeyDown={this.onKeyDown}
+						data-aos="zoom-in">
+						<div className="mb-5 text-center">
+							<h3>login to your {process.env.REACT_APP_NAME} account</h3>
+						</div>
+
 						{this.state.error_message && (
-							<Alert variant="danger">{this.state.error_message}</Alert>
+							<Row className="mb-5">
+								<Col xs={12} sm={9} lg={6} className="mx-auto">
+									<Alert className="text-center my-0" variant="danger">
+										{this.state.error_message}
+									</Alert>
+								</Col>
+							</Row>
 						)}
-						<Form.Group controlId="email">
-							<Form.Label>Email</Form.Label>
-							<Form.Control
-								onChange={this.onChange}
-								value={this.state.data.email}
-								type="email"
-								placeholder="enter your email"
-							/>
-						</Form.Group>
-						<Form.Group controlId="password">
-							<Form.Label>Password</Form.Label>
-							<Form.Control
-								onChange={this.onChange}
-								value={this.state.data.password}
-								type="password"
-								placeholder="enter your password"
-							/>
-						</Form.Group>
-						<Button
-							variant="primary"
-							onClick={this.onSubmit}
-							disabled={this.state.submitting}>
-							{this.state.submitting ? (
-								<Spinner
-									className="mx-2"
-									as="span"
-									aria-hidden="true"
-									animation="border"
-									role="status"
-									size="sm">
-									<span className="sr-only">Logging in ...</span>
-								</Spinner>
-							) : (
-								"login"
-							)}
-						</Button>
-					</Form>
-				</Card.Body>
-			</Card>
+
+						<Row as={Form.Group} controlId="username" className="mb-4">
+							<Form.Label column xs={12} sm={3}>
+								Username
+							</Form.Label>
+							<Col xs={12} sm={9} lg={6}>
+								<Form.Control
+									onChange={this.onChange}
+									value={this.state.data.username}
+									placeholder="username"
+								/>
+							</Col>
+						</Row>
+
+						<Row as={Form.Group} controlId="password" className="mb-4">
+							<Form.Label column xs={12} sm={3}>
+								Password
+							</Form.Label>
+							<Col xs={12} sm={9} lg={6}>
+								<Form.Control
+									onChange={this.onChange}
+									value={this.state.data.password}
+									type="password"
+									placeholder="password"
+								/>
+							</Col>
+						</Row>
+
+						<Row className="mb-5">
+							<Button
+								variant="dark-purple"
+								className="mx-auto"
+								onClick={this.onSubmit}
+								disabled={this.state.submitting}>
+								{this.state.submitting ? (
+									<Spinner
+										className="mx-2"
+										as="span"
+										aria-hidden="true"
+										animation="border"
+										role="status"
+										size="sm">
+										<span className="sr-only">Logging in ...</span>
+									</Spinner>
+								) : (
+									"login"
+								)}
+							</Button>
+						</Row>
+
+						<div className="mb-5 text-center">
+							New to {process.env.REACT_APP_NAME} ?
+							<Link to="/register"> Create an account</Link>
+						</div>
+					</Col>
+				</Row>
+			</Container>
 		);
 	}
 }
 
 export default connect(
 	null,
-	{ setUser, setError }
+	{ login }
 )(LoginForm);

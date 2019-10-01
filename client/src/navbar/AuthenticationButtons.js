@@ -1,18 +1,18 @@
 import React, { Component } from "react";
-import { ButtonGroup } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
 export default class AuthenticationButtons extends Component {
 	render() {
 		return (
-			<ButtonGroup className="ml-md-auto mt-2 mt-md-0">
-				<Link to="/register" className="btn btn-outline-primary">
+			<div className="ml-md-auto">
+				<Link to="/register" className="btn btn-dark-purple b mx-2" id="login">
 					register
 				</Link>
-				<Link to="/login" className="btn btn-outline-primary">
+
+				<Link to="/login" className="btn btn-dark-green mx-2" id="register">
 					login
 				</Link>
-			</ButtonGroup>
+			</div>
 		);
 	}
 }

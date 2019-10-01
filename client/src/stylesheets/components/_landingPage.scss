@@ -1,0 +1,17 @@
+.hero-message {
+	h1 {
+		font-family: "Yanone Kaffeesatz", sans-serif;
+		font-size: 4rem;
+
+		@include media-breakpoint-up(sm) {
+			font-size: 6rem;
+		}
+	}
+	small {
+		font-size: 1.15rem;
+
+		@include media-breakpoint-up(sm) {
+			font-size: 1.25rem;
+		}
+	}
+}

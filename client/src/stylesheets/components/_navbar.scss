@@ -1,0 +1,13 @@
+.navbar {
+	transition: background-color 0.3s;
+
+	&-brand {
+		cursor: pointer;
+	}
+}
+
+.nav-link.active {
+	background-color: $theme-purple;
+	color: $light !important;
+	border-radius: 5px;
+}

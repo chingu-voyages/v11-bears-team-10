@@ -1,5 +1,15 @@
+.projectsbody{
+	@include align-flex-item(column);
+	flex-direction: column;
+	height: 100vh;
+}
+
 .board-body {
-  background: $body-color;
+	background: $body-color;
+	@include align-flex-item(column);
+  align-items: center;
+	justify-content: flex-start;
+	flex-grow: 1;
 }
 
 .projects-items {
@@ -15,7 +25,8 @@
   }
 
   .clicked {
-    background: $theme-green;
+    // background: $theme-green;
+    background: $theme-purple;
     color: white;
 	}
 	
@@ -23,4 +34,10 @@
 
 .projects-shelf {
 	flex-wrap: wrap;
+	margin-left: 50px;
+	margin-right: 50px;
+	padding-left: 80px;
+	padding-right: 50px;
+	justify-content: flex-start;
+	align-items: center;
 }

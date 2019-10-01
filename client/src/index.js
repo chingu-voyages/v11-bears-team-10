@@ -1,38 +1,92 @@
 import React from "react";
-import ReactDOM from "react-dom";
+import { render } from "react-dom";
 import { Provider } from "react-redux";
 import configureAppStore from "./redux/store";
 import AOS from "aos";
+import axios from "axios";
 
 import * as serviceWorker from "./serviceWorker";
 
-import "./stylesheets/css/styles.css";
-import "aos/dist/aos.css";
-import "./index.scss";
+import "./stylesheets/main.scss";
 import "./images/icons/icons";
 
 import App from "./App";
+import { getLocalStorageItems, removeLocalStorageItems } from "./_helpers";
+import AppPlaceholder from "./AppPlaceholder";
+import ErrorPage from "./errors/ErrorPage";
+import Footer from "./components/Footer";
 
+AOS.init();
 
-AOS.init({});
+axios.defaults.headers.common["Content-Type"] = "application/json";
 
-export const INITIAL_STATE = {
-	// user: null,
-	user: { name: "john doe" },
-	error: {
-		showError: false,
-		statusCode: null,
-		message: null,
-		requestTimeout: false
-	}
+axios.defaults.baseURL = process.env.REACT_APP_BACKEND_API_BASE_URL;
+
+axios.defaults.timeout = parseInt(process.env.REACT_APP_REQUEST_TIMEOUT);
+
+const DEFAULT_INITIAL_STATE = {
+	user: null,
+	authToken: null,
+
+	/**
+	 * null if no error , or an object containing 0 or more of these properties :
+	 * message : string
+	 * statusCode : int
+	 * requestTimeout : bool
+	 */
+	error: null,
+
+	/**
+	 * possible values :
+	 * - null : project list is not fetched yet from the server , need to do an axios request .
+	 * - false : something went wrong when trying to fetch the projects list .
+	 * - array : an array of projects .
+	 */
+	projects: null,
+
+	project: null
 };
 
-ReactDOM.render(
-	<Provider store={configureAppStore(INITIAL_STATE)}>
-		<App />
-	</Provider>,
-	document.getElementById("root")
-);
+const renderApp = INITIAL_STATE =>
+	render(
+		<Provider store={configureAppStore(INITIAL_STATE)}>
+			<App />
+		</Provider>,
+		document.getElementById("root")
+	);
+
+const renderPlaceholder = () => render(<AppPlaceholder />, document.getElementById("root"));
+
+const renderErrorPage = error =>
+	render(
+		<>
+			<ErrorPage error={error} />
+			<Footer />
+		</>,
+		document.getElementById("root")
+	);
+
+// authentication before rendering the App component
+const { user_id, authToken } = getLocalStorageItems("user_id", "authToken");
+
+if (user_id && authToken) {
+	renderPlaceholder();
+
+	axios
+		.get(`/users/${user_id}`, { headers: { Authorization: "Bearer " + authToken } })
+
+		.then(response => {
+			axios.defaults.headers.common["Authorization"] = "Bearer " + authToken;
+			renderApp({ ...DEFAULT_INITIAL_STATE, authToken, user: response.data.user });
+		})
+
+		.catch(e => {
+			if (e.response) {
+				removeLocalStorageItems("authToken", "user_id");
+				renderApp(DEFAULT_INITIAL_STATE);
+			} else renderErrorPage({ requestTimeout: e.code === "ECONNABORTED" });
+		});
+} else renderApp(DEFAULT_INITIAL_STATE);
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
