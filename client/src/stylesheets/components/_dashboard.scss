@@ -83,25 +83,9 @@
 // ---------------------------------------- soufiane's dashboard styles -----------------------------------------------|
 // --------------------------------------------------------------------------------------------------------------------|
 
-#dashboard {
-	flex: 1;
-	background-color: rgba(#011038, 0.15);
-
-	@include media-breakpoint-up(sm) {
-		border-radius: 0.25rem !important; // the same as .rounded from bootstrap
-	}
-
-	#projects-summary {
-		h2 {
-			background-color: #e4f2f0c0;
-		}
-	}
-
-	h1 {
-		@include font-size(1.1rem);
-	}
-
-	#projects-summary h2 {
+#projects-summary {
+	h2 {
+		background-color: #e4f2f0c0;
 		@include font-size(2rem);
 
 		span {
@@ -143,7 +127,7 @@
 		#messages {
 			color: #3b064d;
 		}
-		
+
 		#todos {
 			color: #ed0cef;
 		}

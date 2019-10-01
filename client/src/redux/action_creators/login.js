@@ -22,15 +22,11 @@ export default function login(data, invalidate, invalidCredentials) {
 				if (!e.response)
 					return dispatch(setError({ requestTimeout: e.code === "ECONNABORTED" }));
 
-				if (e.response.status === 401) return invalidCredentials();
+				if (e.response.status === 401 || e.response.status === 422)
+					return invalidCredentials();
 
-				if (e.response.status === 422)
-					e.response.data.errors.forEach(error =>
-						validation.addErrors(error.msg, error.param)
-					);
-				else dispatch(setError({ statusCode: e.response.status }));
-
-				invalidate(validation.errors);
+				dispatch(setError({ statusCode: e.response.status }));
+				invalidate(); // stop the spinner
 			});
 	};
 }

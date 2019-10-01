@@ -5,8 +5,11 @@ const reducer = (finishedProjects, project) =>
 	project.completed ? finishedProjects + 1 : finishedProjects;
 
 const Summary = ({ projectList }) => (
-	<section id="projects-summary" className="bg-white p-3 mb-3 rounded bottom-shadow" data-aos="fade-up">
-		<h1>Summary</h1>
+	<section
+		id="projects-summary"
+		className="bg-white p-3 mb-3 rounded bottom-shadow"
+		data-aos="fade-up">
+		<h1 className="section-title">Summary</h1>
 		<hr className="w-100" />
 		<Row noGutters>
 			<Col xs={12} sm={4} className="px-2">
