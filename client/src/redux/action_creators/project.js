@@ -104,7 +104,7 @@ export function updateProject(project) {
       .then(response => {
         dispatch({
           type: "UPDATE_PROJECT",
-          payload: response.data
+          payload: response.data.project
         });
       })
       .catch(e => {
