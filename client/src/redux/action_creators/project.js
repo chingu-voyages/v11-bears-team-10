@@ -87,16 +87,14 @@ export function deleteProject(id) {
 
 
 
-export function updateProject(project, data) {
-
-		let title = data.name
-		let description=  data.description
-	
+export function updateProject(project) {
+  const {_id, ...update } = project
+  console.log('update =', update)
   return (dispatch, getState) => {
     axios
       .put(
-        `/project/${data._id}`,
-       { title, description },
+        `/project/${_id}`,
+       update,
         {
           headers: {
             Authorization: "Bearer " + getState().authToken

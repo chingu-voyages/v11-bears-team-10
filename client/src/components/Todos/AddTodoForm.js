@@ -4,12 +4,12 @@ import { connect } from "react-redux";
 
 import { updateProject } from '../../redux/action_creators/project'
 
-function AddTodoForm({ showForm, handleCloseForm, projectData }) {
-const [name, setName] = useState('')
+function AddTodoForm({ showForm, handleCloseForm, project, updateProject }) {
+const [title, setTitle] = useState('')
 const [description, setDescription] = useState('')
 
 const handleDescrChange = e => setDescription(e.target.value)
-const handleNameChange = e => setName(e.target.value)
+const handleNameChange = e => setTitle(e.target.value)
 
   return (
     <Modal
@@ -24,11 +24,14 @@ const handleNameChange = e => setName(e.target.value)
       <Form
 			  onSubmit={(e) => {
 					e.preventDefault();
-					const data = {
-						name,
+					const todo = {
+						title,
 						description,
-					}
-				 updateProject(projectData, data)
+          }
+          project.todos.push(todo)
+          console.log('todo = ', todo)
+          console.log('project todo=', project.todos)
+				 updateProject(project)
 			 }}
 			>
         <Modal.Body>
@@ -38,7 +41,7 @@ const handleNameChange = e => setName(e.target.value)
               className="form-field todo-field"
               type="text"
 							placeholder="Name Your todo list"
-							defaultValue={name}
+							defaultValue={title}
 							onChange={handleNameChange}
             />
           </Form.Group>
@@ -77,4 +80,16 @@ const handleNameChange = e => setName(e.target.value)
   );
 }
 
-export default connect(null, { updateProject })( AddTodoForm);
+const mapStateToProps = (state) => {
+ return{
+  project : {...state.project, todos: [...state.project.todos]}
+ }
+}
+
+const mapDispachToProps = dispach =>{
+  return{
+    updateProject: (project) => dispach(updateProject(project))
+  }
+}
+
+export default connect(mapStateToProps, mapDispachToProps)( AddTodoForm);
