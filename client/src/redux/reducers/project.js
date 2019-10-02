@@ -4,6 +4,8 @@ const project = (state = null, action) => {
       return action.payload;
     case "SET_PROJECT":
       return action.payload;
+    case "UPDATE_PROJECT":
+      return action.payload;
     case "DELETE_PROJECT":
       return action.payload;
     default:

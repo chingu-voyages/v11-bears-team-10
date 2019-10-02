@@ -19,7 +19,7 @@ const todoListSchema = new Schema({
   ]
 });
 
-const messageBoardSchema = new Schema({
+const messageListSchema = new Schema({
   title: { type: String, required: true },
   text: { type: String, required: true },
   date_create: { type: Date, default: Date.now },
@@ -34,7 +34,7 @@ const projectSchema = new Schema({
   admin: { type: Schema.Types.ObjectId, required: true },
   date_create: { type: Date, default: Date.now },
   todos: [todoListSchema],
-  message_board: [messageBoardSchema],
+  messages: [messageListSchema],
   completed: { type: Boolean, default: false },
   team: [
     {

@@ -59,7 +59,6 @@ function ProjectBoard(props) {
               </div>
             </section>
           </section>
-          <TodosBoard project={project.todos} />
           <section className="flex-col" data-aos="fade-up">
             {showMessages ? (
               <MessageBoard />
