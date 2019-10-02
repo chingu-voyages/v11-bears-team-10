@@ -7,7 +7,7 @@ import { withRouter } from "react-router-dom";
 function ProjectCard({ project, history }) {
 	return (
 		<div
-			className="project-card border border-secondary rounded p-3"
+			className="project-card border border-secondary rounded bottom-shadow-on-hover p-3"
 			onClick={() => history.push(`/project/${project._id}`)}
 			data-aos="fade-down">
 			<h2 className="text-center text-truncate mb-4">{project.title}</h2>
