@@ -14,21 +14,21 @@ const userOne = {
   id: '',
   username: 'yakhousam',
   email: 'yakhousam@mymail.com',
-  password: 'mypassword',
+  password: 'Mypassword1@',
   token: ''
 };
 const userTwo = {
   id: '',
   username: 'yakhousam2',
   email: 'yakhousam2@mymail.com',
-  password: 'mypassword2',
+  password: 'Mypassword2@',
   token: ''
 };
 const userThree = {
   id: '',
   username: 'yakhousam3',
   email: 'yakhousam3@mymail.com',
-  password: 'mypassword3',
+  password: 'Mypassword3@',
   token: ''
 };
 let projectOne = {};
@@ -69,6 +69,7 @@ describe('TEST PROJECT Collection ', function() {
           response.status.should.equal(201);
           response.body.should.have.property('project');
           projectOne = { ...response.body.project };
+          // console.log('project one=', projectOne)
 
           chai
             .request(pmApp)
@@ -207,9 +208,9 @@ describe('TEST PROJECT Collection ', function() {
     });
   })
 
-  // after(function() {
-  //   for (let i in mongoose.connection.collections) {
-  //     mongoose.connection.collections[i].deleteMany();
-  //   }
-  // });
+  after(function() {
+    for (let i in mongoose.connection.collections) {
+      mongoose.connection.collections[i].deleteMany();
+    }
+  });
 });
