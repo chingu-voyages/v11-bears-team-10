@@ -1,9 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import { Row, Button, Col } from "react-bootstrap";
-import { Link } from "react-router-dom";
 import ProjectCard from "./ProjectCard";
+import AddProject from "../Projects/AddProjectForm"
 
 export default function ProjectsList({ projectList }) {
+	const [showModal, setShowModal] = useState(false);
+	const closeModal = () => setShowModal(false);
+	const openForm = () => setShowModal(true);
+
 	return (
 		<section
 			id="project-list"
@@ -11,10 +15,11 @@ export default function ProjectsList({ projectList }) {
 			data-aos="fade-up">
 			<Row noGutters>
 				<h1 className="my-auto section-title">Projects</h1>
-				<Button as={Link} to="/haha" variant="dark-purple" className="ml-auto">
+				<Button onClick={openForm} variant="dark-purple" className="ml-auto">
 					create a project
 				</Button>
 			</Row>
+			<AddProject showForm={showModal} handleCloseForm={closeModal} />
 			<hr className="w-100" />
 			<Row noGutters>
 				{projectList.length ? (
