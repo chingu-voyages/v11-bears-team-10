@@ -25,7 +25,6 @@ function AddTodoForm({ showForm, handleCloseForm, project, updateProject }) {
             title,
             description
           };
-          console.log("todos =", todo);
           project.todos.push(todo);
           updateProject(project);
         }}
@@ -37,7 +36,7 @@ function AddTodoForm({ showForm, handleCloseForm, project, updateProject }) {
               className="form-field todo-field"
               type="text"
               placeholder="Name Your todo list"
-              defaultValue={title}
+              value={title}
               onChange={e => setTitle(e.target.value)}
             />
           </Form.Group>
@@ -47,6 +46,7 @@ function AddTodoForm({ showForm, handleCloseForm, project, updateProject }) {
               className="form-field todo-field"
               type="text"
               placeholder="Add a description"
+              value={description}
               onChange={e => setDescription(e.target.value)}
             />
             />
