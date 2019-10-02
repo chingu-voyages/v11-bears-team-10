@@ -1,16 +1,12 @@
-import React,{useState} from "react";
+import React, { useState } from "react";
 import { Modal, Button, Form } from "react-bootstrap";
 import { connect } from "react-redux";
 
-import { createProject } from '../../redux/action_creators/project'
+import { createProject } from "../../redux/action_creators/project";
 
-
-function AddProjectForm({ showForm, handleCloseForm, userId, createProject }) {
-	const [title, setTitle] = useState('')
-	const [description, setDescription] = useState('')
-
-	const handleDescrChange = e => setDescription(e.target.value)
-  const handleTitleChange = e => setTitle(e.target.value)
+function AddProjectForm({ showForm, handleCloseForm, admin, createProject }) {
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
 
   return (
     <>
@@ -19,45 +15,58 @@ function AddProjectForm({ showForm, handleCloseForm, userId, createProject }) {
           <Modal.Title id="project-title">Start A Project</Modal.Title>
         </Modal.Header>
         <Form
-				 onSubmit={(e) => {
-					  e.preventDefault();
-            const data = {
-							userId,
-							title,
-							description,
-						}
-            createProject(data)
-				 }
-				}
-				>
+          onSubmit={e => {
+            e.preventDefault();
+            const project = {
+              admin,
+              title,
+              description
+            };
+            console.log('create project =', project)
+            createProject(project);
+          }}
+        >
           <Modal.Body>
-            <Form.Group controlId="projectName" >
+            <Form.Group controlId="projectName">
               <Form.Label className="form-labels">Project Name</Form.Label>
-							<Form.Control 
-								className="form-field" 
-								type="text" 
-								placeholder="Name Your Project" 
-								defaultValue={title}
-								onChange={handleTitleChange}
-							/>
+              <Form.Control
+                className="form-field"
+                type="text"
+                placeholder="Name Your Project"
+                value={title}
+                onChange={e => setTitle(e.target.value)}
+              />
             </Form.Group>
             <Form.Group controlId="textArea" className="forms">
-              <Form.Label className="form-labels">Project Description</Form.Label>
+              <Form.Label className="form-labels">
+                Project Description
+              </Form.Label>
               <Form.Control
-								as="textarea"
-								className="form-field"
+                as="textarea"
+                className="form-field"
                 placeholder="Add a project description"
-								rows="3"
-								defaultValue={description}
-								onChange={handleDescrChange}
+                rows="3"
+                value={description}
+                onChange={e => setDescription(e.target.value)}
               />
             </Form.Group>
           </Modal.Body>
           <Modal.Footer>
-            <Button variant="secondary" onClick={handleCloseForm} id="close" className="hvr-shadow">
+            <Button
+              variant="secondary"
+              onClick={handleCloseForm}
+              id="close"
+              className="hvr-shadow"
+            >
               Close
             </Button>
-            <Button variant="primary" onClick={handleCloseForm} id="save" type="submit" className="hvr-shadow">
+            <Button
+              variant="primary"
+              onClick={handleCloseForm}
+              id="save"
+              type="submit"
+              className="hvr-shadow"
+            >
               Save
             </Button>
           </Modal.Footer>
@@ -67,6 +76,19 @@ function AddProjectForm({ showForm, handleCloseForm, userId, createProject }) {
   );
 }
 
+const mapStateToProps = state =>{
+  return {
+    admin: state.user._id
+  }
+}
 
+const mapDispatchToProps = dispatch => {
+  return {
+    createProject: project => dispatch(createProject(project))
+  }
+};
 
-export default  connect(null, {createProject})(AddProjectForm)
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(AddProjectForm);

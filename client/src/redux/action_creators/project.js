@@ -4,18 +4,17 @@ import Validation from "../../validation";
 import setError from "./setError";
 
 
-export function createProject(data) {
-  let title = data.title;
-  let description = data.description;
+export function createProject(project) {
+  let title = project.title;
+  let description = project.description;
   return (dispatch, getState) => {
-    const validation = new Validation(data, {
-      title: "min:4",
-      description: "min:4"
+    const validation = new Validation(project, {
+      title: "min:1",
     });
     validation.validate();
     axios
       .post(
-        `/project/${data.userId}`,
+        `/project/${project.admin}`,
         { title, description },
         {
           headers: {
@@ -26,8 +25,12 @@ export function createProject(data) {
       .then(response => {
         dispatch({
           type: "ADD_PROJECT",
-					payload: response.data
+					payload: response.data.project
         });
+        dispatch({
+          type: "UPDATE_USER",
+          payload: {projectList: response.data.user.projectList}
+        })
       })
       .catch(e => {
         if (!e.response)
