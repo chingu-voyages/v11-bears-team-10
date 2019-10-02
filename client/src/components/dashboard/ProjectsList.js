@@ -10,7 +10,7 @@ export default function ProjectsList({ projectList }) {
 			className="p-3 mb-3 bg-white rounded bottom-shadow"
 			data-aos="fade-up">
 			<Row noGutters>
-				<h1 className="my-auto">Projects</h1>
+				<h1 className="my-auto section-title">Projects</h1>
 				<Button as={Link} to="/haha" variant="dark-purple" className="ml-auto">
 					create a project
 				</Button>

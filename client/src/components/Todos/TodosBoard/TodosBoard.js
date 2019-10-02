@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {connect} from 'react-redux'
 
 import Todo from "../Todos/Todo";
 import AddTodo from "../AddTodoForm";
@@ -8,7 +9,7 @@ import Portal from "../../../HOC/portal/portal";
 
 const TodoPortal = Portal(TodoView);
 
-function TodosBaord({project}) {
+function TodosBaord({todos}) {
   const [showModal, setShowModal] = useState(false);
   const [showPortal, setShowPortal] = useState(false);
 
@@ -17,16 +18,25 @@ function TodosBaord({project}) {
   const displayPortal = () => setShowPortal(true);
   const hidePortal = () => setShowPortal(false);
 
+  const todoListe = todos.map(todo => <Todo key={todo._id} todo={todo} showTodoPortal={displayPortal} />)
+
   return (
     <>
       <div className="add-todo  flex-col-centered" onClick={openForm}>
         <FontAwesomeIcon icon="plus-square" className="plus-todo" />
       </div>
-      <AddTodo showForm={showModal} handleCloseForm={closeModal} projectData={project} />
+      <AddTodo showForm={showModal} handleCloseForm={closeModal} />
       <TodoPortal showForm={showPortal} setOpen={hidePortal} />
-      <Todo showTodoPortal={displayPortal} />
+      {/* <Todo todo={{title:'blabla'}} showTodoPortal={displayPortal} /> */}
+      {todoListe}
     </>
   );
 }
 
-export default TodosBaord;
+const mapStateToProps = state =>{
+  return{
+    todos : [...state.project.todos]
+  }
+}
+
+export default connect(mapStateToProps)(TodosBaord);

@@ -56,9 +56,11 @@ export default class Validation {
 
 		if (!this.errors[attribute]) this.errors[attribute] = [];
 
-		if (typeof _errors === "string") this.errors[attribute].push(_errors);
+		if (typeof _errors === "string" && !this.errors[attribute].includes(_errors))
+			this.errors[attribute].push(_errors);
 
-		if (Array.isArray(_errors)) this.errors[attribute].push(..._errors);
+		if (Array.isArray(_errors))
+			this.errors[attribute].includes(_errors) || this.errors[attribute].push(..._errors);
 	}
 
 	addValidated(attribute) {

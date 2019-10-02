@@ -1,8 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
 import { Form, Modal, Button } from "react-bootstrap";
 
-function AddMessageList({ showForm, handleCloseForm }) {
-// const [todo, setTodo] = useState('')
+import { connect } from "react-redux";
+import { updateProject } from "../../redux/action_creators/project";
+
+function AddMessageList({
+  showForm,
+  handleCloseForm,
+  project,
+  username,
+  updateProject
+}) {
+  const [title, setTitle] = useState("");
+  const [text, setText] = useState("");
 
   return (
     <Modal
@@ -16,22 +26,39 @@ function AddMessageList({ showForm, handleCloseForm }) {
       <Modal.Header closeButton className="project-header">
         <Modal.Title>Add a message</Modal.Title>
       </Modal.Header>
-      <Form>
+      <Form
+        onSubmit={e => {
+          console.log("message on submit");
+          e.preventDefault();
+          const message = {
+            title,
+            text,
+            user: { username }
+          };
+          project.messages.push(message);
+          console.log("add message project =", project);
+          updateProject(project);
+        }}
+      >
         <Modal.Body>
           <Form.Group controlId="projectName">
             <Form.Label className="form-labels">Title</Form.Label>
             <Form.Control
               className="form-field todo-field"
               type="text"
-              placeholder="Name Your todo list"
+              placeholder="Message Title"
+              value={title}
+              onChange={e => setTitle(e.target.value)}
             />
           </Form.Group>
-					<Form.Group controlId="projectName">
+          <Form.Group controlId="projectName">
             <Form.Label className="form-labels">Message</Form.Label>
             <Form.Control
               className="form-field todo-field"
               type="text"
-              placeholder="Add a description"
+              placeholder="Add a message"
+              value={text}
+              onChange={e => setText(e.target.value)}
             />
           </Form.Group>
         </Modal.Body>
@@ -49,6 +76,7 @@ function AddMessageList({ showForm, handleCloseForm }) {
             onClick={handleCloseForm}
             id="save"
             className="hvr-shadow"
+            type="submit"
           >
             Save
           </Button>
@@ -57,5 +85,20 @@ function AddMessageList({ showForm, handleCloseForm }) {
     </Modal>
   );
 }
+const mapStateToProps = state => {
+  return {
+    project: { ...state.project, messages: [...state.project.messages] },
+    username: state.user.username
+  };
+};
 
-export default AddMessageList;
+const mapDispachToProps = dispach => {
+  return {
+    updateProject: project => dispach(updateProject(project))
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispachToProps
+)(AddMessageList);

@@ -1,8 +1,7 @@
-import React, { useState } from "react"
+import React from "react"
 
 
-function Message({showMessagePortal}) {
-  const [messageData] = useState({ title: "Message Title" })
+function Message({showMessagePortal, message}) {
 
   return (
 		<section 
@@ -14,15 +13,15 @@ function Message({showMessagePortal}) {
         <span className="flex-row list-head">
 					<div className="creator">AV</div>
           <span className="flex-col">
-            <h3>{messageData.title}</h3>
-            <span className="date">Sept 16 2019 12:00AM</span>
+            <h3>{message.title}</h3>
+            <span className="date">{message.date_create}</span>
           </span>
         </span>
         {/* <hr /> */}
       </div>
-      <div className="close-todo flex-col-centered">x</div>
+      <div className="close-todo flex-col-centered">X</div>
     </section>
   );
 }
 
-export default Message
+export default Message;

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { connect } from "react-redux";
 import { getProject } from "../../../redux/action_creators/project";
@@ -8,6 +8,9 @@ import MessageBoard from "../../Messages/MessageBoard";
 function ProjectBoard(props) {
   const { project, dispatch} = props;
   const { id } = props.match.params;
+
+  const [showMessages, setShowMessages] = useState(false);
+	const [showTodos, setShowTodos] = useState(true);
 
   useEffect(() => {
     console.log('use effect getproject')
@@ -31,11 +34,11 @@ function ProjectBoard(props) {
                   <FontAwesomeIcon icon="list-ul" />
                 </div>
                 <div
-                  // className={`summary ${showTodos ? "clicked" : ""}`}
-                  //   onClick={() => {
-                  //     setShowMessages(false);
-                  //     setShowTodos(true);
-                  //   }}
+                   className={`summary ${showTodos ? "clicked" : ""}`}
+                    onClick={() => {
+                      setShowMessages(false);
+                      setShowTodos(true);
+                    }}
                 >
                   <h3>Todos</h3>
                 </div>
@@ -45,24 +48,24 @@ function ProjectBoard(props) {
                   <FontAwesomeIcon icon="sticky-note" />
                 </div>
                 <div
-                  // className={`summary ${showMessages ? "clicked" : ""}`}
-                  //   onClick={() => {
-                  //     setShowTodos(false);
-                  //     setShowMessages(true);
-                  //   }}
+                  className={`summary ${showMessages ? "clicked" : ""}`}
+                    onClick={() => {
+                      setShowTodos(false);
+                      setShowMessages(true);
+                    }}
                 >
                   <h3>Message Board</h3>
                 </div>
               </div>
             </section>
           </section>
-          {/* <section className="flex-col" data-aos="fade-up">
+          <section className="flex-col" data-aos="fade-up">
             {showMessages ? (
               <MessageBoard />
             ) : (
               <TodosBoard project={project.todos} />
             )}
-          </section> */}
+          </section>
         </div>
       </section>
     </div>

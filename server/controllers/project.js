@@ -78,7 +78,7 @@ async function updateUserProjectList(res, project, users = []) {
     users.map(async userId => {
       try {
         const nb_todos = project.todos.length;
-        const nb_msg = project.message_board.length;
+        const nb_msg = project.messages.length;
         const nb_member = project.team.length + 1;
         const completed = project.completed;
         const user = await User.findById(userId);

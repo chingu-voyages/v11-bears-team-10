@@ -6,9 +6,9 @@ import setError from "./setError";
 export default function register(data, invalidate) {
 	return dispatch => {
 		const validation = new Validation(data, {
-			username: ["min:4", "max:20", "alphanumeric"],
-			password: ["min:8", "max:20", "password"],
-			email: "email"
+			username: "required",
+			password: "required",
+			email: "required"
 		});
 		validation.validate();
 
@@ -20,20 +20,24 @@ export default function register(data, invalidate) {
 			.then(response => dispatch(setUser(response.data.user, response.data.token)))
 
 			.catch(e => {
-				if (!e.response) dispatch(setError({ requestTimeout: e.code === "ECONNABORTED" }));
-				else {
-					if (e.response.status === 401)
-						// for this status code the server returns an 'already used' message
-						// eslint-disable-next-line no-unused-vars
-						for (const regex of [/username/i, /email/i, /password/i]) {
-							let matches = e.response.data.error.match(regex);
-							if (matches) {
-								validation.addErrors("already used", matches[0].toLowerCase());
-								break;
-							}
+				if (!e.response)
+					return dispatch(setError({ requestTimeout: e.code === "ECONNABORTED" }));
+
+				if (e.response.status === 401)
+					// for this status code the server returns an 'already used' message
+					// eslint-disable-next-line no-unused-vars
+					for (const regex of [/username/i, /email/i, /password/i]) {
+						let matches = e.response.data.error.match(regex);
+						if (matches) {
+							validation.addErrors("already used", matches[0].toLowerCase());
+							break;
 						}
-					else dispatch(setError({ statusCode: e.response.status }));
-				}
+					}
+				else if (e.response.status === 422)
+					e.response.data.errors.forEach(error =>
+						validation.addErrors(error.msg, error.param)
+					);
+				else dispatch(setError({ statusCode: e.response.status }));
 
 				// validation.errors is undefined if e.response doesn't exist
 				invalidate(validation.errors);

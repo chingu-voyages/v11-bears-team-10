@@ -1,17 +1,14 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
 import { Row } from "react-bootstrap";
 import { withRouter } from "react-router-dom";
-
-function onClick(history, project) {
-	history.push("/project/" + project._id);
-}
 
 function ProjectCard({ project, history }) {
 	return (
 		<div
-			onClick={onClick.bind(null, history, project)}
-			className="project-card border border-secondary rounded bottom-shadow-on-hover p-3"
+			className="project-card border border-secondary rounded p-3"
+			onClick={() => history.push(`/project/${project._id}`)}
 			data-aos="fade-down">
 			<h2 className="text-center text-truncate mb-4">{project.title}</h2>
 			<Row noGutters>
