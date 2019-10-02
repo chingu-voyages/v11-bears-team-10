@@ -74,14 +74,14 @@ const deleteProject = async (id, req, res) => {
 };
 
 async function updateUserProjectList(res, project, users = []) {
+  const nb_todos = project.todos.length;
+  const nb_msg = project.messages.length;
+  const nb_member = project.team.length + 1;
+  const completed = project.completed;
   await Promise.all(
     users.map(async userId => {
       try {
-        const nb_todos = project.todos.length;
-        const nb_msg = project.messages.length;
-        const nb_member = project.team.length + 1;
-        const completed = project.completed;
-        const user = await User.findById(userId);
+        const user = await User.findById(userId,{password:0});
         const userPrj = user.projectList.id(project._id);
         if (userPrj) {
           userPrj.set({ title: project.title, nb_todos, nb_msg, nb_member, completed });
@@ -95,7 +95,7 @@ async function updateUserProjectList(res, project, users = []) {
             completed
           });
         }
-        await user.save();
+       await user.save();
       } catch (error) {
         res.status(500).json({ error: error.message });
       }
