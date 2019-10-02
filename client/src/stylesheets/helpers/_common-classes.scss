@@ -65,6 +65,9 @@ $spinner-size: 8;
 
 .h-100vh {
 	height: 100vh !important;
+	&-max {
+		max-height: 100vh !important;
+	}
 }
 
 .bottom-shadow {
@@ -87,9 +90,10 @@ $spinner-size: 8;
 	}
 }
 
-.section- {
+section .section- {
 	&title {
 		@include font-size(1.1rem);
+		margin-bottom: 0 !important;
 	}
 
 	&paragraph {
