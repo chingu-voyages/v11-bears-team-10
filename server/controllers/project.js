@@ -30,12 +30,12 @@ const createProject = async (userId, req, res) => {
       ...project
     });
     await newProject.save();
-    await User.findByIdAndUpdate(userId, {
+    const user = await User.findByIdAndUpdate(userId, {
       $push: {
         projectList: { _id: newProject._id, title: newProject.title }
       }
-    });
-    res.status(201).json({ project: newProject });
+    }, { new: true });
+    res.status(201).json({ project: newProject, user });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
