@@ -37,7 +37,7 @@ function MessageBoard({messages}) {
 
 const mapStateToProps = state =>{
   return{
-    messages : [...state.project.message_board]
+    messages : [...state.project.messages]
   }
 }
 
