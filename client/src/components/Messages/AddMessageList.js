@@ -35,7 +35,7 @@ function AddMessageList({
             text,
             user: { username }
           };
-          project.message_board.push(message);
+          project.messages.push(message);
           console.log("add message project =", project);
           updateProject(project);
         }}
@@ -87,7 +87,7 @@ function AddMessageList({
 }
 const mapStateToProps = state => {
   return {
-    project: { ...state.project, messages: [...state.project.message_board] },
+    project: { ...state.project, messages: [...state.project.messages] },
     username: state.user.username
   };
 };
