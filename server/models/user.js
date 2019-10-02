@@ -1,5 +1,5 @@
-const mongoose = require('mongoose');
-const bcrypt = require('bcrypt');
+const mongoose = require("mongoose");
+const bcrypt = require("bcrypt");
 
 const { Schema } = mongoose;
 
@@ -42,17 +42,17 @@ const userSchema = new Schema({
     {
       _id: Schema.Types.ObjectId,
       title: String,
-      nb_todos: {type: Number, default: 0},
-      nb_msg: {type: Number, default: 0},
-      nb_member: {type: Number, default: 0},
+      nb_todos: { type: Number, default: 0 },
+      nb_msg: { type: Number, default: 0 },
+      nb_member: { type: Number, default: 0 },
       completed: { type: Boolean, default: false }
     }
   ]
 });
 
-userSchema.pre('save', function(next) {
+userSchema.pre("save", function(next) {
   const user = this;
-  if (!user.isModified()) return next();
+  if (!user.isModified("password")) return next();
   bcrypt.hash(user.password, 12, (err, hashedPassword) => {
     if (err) return next(err);
     user.password = hashedPassword;
@@ -60,6 +60,6 @@ userSchema.pre('save', function(next) {
   });
 });
 
-const User = mongoose.model('User', userSchema);
+const User = mongoose.model("User", userSchema);
 
 module.exports = User;
