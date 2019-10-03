@@ -1,13 +1,13 @@
 import React from "react"
 
 
-function Message({showMessagePortal, message}) {
+function MessageItem({ message}) {
 
   return (
 		<section 
 			className="flex-row message-body" 
 			data-aos="fade-up"
-			onClick={showMessagePortal}
+			// onClick={showMessagePortal}
 		>
       <div className="flex-col  message-list">
         <span className="flex-row list-head">
@@ -24,4 +24,4 @@ function Message({showMessagePortal, message}) {
   );
 }
 
-export default Message;
+export default MessageItem;
