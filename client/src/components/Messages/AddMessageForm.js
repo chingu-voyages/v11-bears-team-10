@@ -4,7 +4,7 @@ import { Form, Modal, Button } from "react-bootstrap";
 import { connect } from "react-redux";
 import { updateProject } from "../../redux/action_creators/project";
 
-function AddMessageList({
+function AddMessageForm({
   showForm,
   handleCloseForm,
   project,
@@ -101,4 +101,4 @@ const mapDispachToProps = dispach => {
 export default connect(
   mapStateToProps,
   mapDispachToProps
-)(AddMessageList);
+)(AddMessageForm);

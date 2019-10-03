@@ -2,14 +2,14 @@ import React, {useState} from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {connect} from 'react-redux'
 
-import Message from "./MessageList/MessageList";
+import Message from "./MessageItem/MessageItem";
 import Portal from '../../HOC/portal/portal'
-import AddMessage from './Message'
-import AddMessageList from './AddMessageList'
+import AddMessage from './MessagePortal'
+import AddMessageList from './AddMessageForm'
 
 const MessagePortal = Portal(AddMessage)
 
-function MessageBoard({messages}) {
+function Messages({messages}) {
 	const [showModal, setShowModal] = useState(false);
 	const [showPortal, setShowPortal] = useState(false);
 
@@ -22,14 +22,14 @@ function MessageBoard({messages}) {
 
   return (
     <>
-      <div
+      {/* <div
         className="add-todo  flex-col-centered"
         onClick={openForm}
       >
         <FontAwesomeIcon icon="plus-square" className="plus-todo" />
-      </div>
-			<AddMessageList showForm={showModal} handleCloseForm={closeModal} />
-			<MessagePortal showForm={showPortal} setOpen={hidePortal} />
+      </div> */}
+			{/* <AddMessageList showForm={showModal} handleCloseForm={closeModal} /> */}
+			{/* <MessagePortal showForm={showPortal} setOpen={hidePortal} /> */}
       { messageList }
     </>
   );
@@ -41,5 +41,5 @@ const mapStateToProps = state =>{
   }
 }
 
-export default connect(mapStateToProps)(MessageBoard);
+export default connect(mapStateToProps)(Messages);
 

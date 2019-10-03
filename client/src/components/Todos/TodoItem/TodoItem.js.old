@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {connect} from 'react-redux'
 import { updateProject } from "../../../redux/action_creators/project";
 
-function Todo({showTodoPortal, todo, project, updateProject}) {
+function TodoItem({showTodoPortal, todo, project, updateProject}) {
   const deleteTodo = () => {
       const todoId = todo._id;
       project.todos = project.todos.filter(todo => todo._id !== todoId);
@@ -48,4 +48,4 @@ const mapDispachToProps = dispach => {
 export default connect(
   mapStateToProps,
   mapDispachToProps
-)(Todo);
+)(TodoItem);

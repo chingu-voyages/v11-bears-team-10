@@ -1,0 +1,39 @@
+.projectbody{
+	// border: 3px red solid;
+	background: white;
+	min-height: 80vh;
+}
+
+.project-nav{
+	justify-content: center;
+	padding-top: 20px;
+	border-bottom: 1px rgba(0, 0, 0, 0.13) solid;
+	cursor: pointer;
+  div{
+		border: 1px rgba(0, 0, 0, 0.13) solid;
+		padding: 5px;
+		width: 200px;
+		text-align: center;
+	}
+}
+
+#todo-nav{
+	border-top-left-radius: 3px;
+}
+
+#doc-nav{
+//	border-top-right-radius: 3px;
+}
+
+#edit-project{
+	background: #5353A6;
+	border-top-right-radius: 3px;
+	color: white;
+	width: 100px;
+	border: unset;
+}
+
+.projects-items{
+	padding: 10px 150px;
+	// border: 3px red solid;
+}

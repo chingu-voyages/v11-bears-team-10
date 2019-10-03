@@ -5,7 +5,7 @@ import { getProject } from "../../../redux/action_creators/project";
 import TodosBoard from "../../Todos/TodosBoard/TodosBoard";
 import MessageBoard from "../../Messages/MessageBoard";
 
-function ProjectBoard(props) {
+function Project(props) {
   const { project, dispatch} = props;
   const { id } = props.match.params;
 
@@ -77,4 +77,4 @@ const mapStatToProps = state => {
   };
 };
 
-export default connect(mapStatToProps)(ProjectBoard);
+export default connect(mapStatToProps)(Project);

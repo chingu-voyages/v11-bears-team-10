@@ -22,7 +22,8 @@ const login = async (req, res) => {
     const playload = {
       id: user._id
     };
-    const token = jwt.sign(playload, secret, { expiresIn: 60 * 60 * 24 });
+		const token = jwt.sign(playload, secret, { expiresIn: 60 * 60 * 24 });
+		console.log("user", user)
     res.status(200).json({ token, user });
   } catch (error) {
     res.status(500).json({ error: error.message });

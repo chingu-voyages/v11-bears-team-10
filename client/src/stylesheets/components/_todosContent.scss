@@ -1,0 +1,31 @@
+.todo-content-body{
+	border: 1px solid black;
+	padding: 10px;
+	margin-left: 5px;
+	position: relative;
+	z-index: 50;
+	top: -110px;
+	left: 0px;
+	hr{
+		height: 0.01em;
+    width: 64vw;
+    color: #ecf4f3;
+    background: #ecf4f3;
+    margin-left: unset;
+    margin-bottom: unset;
+	}
+	border: 1px solid rgba(128, 128, 128, 0.336);
+	-webkit-animation: slide 0.5s forwards;
+  -webkit-animation-delay: 2s;
+  animation: slide 0.5s forwards;
+  animation-delay: 0.1s;
+}
+
+.content-body-head{
+	justify-content: space-between;
+}
+
+
+@keyframes slide {
+	100% { top: 0px; }
+}

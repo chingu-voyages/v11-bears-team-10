@@ -19,6 +19,9 @@ $enable-responsive-font-sizes: true;
 @import "./components/landingPage";
 @import "./components/navbar";
 @import "./components/errorPage";
+@import "./components/newProjectPage";
+@import "./components/newTodoItem";
+@import "./components/todosContent";
 
 html {
 	scroll-behavior: smooth;

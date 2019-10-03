@@ -2,14 +2,14 @@ import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {connect} from 'react-redux'
 
-import Todo from "../Todos/Todo";
+import Todo from "../TodoItem/TodoItem";
 import AddTodo from "../AddTodoForm";
 import TodoView from "../TodoView";
 import Portal from "../../../HOC/portal/portal";
 
 const TodoPortal = Portal(TodoView);
 
-function TodosBaord({todos}) {
+function Todos({todos}) {
   const [showModal, setShowModal] = useState(false);
   const [showPortal, setShowPortal] = useState(false);
 
@@ -39,4 +39,4 @@ const mapStateToProps = state =>{
   }
 }
 
-export default connect(mapStateToProps)(TodosBaord);
+export default connect(mapStateToProps)(Todos);
