@@ -35,7 +35,7 @@ const createProject = async (userId, req, res) => {
         projectList: { _id: newProject._id, title: newProject.title }
       }
     }, { new: true });
-    res.status(201).json({ project: newProject, user });
+    res.status(201).json({ project: newProject, projectList: user.projectList });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -49,7 +49,8 @@ const updateProject = async (id, req, res) => {
     const adminId = project.admin;
     const teamIds = project.team.map(user => user._id);
     await updateUserProjectList(res, project, [adminId, ...teamIds]);
-    res.status(200).json({ project });
+    const user = await User.findById(adminId, 'projectList')
+    res.status(200).json({ project, projectList: user.projectList});
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

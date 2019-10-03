@@ -14,7 +14,8 @@ function ProjectBoard(props) {
 
   useEffect(() => {
     console.log('use effect getproject')
-    dispatch(getProject(id));
+    if(id)
+      dispatch(getProject(id));
   }, [id, dispatch]);
 
   return !project ? (
