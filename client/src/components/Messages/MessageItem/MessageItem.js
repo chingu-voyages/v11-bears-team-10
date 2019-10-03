@@ -1,25 +1,30 @@
-import React from "react"
+import React from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-
-function MessageItem({ message}) {
+function MessageItem({ message }) {
+  const deleteMessage = () => {
+    console.log("delete this message");
+  };
 
   return (
-		<section 
-			className="flex-row message-body" 
-			data-aos="fade-up"
-			// onClick={showMessagePortal}
-		>
-      <div className="flex-col  message-list">
-        <span className="flex-row list-head">
-					<div className="creator">AV</div>
-          <span className="flex-col">
-            <h3>{message.title}</h3>
-            <span className="date">{message.date_create}</span>
-          </span>
-        </span>
-        {/* <hr /> */}
+    <section
+      className="flex-col todo-item-body message-item-body"
+    >
+      <div className="item-top flex-row">
+        <div id="initials" className="flex-col-centered">
+          {"AO"}
+        </div>
+        <div onClick={deleteMessage}>
+          <FontAwesomeIcon icon="times-circle" className="close-todo-item" />
+        </div>
       </div>
-      <div className="close-todo flex-col-centered">X</div>
+      <hr />
+      <div className="item-bottom">
+        <div>
+          <h4>{message.title}</h4>
+          <span className="date">{message.date_create}</span>
+        </div>
+      </div>
     </section>
   );
 }

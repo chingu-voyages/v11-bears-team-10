@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import { connect } from "react-redux";
 import { getProject } from "../../../redux/action_creators/project";
@@ -15,7 +16,6 @@ function Project(props) {
   const [showTodos, setShowTodos] = useState(true);
   const [showTodoModal, setShowTodoModal] = useState(false);
   const [showMessageModal, setShowMessageModal] = useState(false);
- 
 
   const closeTodoModal = () => setShowTodoModal(false);
   const closeMessageModal = () => setShowMessageModal(false);
@@ -25,13 +25,12 @@ function Project(props) {
   };
 
   const renderBody = e => {
-    let target = e.target.innerHTML;
+		let target = e.target.innerText
+		console.dir(target)
     if (target === "Todos") {
       setShowTodos(true);
-
     } else if (target === "Messages") {
       setShowTodos(false);
-
     }
   };
 
@@ -45,21 +44,21 @@ function Project(props) {
   ) : (
     <div className="projectbody">
       <nav className="project-nav flex-row" onClick={renderBody}>
-        <div id="todo-nav" >
+        <div id="todo-nav" className="flex-row-centered">
+          <FontAwesomeIcon icon="tasks" className="project-icon" />
           Todos
         </div>
-        <div id="message-nav" >
+        <div id="message-nav" className="flex-row-centered">
+          <FontAwesomeIcon icon="sticky-note"   className="project-icon" />
           Messages
         </div>
-        <div id="doc-nav" >
+        <div id="doc-nav" className="flex-row-centered">
+          <FontAwesomeIcon icon="file-alt" className="project-icon" />
           Documents
         </div>
-          <div
-						onClick={openForm}
-						id="edit-project"
-          >
-           +
-          </div>
+        <div onClick={openForm} id="edit-project">
+          +
+        </div>
       </nav>
       <AddTodoForm showForm={showTodoModal} handleCloseForm={closeTodoModal} />
       <AddMessageForm
