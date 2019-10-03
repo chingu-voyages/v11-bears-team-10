@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { getProject } from "../../../redux/action_creators/project";
 import TodosBoard from "../../Todos/TodosBoard/TodosBoard";
 import MessageBoard from "../../Messages/MessageBoard";
+import AppPlaceholder from "../../../AppPlaceholder";
 
 function ProjectBoard(props) {
   const { project, dispatch} = props;
@@ -14,11 +15,12 @@ function ProjectBoard(props) {
 
   useEffect(() => {
     console.log('use effect getproject')
-    dispatch(getProject(id));
+    if(id)
+      dispatch(getProject(id));
   }, [id, dispatch]);
 
   return !project ? (
-    <div>loading...</div>
+    <AppPlaceholder text="Loading..." />
   ) : (
     <div className="projectsbody">
       <section className="board-body flex-col-centered">
