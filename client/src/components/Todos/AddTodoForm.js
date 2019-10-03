@@ -27,6 +27,9 @@ function AddTodoForm({ showForm, handleCloseForm, project, updateProject }) {
           };
           project.todos.push(todo);
           updateProject(project);
+          setTitle("");
+          setDescription("");
+          handleCloseForm();
         }}
       >
         <Modal.Body>
@@ -38,6 +41,7 @@ function AddTodoForm({ showForm, handleCloseForm, project, updateProject }) {
               placeholder="Name Your todo list"
               value={title}
               onChange={e => setTitle(e.target.value)}
+              required
             />
           </Form.Group>
           <Form.Group controlId="projectName">
@@ -55,7 +59,11 @@ function AddTodoForm({ showForm, handleCloseForm, project, updateProject }) {
         <Modal.Footer>
           <Button
             variant="secondary"
-            onClick={handleCloseForm}
+            onClick={() => {
+              setTitle("");
+              setDescription("");
+              handleCloseForm();
+            }}
             id="close"
             className="hvr-shadow"
           >
@@ -63,7 +71,6 @@ function AddTodoForm({ showForm, handleCloseForm, project, updateProject }) {
           </Button>
           <Button
             variant="primary"
-            onClick={handleCloseForm}
             id="save"
             className="hvr-shadow"
             type="submit"
