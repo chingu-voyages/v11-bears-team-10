@@ -29,7 +29,7 @@ export function createProject(project) {
         });
         dispatch({
           type: "UPDATE_USER",
-          payload: {projectList: response.data.user.projectList}
+          payload: {projectList: response.data.projectList}
         })
       })
       .catch(e => {
@@ -92,7 +92,6 @@ export function deleteProject(id) {
 
 export function updateProject(project) {
   const {_id, ...update } = project
-  console.log('update =', update)
   return (dispatch, getState) => {
     axios
       .put(
@@ -108,6 +107,10 @@ export function updateProject(project) {
         dispatch({
           type: "UPDATE_PROJECT",
           payload: response.data.project
+        });
+        dispatch({
+          type: "UPDATE_USER",
+          payload: {projectList: response.data.projectList}
         });
       })
       .catch(e => {

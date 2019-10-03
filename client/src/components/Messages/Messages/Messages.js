@@ -1,8 +1,7 @@
 import React from "react";
 import {connect} from 'react-redux'
 
-import MessageItem from "./MessageItem/MessageItem";
-
+import MessageItem from '../MessageItem/MessageItem'
 
 
 function Messages({messages}) {

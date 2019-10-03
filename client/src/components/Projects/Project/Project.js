@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { getProject } from "../../../redux/action_creators/project";
 
 import Todos from "../../Todos/Todos/Todos";
-import Messages from "../../Messages/Messages";
+import Messages from "../../Messages/Messages/Messages";
 import AddTodoForm from "../../Todos/AddTodoForm";
 import AddMessageForm from "../../Messages/AddMessageForm";
 
@@ -15,7 +15,7 @@ function Project(props) {
   const [showTodos, setShowTodos] = useState(true);
   const [showTodoModal, setShowTodoModal] = useState(false);
   const [showMessageModal, setShowMessageModal] = useState(false);
-  // const [buttonText, setButtonText] = useState("addTodo");
+ 
 
   const closeTodoModal = () => setShowTodoModal(false);
   const closeMessageModal = () => setShowMessageModal(false);
@@ -28,10 +28,10 @@ function Project(props) {
     let target = e.target.innerHTML;
     if (target === "Todos") {
       setShowTodos(true);
-     // setButtonText("addTodo");
+
     } else if (target === "Messages") {
       setShowTodos(false);
-     // setButtonText("addMessage");
+
     }
   };
 
@@ -54,16 +54,12 @@ function Project(props) {
         <div id="doc-nav" >
           Documents
         </div>
-        {/* <div> */}
           <div
 						onClick={openForm}
 						id="edit-project"
-            // variant="dark-purple"
-            // className="mt-2 mb-2"
           >
            +
           </div>
-        {/* </div> */}
       </nav>
       <AddTodoForm showForm={showTodoModal} handleCloseForm={closeTodoModal} />
       <AddMessageForm
