@@ -28,6 +28,7 @@ function ProjectBoard(props) {
           <section className="projects-summary flex-col" data-aos="fade-up">
             <span>
               <h3>{project.title}</h3>
+              <p>{project.description}</p>
             </span>
             <hr />
             <section className="flex-row projects-items">
