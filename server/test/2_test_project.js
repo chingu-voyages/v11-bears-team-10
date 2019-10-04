@@ -76,7 +76,7 @@ describe('TEST PROJECT Collection ', function() {
             .get(`/v1/users/${userOne.id}`)
             .set({ Authorization: userOne.token })
             .end((err, response) => {
-              response.status.should.equal(200);
+              response.status.should.equal(200, 'The user projectList should be updated with the new project');
               const user = response.body.user;
               user.projectList[0]._id.should.equal(projectOne._id);
 
@@ -163,6 +163,10 @@ describe('TEST PROJECT Collection ', function() {
     it('PUT PROJECT - ADD A USER TO ASSIGN ARRAY IN THE TODO LIST - Route = /v1/project/:project-id - should return 200', function(done) {
       // console.log('projectone =', projectOne)
       projectOne.todos.find(todo => todo._id === todoID).assigned_users.unshift({
+        _id: userOne.id,
+        username: userOne.username
+      });
+      projectOne.todos.find(todo => todo._id === todoID).assigned_users.unshift({
         _id: userTwo.id,
         username: userTwo.username
       });
@@ -174,14 +178,46 @@ describe('TEST PROJECT Collection ', function() {
         .end(async (err, response) => {
           response.status.should.equal(200);
           const project = response.body.project;
-          const user = await User.findById(userTwo.id)
-          project.team[0]._id.should.equal(projectOne.team[0]._id.toString());
-          user.projectList[0]._id.toString().should.equal(projectOne._id.toString())
+          project.todos
+            .find(todo => todo._id === todoID)
+            .assigned_users[0]._id.should.equal(
+              projectOne.todos
+                .find(todo => todo._id === todoID)
+                .assigned_users[0]._id.toString()
+            );
+          project.todos
+            .find(todo => todo._id === todoID)
+            .assigned_users[1]._id.should.equal(
+              projectOne.todos
+                .find(todo => todo._id === todoID)
+                .assigned_users[1]._id.toString()
+            );
+          // console.log(project);
+          projectOne = { ...project };
+          done();
+        });
+    });
+    it('PUT PROJECT - ADD A MESSAGE - Route = /v1/project/:project-id - should return 200', function(done) {
+      const {id, username } = userOne;
+      const title = 'message title'
+      const text = 'message text'
+      const update = {...projectOne, messages:[{title, text, user:{_id: id, username}}, ...projectOne.messages]}
+      chai
+        .request(pmApp)
+        .put(`/v1/project/${projectOne._id}`)
+        .send(update)
+        .set({ Authorization: userOne.token })
+        .end((err, response) => {
+          response.status.should.equal(200);
+          const project = response.body.project;
+          project.messages[0].user._id.toString()
+          .should.equal(update.messages[0].user._id.toString());
           // console.log(project);
           projectOne = {...project}
           done();
         });
     });
+
   });
 
   describe('TEST DELETE PROJECT - URI = /porject', function() {
@@ -208,9 +244,5 @@ describe('TEST PROJECT Collection ', function() {
     });
   })
 
-  after(function() {
-    for (let i in mongoose.connection.collections) {
-      mongoose.connection.collections[i].deleteMany();
-    }
-  });
+ 
 });
