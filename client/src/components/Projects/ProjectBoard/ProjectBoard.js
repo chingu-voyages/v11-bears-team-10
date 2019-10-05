@@ -13,7 +13,7 @@ import { withRouter } from "react-router-dom";
 import "./projectBoard.css";
 
 function ProjectBoard(props) {
-  const { project, usersList, fetshUsers, getProject, updateProject, deleteProject } = props;
+  const { project, usersList, fetshUsers, getProject, updateProject, deleteProject, history } = props;
   const { id } = props.match.params;
 
   const [showMessages, setShowMessages] = useState(false);
@@ -69,6 +69,7 @@ function ProjectBoard(props) {
             e.preventDefault();
             deleteProject(project._id)
             setisUpdateTitle(false);
+            history.push('/dashboard')
           }}
         >
           <input

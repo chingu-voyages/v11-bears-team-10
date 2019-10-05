@@ -64,11 +64,11 @@ const deleteProject = async (id, req, res) => {
     if (!project.admin.equals(req.user._id))
       return res.status(401).send('UnAuthorized');
 
-    await User.findByIdAndUpdate(project.admin, {
+    const user = await User.findByIdAndUpdate(project.admin, {
       $pull: { projectList: { _id: project._id } }
-		});
+		}, {new: true});
 		
-    res.status(200).json({ project });
+    res.status(200).json({ project, projectList: user.projectList });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
