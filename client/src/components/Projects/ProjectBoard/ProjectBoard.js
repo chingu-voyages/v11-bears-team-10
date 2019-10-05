@@ -3,37 +3,38 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { connect } from "react-redux";
 import { getProject } from "../../../redux/action_creators/project";
 import { fetshUsers } from "../../../redux/action_creators/usersListAction";
+import { updateProject } from "../../../redux/action_creators/project";
 import TodosBoard from "../../Todos/TodosBoard/TodosBoard";
 import MessageBoard from "../../Messages/MessageBoard";
 import AppPlaceholder from "../../../AppPlaceholder";
 
+import "./projectBoard.css";
+
 function ProjectBoard(props) {
-  const { project, usersList, dispatch } = props;
+  const { project, usersList, fetshUsers, getProject, updateProject } = props;
   const { id } = props.match.params;
 
   const [showMessages, setShowMessages] = useState(false);
   const [showTodos, setShowTodos] = useState(true);
-  const [users, setUsers] = useState(usersList);
+
+  const [users, setUsers] = useState([]);
   const [team, setTeam] = useState([]);
-
-  const handleChange = e => {
-    const user = users.find(user => user._id === e.target.value);
-    console.log("user list before =", users);
-    setUsers(users.filter(user => user._id !== e.target.value));
-    e.target.value = "";
-    setTeam([...team, user]);
-  };
-  useEffect(() => {
-    setUsers(usersList);
-  }, [usersList]);
+  const [isUpdateTeam, setisUpdateTeam] = useState(false);
 
   useEffect(() => {
-    console.log("use effect getproject");
-    if (id) dispatch(getProject(id));
-    dispatch(fetshUsers());
-  }, [id, dispatch]);
-  // console.log("users =", users);
-  // console.log("userlist=", usersList);
+    console.log("----------effect setUsers---------")
+    if (project && project.team) setTeam(project.team);
+    const users = usersList.filter(
+      user => !team.find(team => team._id === user._id)
+    );
+    setUsers(users);
+  }, [usersList, project]);
+
+  useEffect(() => {
+    console.log("----------effect fetch users---------")
+    getProject(id);
+    fetshUsers();
+  }, [id]);
   return !project ? (
     <AppPlaceholder text="Loading..." />
   ) : (
@@ -44,34 +45,87 @@ function ProjectBoard(props) {
             <div>
               <h3>{project.title}</h3>
               <p>{project.description}</p>
-              <div>
+              <div className="team-container">
                 {team.map(user => (
-                  <span key={user._id}>
+                  <span className="team_item" key={user._id}>
                     {user.username}
-                    <span
-                      id={user._id}
-                      onClick={(e) => {
-                        const user = team.find(
-                          user => user._id === e.target.id
-                        );
-                        setTeam(
-                          team.filter(user => user._id !== e.target.id)
-                        );
-                        setUsers([...users, user]);
-                      }}
-                    >
-                      X
-                    </span>
+                    {isUpdateTeam && (
+                      <span
+                        className="team-item-delete"
+                        id={user._id}
+                        onClick={e => {
+                          const user = team.find(
+                            user => user._id === e.target.id
+                          );
+                          setTeam(
+                            team.filter(user => user._id !== e.target.id)
+                          );
+                          setUsers([...users, user]);
+                        }}
+                      >
+                        X
+                      </span>
+                    )}
                   </span>
                 ))}
-                <input list="list-users" onChange={handleChange} />
-                <datalist id="list-users">
-                  {users.map(user => (
-                    <option key={user._id} value={user._id}>
-                      {user.username}
-                    </option>
-                  ))}
-                </datalist>
+                {!isUpdateTeam && (
+                  <button onClick={() => setisUpdateTeam(true)}>
+                    add/remove people
+                  </button>
+                )}
+                {isUpdateTeam && (
+                  <div>
+                    <input
+                      list="list-users"
+                      onChange={e => {
+                        console.log("----------onchange---------")
+                        const user = users.find(
+                          user => user._id === e.target.value
+                        );
+                        setUsers(
+                          users.filter(user => user._id !== e.target.value)
+                        );
+                        e.target.value = "";
+                        setTeam([...team, user]);
+                      }}
+                    />
+                    <datalist id="list-users">
+                      {users.map(user => (
+                        <option key={user._id} value={user._id}>
+                          {user.username}
+                        </option>
+                      ))}
+                    </datalist>
+                    <br />
+                    <input
+                      type="button"
+                      value="Update"
+                      onClick={() => {
+                        const update = { ...project, team };
+                        updateProject(update);
+                        setisUpdateTeam(false);
+                      }}
+                    />
+                    <input
+                      type="button"
+                      value="Cancel"
+                      onClick={() => {
+                        console.log("----------cancel---------")
+                        const tm = project.team
+                        setTeam(tm);
+                        console.log("team =", project.team)
+                        console.log('team =', team)
+                        const users = usersList.filter(
+                          user => !tm.find(tm => tm._id === user._id)
+                          );
+                          console.log("userlist =", usersList)
+                          console.log('users =',users)
+                          setUsers(users);
+                          setisUpdateTeam(false);
+                        }}
+                    />
+                  </div>
+                )}
               </div>
             </div>
             <hr />
@@ -124,5 +178,15 @@ const mapStatToProps = state => {
     usersList: state.usersList
   };
 };
+const mapDistpatchToProps = dispatch => {
+  return {
+    getProject: id => dispatch(getProject(id)),
+    fetshUsers: () => dispatch(fetshUsers()),
+    updateProject: project => dispatch(updateProject(project))
+  };
+};
 
-export default connect(mapStatToProps)(ProjectBoard);
+export default connect(
+  mapStatToProps,
+  mapDistpatchToProps
+)(ProjectBoard);
