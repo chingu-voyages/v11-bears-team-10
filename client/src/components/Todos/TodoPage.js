@@ -39,10 +39,10 @@ function TodoPage({ project, updateProject, todo, userId }) {
             setisUpdateTitle(false);
           }}
         >
-          { todo.assigned_users.find(user => user._id === userId) && <input
+          {todo.complited ? todo.assigned_users.find(user => user._id === userId) && <input
             type="submit"
             value="Mark as complited"
-          />}
+          /> : <span>complited</span>}
         </form>
       {!isUpdateTitle && <h1>{title}</h1>}
       {!isUpdateTitle && (
