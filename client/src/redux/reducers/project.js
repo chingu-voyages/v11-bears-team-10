@@ -7,7 +7,7 @@ const project = (state = null, action) => {
     case "UPDATE_PROJECT":
       return action.payload;
     case "DELETE_PROJECT":
-      return action.payload;
+      return null;
     default:
       return state;
   }

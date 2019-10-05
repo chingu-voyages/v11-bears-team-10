@@ -74,7 +74,7 @@ export function deleteProject(id) {
         dispatch({
           type: "DELETE_PROJECT",
           payload: {
-            payload: response.data,
+            payload: response.data.project,
             deleted: true
           }
         });
