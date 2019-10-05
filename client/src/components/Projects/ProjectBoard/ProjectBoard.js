@@ -54,6 +54,7 @@ function ProjectBoard(props) {
     <AppPlaceholder text="Loading..." />
   ) : (
     <div className="projectsbody">
+      <section className="board-body flex-col-centered">
       {!projecetDelete && (
         <button
           onClick={() => {
@@ -89,7 +90,6 @@ function ProjectBoard(props) {
           />
         </form>
       )}
-      <section className="board-body flex-col-centered">
         <div className="content" data-aos="fade-in">
           <section className="projects-summary flex-col" data-aos="fade-up">
             <div>
