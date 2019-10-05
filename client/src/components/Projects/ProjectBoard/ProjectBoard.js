@@ -20,10 +20,20 @@ function ProjectBoard(props) {
   const [users, setUsers] = useState([]);
   const [team, setTeam] = useState([]);
   const [isUpdateTeam, setisUpdateTeam] = useState(false);
+  
+  const [title, setTitle] = useState('')
+  const [isUpdateTitle, setisUpdateTitle] = useState(false);
+
+  const [description, setDescription] = useState('')
+  const [isUpdateDescription, setisUpdateDescription] = useState(false);
+
 
   useEffect(() => {
     console.log("----------effect setUsers---------")
-    if (project && project.team) setTeam(project.team);
+    if (project){
+      setTeam(project.team);
+      setTitle(project.title)
+    }
     const users = usersList.filter(
       user => !team.find(team => team._id === user._id)
     );
@@ -43,7 +53,25 @@ function ProjectBoard(props) {
         <div className="content" data-aos="fade-in">
           <section className="projects-summary flex-col" data-aos="fade-up">
             <div>
-              <h3>{project.title}</h3>
+              <div style={{display: "flex"}}>
+                {!isUpdateTitle && <h1>{title}</h1>}
+                {!isUpdateTitle && <button onClick={()=>{ setisUpdateTitle(true) }}>update</button>}
+               {isUpdateTitle && <form onSubmit={(e) => {
+                  e.preventDefault();
+                  const update = {...project, title}
+                  updateProject(update)
+                  setisUpdateTitle(false)
+                }
+                }>
+                  <input type="text" value={title} onChange={e=>setTitle(e.target.value)} required/>
+                  <input type="submit" value="update" />
+                  <input type="button" value="cancel" onClick={() => {
+                    setTitle(project.title)
+                    setisUpdateTitle(false)
+                  }
+                  }/>
+                </form>}
+                </div>
               <p>{project.description}</p>
               <div className="team-container">
                 {team.map(user => (
@@ -74,7 +102,11 @@ function ProjectBoard(props) {
                   </button>
                 )}
                 {isUpdateTeam && (
-                  <div>
+                  <form onSubmit={() => {
+                    const update = { ...project, team };
+                    updateProject(update);
+                    setisUpdateTeam(false);
+                  }}>
                     <input
                       list="list-users"
                       onChange={e => {
@@ -86,7 +118,8 @@ function ProjectBoard(props) {
                           users.filter(user => user._id !== e.target.value)
                         );
                         e.target.value = "";
-                        setTeam([...team, user]);
+                        if(user)
+                          setTeam([...team, user]);
                       }}
                     />
                     <datalist id="list-users">
@@ -98,13 +131,8 @@ function ProjectBoard(props) {
                     </datalist>
                     <br />
                     <input
-                      type="button"
+                      type="submit"
                       value="Update"
-                      onClick={() => {
-                        const update = { ...project, team };
-                        updateProject(update);
-                        setisUpdateTeam(false);
-                      }}
                     />
                     <input
                       type="button"
@@ -124,7 +152,7 @@ function ProjectBoard(props) {
                           setisUpdateTeam(false);
                         }}
                     />
-                  </div>
+                  </form>
                 )}
               </div>
             </div>
