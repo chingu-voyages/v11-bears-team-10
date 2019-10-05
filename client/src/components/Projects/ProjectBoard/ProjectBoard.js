@@ -33,6 +33,7 @@ function ProjectBoard(props) {
     if (project){
       setTeam(project.team);
       setTitle(project.title)
+      setDescription(project.description)
     }
     const users = usersList.filter(
       user => !team.find(team => team._id === user._id)
@@ -72,7 +73,24 @@ function ProjectBoard(props) {
                   }/>
                 </form>}
                 </div>
-              <p>{project.description}</p>
+              {!isUpdateDescription && <p>{project.description}</p>}
+              {!isUpdateDescription && <button onClick={()=>{ setisUpdateDescription(true) }}>update</button>}
+               {isUpdateDescription && <form onSubmit={(e) => {
+                  e.preventDefault();
+                  const update = {...project, description}
+                  updateProject(update)
+                  setisUpdateDescription(false)
+                }
+                }>
+                  <textarea value={description} onChange={e=>setDescription(e.target.value)} required/>
+                  <input type="submit" value="update" />
+                  <input type="button" value="cancel" onClick={() => {
+                    setDescription(project.description)
+                    setisUpdateDescription(false)
+                  }
+                  }/>
+                </form>}
+
               <div className="team-container">
                 {team.map(user => (
                   <span className="team_item" key={user._id}>
