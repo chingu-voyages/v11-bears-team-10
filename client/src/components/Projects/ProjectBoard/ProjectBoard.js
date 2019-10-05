@@ -2,39 +2,38 @@ import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { connect } from "react-redux";
 import { getProject } from "../../../redux/action_creators/project";
-import { fetshUsers } from '../../../redux/action_creators/usersListAction'
+import { fetshUsers } from "../../../redux/action_creators/usersListAction";
 import TodosBoard from "../../Todos/TodosBoard/TodosBoard";
 import MessageBoard from "../../Messages/MessageBoard";
 import AppPlaceholder from "../../../AppPlaceholder";
 
 function ProjectBoard(props) {
-  const { project, usersList, dispatch} = props;
+  const { project, usersList, dispatch } = props;
   const { id } = props.match.params;
-  
+
   const [showMessages, setShowMessages] = useState(false);
-	const [showTodos, setShowTodos] = useState(true);
+  const [showTodos, setShowTodos] = useState(true);
   const [users, setUsers] = useState(usersList);
   const [team, setTeam] = useState([]);
-  
-  const handleChange = (e)=>{
-    const user = users.find(user => user._id === e.target.value)
-    console.log('user list before =', users)
-    setUsers(users.filter(user => user._id !== e.target.value))
-    console.log('user list after =', users)
-    setTeam([...team, user])
-    
-  }
-  
-  
+
+  const handleChange = e => {
+    const user = users.find(user => user._id === e.target.value);
+    console.log("user list before =", users);
+    setUsers(users.filter(user => user._id !== e.target.value));
+    e.target.value = "";
+    setTeam([...team, user]);
+  };
   useEffect(() => {
-    console.log('use effect getproject')
-    if(id)
-    dispatch(getProject(id));
-    dispatch(fetshUsers())
-    setUsers(usersList)
+    setUsers(usersList);
+  }, [usersList]);
+
+  useEffect(() => {
+    console.log("use effect getproject");
+    if (id) dispatch(getProject(id));
+    dispatch(fetshUsers());
   }, [id, dispatch]);
-  console.log('users =', users)
-  console.log('userlist=', usersList)
+  // console.log("users =", users);
+  // console.log("userlist=", usersList);
   return !project ? (
     <AppPlaceholder text="Loading..." />
   ) : (
@@ -46,13 +45,33 @@ function ProjectBoard(props) {
               <h3>{project.title}</h3>
               <p>{project.description}</p>
               <div>
-                {team.map(user => <span key={user._id}>{user.username}</span>)}
-              <input list="list-users" onChange={handleChange}/>
-              <datalist id="list-users" >
-                {users.map((user) => (
-                  <option key={user._id} value={user._id}>{user.username}</option>
+                {team.map(user => (
+                  <span key={user._id}>
+                    {user.username}
+                    <span
+                      id={user._id}
+                      onClick={(e) => {
+                        const user = team.find(
+                          user => user._id === e.target.id
+                        );
+                        setTeam(
+                          team.filter(user => user._id !== e.target.id)
+                        );
+                        setUsers([...users, user]);
+                      }}
+                    >
+                      X
+                    </span>
+                  </span>
                 ))}
-              </datalist>
+                <input list="list-users" onChange={handleChange} />
+                <datalist id="list-users">
+                  {users.map(user => (
+                    <option key={user._id} value={user._id}>
+                      {user.username}
+                    </option>
+                  ))}
+                </datalist>
               </div>
             </div>
             <hr />
