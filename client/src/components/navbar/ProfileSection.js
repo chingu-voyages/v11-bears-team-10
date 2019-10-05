@@ -32,10 +32,11 @@ function ProfileSection({ user, logout }) {
 				</Spinner>
 			)}
 
-			<Link to="/dashboard" role="image">
+			<Link to="/dashboard" role="image" className="link-no-styles">
 				<Avatar
-					src="https://placeimg.com/640/480/any"
-					alt={user.username.substring(0, 2)}
+					src="https://placeimg.com/640/480/any" // random picture
+					username={user.username}
+					className="mx-auto mx-md-2"
 				/>
 			</Link>
 
@@ -45,7 +46,8 @@ function ProfileSection({ user, logout }) {
 				</NavDropdown.Item>
 				<NavDropdown.Divider />
 				<NavDropdown.Item onClick={startLoggingOut}>
-					<FontAwesomeIcon icon="sign-out-alt" className="mr-2" />logout
+					<FontAwesomeIcon icon="sign-out-alt" className="mr-2" />
+					logout
 				</NavDropdown.Item>
 			</NavDropdown>
 		</Nav>

@@ -74,9 +74,12 @@ export function deleteProject(id) {
         dispatch({
           type: "DELETE_PROJECT",
           payload: {
-            payload: response.data,
-            deleted: true
+            payload: null,
           }
+        });
+        dispatch({
+          type: "UPDATE_USER",
+          payload: {projectList: response.data.projectList}
         });
       })
       .catch(e => {
