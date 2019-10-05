@@ -34,28 +34,29 @@ describe('TEST User collectiion', function() {
   })
   // this.timeout(5000);
   describe('TEST REGISTRATION - URI = /v1/register', function(){
-    it('POST - /v1/register - User can register an account - should return 201', function(done) {
+    it("POST - /v1/register - User can register an account - should return 201", function(done) {
       chai
         .request(pmApp)
-        .post('/v1/register')
+        .post("/v1/register")
         .send(userOne)
         .end((err, response) => {
           should.equal(201, response.status);
-          response.body.should.have.property('user')
-          response.body.should.have.property('token')
+          response.body.should.have.property("user");
+          response.body.should.have.property("token");
+          response.body.user.username.should.equal(userOne.username);
           userOne.id = response.body.user._id;
-          userOne.token = 'bearer ' + response.body.token;
+          userOne.token = "bearer " + response.body.token;
           // done();
-        });
-      chai
-        .request(pmApp)
-        .post('/v1/register')
-        .send(userTwo)
-        .end((err, response) => {
-          should.equal(201, response.status);
-          userTwo.id = response.body.user._id;
-          userTwo.token = 'bearer ' + response.body.token;
-          done();
+          chai
+            .request(pmApp)
+            .post("/v1/register")
+            .send(userTwo)
+            .end((err, response) => {
+              should.equal(201, response.status);
+              userTwo.id = response.body.user._id;
+              userTwo.token = "bearer " + response.body.token;
+              done();
+            });
         });
     });
     it('POST - /v1/register - User cannot register an account with an existing Username - should return 401', function(done) {
@@ -325,11 +326,7 @@ describe('TEST User collectiion', function() {
         });
     });
   })
-  after(function() {
-    for (let i in mongoose.connection.collections) {
-      mongoose.connection.collections[i].deleteMany();
-    }
-  });
+ 
 });
 
 

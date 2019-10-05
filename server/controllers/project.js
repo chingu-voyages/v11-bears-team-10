@@ -58,12 +58,13 @@ const updateProject = async (id, req, res) => {
 
 const deleteProject = async (id, req, res) => {
   try {
-    const project = await Project.findByIdAndDelete(id);
+    const project = await Project.findById(id);
     if (!project) return res.status(404).json({ error: 'Not Found' });
-
+    
     if (!project.admin.equals(req.user._id))
-      return res.status(401).send('UnAuthorized');
-
+    return res.status(401).send('UnAuthorized');
+    
+    await Project.findByIdAndDelete(id);
     const user = await User.findByIdAndUpdate(project.admin, {
       $pull: { projectList: { _id: project._id } }
 		}, {new: true});
