@@ -1,18 +1,17 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {connect} from 'react-redux'
-import { updateProject } from "../../../redux/action_creators/project";
 
-function Todo({showTodoPortal, todo, project, updateProject}) {
-  const deleteTodo = () => {
-      const todoId = todo._id;
-      project.todos = project.todos.filter(todo => todo._id !== todoId);
-      updateProject(project)
-  }
+
+
+import { withRouter , Link} from 'react-router-dom'
+
+function Todo({history, todo }) {
+  
   
   return (
+    <Link to={`/todo/${todo._id}`}>
     <section className="flex-row todo-body" data-aos="fade-up"
-		 onClick={showTodoPortal}
+		//  onClick={history.push(`/todo/${todo._id}`)}
 		>
       <div className="projects-summary flex-col project-list">
         <span className="flex-row">
@@ -28,24 +27,11 @@ function Todo({showTodoPortal, todo, project, updateProject}) {
         </span>
         <hr />
       </div>
-      <div className="close-todo flex-col-centered" onClick={deleteTodo}>X</div>
     </section>
+    </Link>
   );
 }
 
-const mapStateToProps = state => {
-  return {
-    project: { ...state.project, todos: [...state.project.todos] }
-  };
-};
 
-const mapDispachToProps = dispach => {
-  return {
-    updateProject: project => dispach(updateProject(project))
-  };
-};
 
-export default connect(
-  mapStateToProps,
-  mapDispachToProps
-)(Todo);
+export default Todo
