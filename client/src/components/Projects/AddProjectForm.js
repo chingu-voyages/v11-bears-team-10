@@ -22,8 +22,10 @@ function AddProjectForm({ showForm, handleCloseForm, admin, createProject }) {
               title,
               description
             };
-            console.log('create project =', project)
             createProject(project);
+            setTitle("");
+          setDescription("");
+          handleCloseForm();
           }}
         >
           <Modal.Body>
@@ -35,6 +37,7 @@ function AddProjectForm({ showForm, handleCloseForm, admin, createProject }) {
                 placeholder="Name Your Project"
                 value={title}
                 onChange={e => setTitle(e.target.value)}
+                required
               />
             </Form.Group>
             <Form.Group controlId="textArea" className="forms">
@@ -47,6 +50,7 @@ function AddProjectForm({ showForm, handleCloseForm, admin, createProject }) {
                 placeholder="Add a project description"
                 rows="3"
                 value={description}
+                required
                 onChange={e => setDescription(e.target.value)}
               />
             </Form.Group>
@@ -54,7 +58,11 @@ function AddProjectForm({ showForm, handleCloseForm, admin, createProject }) {
           <Modal.Footer>
             <Button
               variant="secondary"
-              onClick={handleCloseForm}
+              onClick={() => {
+                setTitle("");
+                setDescription("");
+                handleCloseForm();
+              }}
               id="close"
               className="hvr-shadow"
             >
@@ -62,7 +70,6 @@ function AddProjectForm({ showForm, handleCloseForm, admin, createProject }) {
             </Button>
             <Button
               variant="primary"
-              onClick={handleCloseForm}
               id="save"
               type="submit"
               className="hvr-shadow"
@@ -76,16 +83,16 @@ function AddProjectForm({ showForm, handleCloseForm, admin, createProject }) {
   );
 }
 
-const mapStateToProps = state =>{
+const mapStateToProps = state => {
   return {
     admin: state.user._id
-  }
-}
+  };
+};
 
 const mapDispatchToProps = dispatch => {
   return {
     createProject: project => dispatch(createProject(project))
-  }
+  };
 };
 
 export default connect(

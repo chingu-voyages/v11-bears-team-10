@@ -1,7 +1,7 @@
 import React from "react";
 import { Spinner } from "react-bootstrap";
 
-export default function AppPlaceholder() {
+export default function AppPlaceholder({text}) {
 	return (
 		<>
 			<Spinner
@@ -9,9 +9,9 @@ export default function AppPlaceholder() {
 				variant="primary"
 				className="mt-auto mb-5 mx-auto  big-spinner"
 				role="status">
-				<span className="sr-only">Authenticating...</span>
+				<span className="sr-only">{text}</span>
 			</Spinner>
-			<h2 className="mb-auto mt-5 mx-auto text-secondary">Authenticating ...</h2>
+			<h2 className="mb-auto mt-5 mx-auto text-secondary">{text}</h2>
 		</>
 	);
 }

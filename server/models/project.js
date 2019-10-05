@@ -24,6 +24,7 @@ const messageListSchema = new Schema({
   text: { type: String, required: true },
   date_create: { type: Date, default: Date.now },
   user: {
+    _id: mongoose.Types.ObjectId,
     username: { type: String, require: true }
   }
 });

@@ -11,7 +11,7 @@ export default function ProjectsList({ projectList }) {
 	return (
 		<section
 			id="project-list"
-			className="p-3 mb-3 bg-white rounded bottom-shadow"
+			className="p-3 bg-white rounded bottom-shadow"
 			data-aos="fade-up">
 			<Row noGutters>
 				<h1 className="my-auto section-title">Projects</h1>

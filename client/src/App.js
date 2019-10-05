@@ -6,7 +6,7 @@ import resetError from "./redux/action_creators/resetError";
 
 import ProtectedRoute from "./reusable_components/ProtectedRoute";
 
-import NavBar from "./navbar";
+import NavBar from "./components/navbar";
 import LandingPage from "./components/LandingPage";
 import HowItWorks from "./components/HowItWorks";
 import Features from "./components/Features";

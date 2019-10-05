@@ -3,9 +3,10 @@ import { Nav, NavDropdown, Spinner } from "react-bootstrap";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 
-import logout from "../redux/action_creators/logout";
+import logout from "../../redux/action_creators/logout";
 
-import Avatar from "../reusable_components/Avatar";
+import Avatar from "../../reusable_components/Avatar";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 function ProfileSection({ user, logout }) {
 	const [isloggingOut, showSpinner] = useState(false);
@@ -31,10 +32,11 @@ function ProfileSection({ user, logout }) {
 				</Spinner>
 			)}
 
-			<Link to="/dashboard" role="image">
+			<Link to="/dashboard" role="image" className="link-no-styles">
 				<Avatar
-					src="https://placeimg.com/640/480/any"
-					alt={user.username.substring(0, 2)}
+					src="https://placeimg.com/640/480/any" // random picture
+					username={user.username}
+					className="mx-auto mx-md-2"
 				/>
 			</Link>
 
@@ -43,7 +45,10 @@ function ProfileSection({ user, logout }) {
 					my dashboard
 				</NavDropdown.Item>
 				<NavDropdown.Divider />
-				<NavDropdown.Item onClick={startLoggingOut}>logout</NavDropdown.Item>
+				<NavDropdown.Item onClick={startLoggingOut}>
+					<FontAwesomeIcon icon="sign-out-alt" className="mr-2" />
+					logout
+				</NavDropdown.Item>
 			</NavDropdown>
 		</Nav>
 	);

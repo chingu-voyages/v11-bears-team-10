@@ -36,8 +36,10 @@ function AddMessageList({
             user: { username }
           };
           project.messages.push(message);
-          console.log("add message project =", project);
           updateProject(project);
+          setTitle("");
+          setText("");
+          handleCloseForm();
         }}
       >
         <Modal.Body>
@@ -48,6 +50,7 @@ function AddMessageList({
               type="text"
               placeholder="Message Title"
               value={title}
+              required
               onChange={e => setTitle(e.target.value)}
             />
           </Form.Group>
@@ -58,6 +61,7 @@ function AddMessageList({
               type="text"
               placeholder="Add a message"
               value={text}
+              required
               onChange={e => setText(e.target.value)}
             />
           </Form.Group>
@@ -65,7 +69,11 @@ function AddMessageList({
         <Modal.Footer>
           <Button
             variant="secondary"
-            onClick={handleCloseForm}
+            onClick={() => {
+              setTitle("");
+              setText("");
+              handleCloseForm();
+            }}
             id="close"
             className="hvr-shadow"
           >
@@ -73,7 +81,6 @@ function AddMessageList({
           </Button>
           <Button
             variant="primary"
-            onClick={handleCloseForm}
             id="save"
             className="hvr-shadow"
             type="submit"

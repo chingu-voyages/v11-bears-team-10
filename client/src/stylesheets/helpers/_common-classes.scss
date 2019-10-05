@@ -32,14 +32,25 @@
 .avatar {
 	width: 40px;
 	height: 40px;
+	border-radius: 50%;
+	cursor: pointer;
 
 	&-placeholder {
-		font-size: 40px;
-		color: $secondary;
-		transition: color 0.2s;
+		position: relative;
+		@include font-size(18px);
+		text-align: center;
+		color: $light;
+		background-color: $secondary;
+		transition: background-color 0.2s;
+		line-height: 40px;
+
+		&.border {
+			border-width: 2px !important;
+			line-height: 36px;
+		}
 
 		&:hover {
-			color: $dark;
+			background-color: $dark;
 		}
 	}
 }
@@ -65,6 +76,9 @@ $spinner-size: 8;
 
 .h-100vh {
 	height: 100vh !important;
+	&-max {
+		max-height: 100vh !important;
+	}
 }
 
 .bottom-shadow {
@@ -87,13 +101,30 @@ $spinner-size: 8;
 	}
 }
 
-.section- {
+section .section- {
 	&title {
 		@include font-size(1.1rem);
+		margin-bottom: 0 !important;
 	}
 
 	&paragraph {
 		@include font-size(1.1rem);
 		font-weight: 300;
+	}
+}
+
+.link-no-styles {
+	text-decoration: none !important;
+	&:link {
+		text-decoration: none !important;
+	}
+	&:visited {
+		text-decoration: none !important;
+	}
+	&:hover {
+		text-decoration: none !important;
+	}
+	&:active {
+		text-decoration: none !important;
 	}
 }

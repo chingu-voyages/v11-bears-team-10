@@ -15,7 +15,8 @@ import {
 	faUserCircle,
 	faClipboardList,
 	faSave,
-	faTimes
+	faTimes,
+	faSignOutAlt
 } from "@fortawesome/free-solid-svg-icons";
 
 //create a library to hold icons and brands
@@ -35,5 +36,6 @@ library.add(
 	faUserCircle,
 	faClipboardList,
 	faSave,
-	faTimes
+	faTimes,
+	faSignOutAlt
 );

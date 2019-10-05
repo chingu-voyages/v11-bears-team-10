@@ -5,7 +5,7 @@ import { Navbar, Nav, NavItem } from "react-bootstrap";
 import ProfileSection from "./ProfileSection";
 import AuthenticationButtons from "./AuthenticationButtons";
 
-import logo from "../images/logo.png";
+import logo from "../../images/logo.png";
 
 export default class NavBar extends Component {
 	constructor(props) {
