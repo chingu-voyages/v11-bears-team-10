@@ -8,6 +8,8 @@ const passport = require('passport');
 const helmet = require('helmet');
 const cors = require('cors');
 
+
+
 const auth = require('./passport');
 
 const indexRouter = require('./routes/index');
@@ -26,6 +28,7 @@ app.use('/v1/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.use(helmet());
 app.use(cors());
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
