@@ -58,7 +58,7 @@ const updateProject = async (id, req, res) => {
 
 const deleteProject = async (id, req, res) => {
   try {
-    const project = await Project.findById(id);
+    const project = await Project.findByIdAndDelete(id);
     if (!project) return res.status(404).json({ error: 'Not Found' });
 
     if (!project.admin.equals(req.user._id))
