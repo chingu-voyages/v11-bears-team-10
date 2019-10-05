@@ -50,6 +50,7 @@ function AddProjectForm({ showForm, handleCloseForm, admin, createProject }) {
                 placeholder="Add a project description"
                 rows="3"
                 value={description}
+                required
                 onChange={e => setDescription(e.target.value)}
               />
             </Form.Group>
