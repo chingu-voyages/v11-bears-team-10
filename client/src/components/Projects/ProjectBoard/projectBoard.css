@@ -1,0 +1,13 @@
+.team-container{
+  display: flex;
+}
+.team_item{
+  border: thin solid black;
+  padding: .5em;
+  border-radius: 1em;
+  margin: 5px;
+}
+.team-item-delete{
+  margin-left: 1em;
+  cursor: pointer;
+}
