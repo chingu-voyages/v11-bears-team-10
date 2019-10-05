@@ -16,6 +16,7 @@ import RegisterForm from "./components/RegisterForm";
 import Footer from "./components/Footer";
 import Dashboard from "./components/dashboard";
 import ProjectPage from "./components/Projects/ProjectBoard/ProjectBoard";
+import TodoPage from './components/Todos/TodoPage'
 import ErrorPage from "./errors/ErrorPage";
 import ErrorToast from "./errors/ErrorToast";
 
@@ -36,6 +37,12 @@ function App({ user, error, resetError }) {
 					redirectIf={!user}
 					redirectTo="/login"
 					component={ProjectPage}
+				/>
+				<ProtectedRoute
+					path="/todo/:id"
+					redirectIf={!user}
+					redirectTo="/login"
+					component={TodoPage}
 				/>
 				<ProtectedRoute
 					path="/dashboard"
