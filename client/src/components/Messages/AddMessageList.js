@@ -35,7 +35,7 @@ function AddMessageList({
             text,
             user: { username }
           };
-          project.messages.push(message);
+          project.messages.unshift(message);
           updateProject(project);
           setTitle("");
           setText("");

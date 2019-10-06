@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 
 import { createProject } from "../../redux/action_creators/project";
 
-function AddProjectForm({ showForm, handleCloseForm, admin, createProject }) {
+function AddProjectForm({ showForm, handleCloseForm, user, createProject }) {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
 
@@ -18,9 +18,10 @@ function AddProjectForm({ showForm, handleCloseForm, admin, createProject }) {
           onSubmit={e => {
             e.preventDefault();
             const project = {
-              admin,
+              admin: user._id,
               title,
-              description
+              description,
+              team: [{_id: user._id, username: user.username}]
             };
             createProject(project);
             setTitle("");
@@ -85,7 +86,7 @@ function AddProjectForm({ showForm, handleCloseForm, admin, createProject }) {
 
 const mapStateToProps = state => {
   return {
-    admin: state.user._id
+    user: state.user
   };
 };
 

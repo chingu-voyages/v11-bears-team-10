@@ -34,7 +34,7 @@ function ProfileSection({ user, logout }) {
 
 			<Link to="/dashboard" role="image" className="link-no-styles">
 				<Avatar
-					src="https://placeimg.com/640/480/any" // random picture
+					// src="https://placeimg.com/640/480/any" // random picture
 					username={user.username}
 					className="mx-auto mx-md-2"
 				/>

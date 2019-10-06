@@ -61,9 +61,6 @@ const createUser = async (req, res) => {
 };
 
 const UpdateUser = async (id, req, res) => {
-  if (!req.user._id.equals(id)) {
-    return res.status(401).end();
-  }
   const update = req.body;
   if (update.username !== req.user.username) {
     user = await User.findOne({ username: update.username });

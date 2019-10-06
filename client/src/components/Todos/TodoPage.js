@@ -1,8 +1,10 @@
 import React, { useState } from "react";
+import './TodoPage.css'
 import { connect } from "react-redux";
 import { updateProject } from "../../redux/action_creators/project";
+import { Link, withRouter } from "react-router-dom"
 
-function TodoPage({ project, updateProject, todo, userId }) {
+function TodoPage({ project, updateProject, todo, userId, history}) {
   const [title, setTitle] = useState(todo.title);
   const [isUpdateTitle, setisUpdateTitle] = useState(false);
 
@@ -16,14 +18,12 @@ function TodoPage({ project, updateProject, todo, userId }) {
   const [assigned_users, setassigned_users] = useState(todo.assigned_users);
   const [isUpdateassigned_users, setisUpdateassigned_users] = useState(false);
 
-  const deleteTodo = () => {
-    const todoId = todo._id;
-    project.todos = project.todos.filter(todo => todo._id !== todoId);
-    updateProject(project);
-  };
+  const [showDelete, setShowDelete ] = useState(false)
+
   console.log("todo =", todo);
   return (
-    <div>
+    <main className="todo-page">
+      <Link to={`/project/${project._id}`}> {project.title} </Link>
       <form
           onSubmit={e => {
             e.preventDefault();
@@ -39,11 +39,41 @@ function TodoPage({ project, updateProject, todo, userId }) {
             setisUpdateTitle(false);
           }}
         >
-          {todo.complited ? todo.assigned_users.find(user => user._id === userId) && <input
+          {!todo.complited ? todo.assigned_users.find(user => user._id === userId) && <input
             type="submit"
             value="Mark as complited"
           /> : <span>complited</span>}
+          {userId === project.admin && !showDelete && <input
+            type="button"
+            value="Delete the todo"
+            onClick={() => {
+              setShowDelete(true)
+            }         
+          }
+          />}
+          {userId === project.admin && showDelete && <div>
+          <input
+            type="button"
+            value="Confirm delete todo"
+            onClick={() => {
+              const todoId = todo._id;
+              project.todos = project.todos.filter(todo => todo._id !== todoId);
+              updateProject(project);
+              history.push(`/project/${project._id}`)
+            }         
+          }
+          />
+          <input
+            type="button"
+            value="Cancel"
+            onClick={() => {
+              setShowDelete(false)
+            }         
+          }
+          />
+          </div>}
         </form>
+        <div className="element">
       {!isUpdateTitle && <h1>{title}</h1>}
       {!isUpdateTitle && (
         <button
@@ -54,6 +84,7 @@ function TodoPage({ project, updateProject, todo, userId }) {
           update
         </button>
       )}
+      </div>
       {isUpdateTitle && (
         <form
           onSubmit={e => {
@@ -81,15 +112,16 @@ function TodoPage({ project, updateProject, todo, userId }) {
             type="button"
             value="cancel"
             onClick={() => {
-              setTitle(project.title);
+              setTitle(todo.title);
               setisUpdateTitle(false);
             }}
           />
         </form>
       )}
       <h3>Date creation: {new Date(todo.date_create).toLocaleDateString()}</h3>
+      <div className="element">
       {!isUpdateDateDue && (
-        <h3>Date Due: {new Date(date_due).toLocaleDateString()}</h3>
+        <h3>Date Due: {date_due && new Date(date_due).toLocaleDateString()}</h3>
       )}
       {!isUpdateDateDue && (
         <button
@@ -100,6 +132,7 @@ function TodoPage({ project, updateProject, todo, userId }) {
           update
         </button>
       )}
+      </div>
       {isUpdateDateDue && (
         <form
           onSubmit={e => {
@@ -133,7 +166,7 @@ function TodoPage({ project, updateProject, todo, userId }) {
           />
         </form>
       )}
-
+ <div className="element">
       {!isUpdateDescription && <p>{todo.description}</p>}
       {!isUpdateDescription && (
         <button
@@ -144,6 +177,7 @@ function TodoPage({ project, updateProject, todo, userId }) {
           update
         </button>
       )}
+      </div>
       {isUpdateDescription && (
         <form
           onSubmit={e => {
@@ -255,7 +289,7 @@ function TodoPage({ project, updateProject, todo, userId }) {
           </form>
         )}
       </div>
-    </div>
+    </main>
   );
 }
 
@@ -277,4 +311,4 @@ const mapDispachToProps = dispach => {
 export default connect(
   mapStateToProps,
   mapDispachToProps
-)(TodoPage);
+)(withRouter(TodoPage));

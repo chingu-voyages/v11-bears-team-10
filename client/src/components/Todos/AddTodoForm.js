@@ -25,7 +25,7 @@ function AddTodoForm({ showForm, handleCloseForm, project, updateProject }) {
             title,
             description
           };
-          project.todos.push(todo);
+          project.todos.unshift(todo);
           updateProject(project);
           setTitle("");
           setDescription("");
