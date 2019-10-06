@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { connect } from "react-redux";
-import { getProject } from "../../../redux/action_creators/project";
-import { fetshUsers } from "../../../redux/action_creators/usersListAction";
+
 import { updateProject, deleteProject } from "../../../redux/action_creators/project";
 import TodosBoard from "../../Todos/TodosBoard/TodosBoard";
 import MessageBoard from "../../Messages/MessageBoard";
@@ -13,46 +12,40 @@ import { withRouter } from "react-router-dom";
 import "./projectBoard.css";
 
 function ProjectBoard(props) {
-  const { project, usersList, fetshUsers, getProject, updateProject, deleteProject, history } = props;
-  const { id } = props.match.params;
+  if(!props.project || !props.usersList){
+   return <AppPlaceholder text="Loading..." />
+  }else{
+    return <Project {...props} />
+  }
+}
+function Project(props){
+  const { project, usersList, updateProject, deleteProject, history } = props;
+  console.log('---------project---------', project)
 
   const [showMessages, setShowMessages] = useState(false);
   const [showTodos, setShowTodos] = useState(true);
 
-  const [users, setUsers] = useState([]);
-  const [team, setTeam] = useState([]);
+  
+  const [team, setTeam] = useState(project.team);
+  let users = usersList.filter(
+    user => !team.find(team => team._id === user._id)
+    )
+  console.log('userlist =', usersList)
+  // const [users, setUsers] = useState([...props.usersList]);
+  console.log('team =', team)
+  console.log('users =', users)
   const [isUpdateTeam, setisUpdateTeam] = useState(false);
 
-  const [title, setTitle] = useState("");
+  const [title, setTitle] = useState(project.title);
   const [isUpdateTitle, setisUpdateTitle] = useState(false);
 
-  const [description, setDescription] = useState("");
+  const [description, setDescription] = useState(project.description);
   const [isUpdateDescription, setisUpdateDescription] = useState(false);
 
   const [textDelete, setTextDelete] = useState("");
   const [projecetDelete, setProjectDelete] = useState(false);
 
-  useEffect(() => {
-    console.log("----------effect setUsers---------");
-    if (project) {
-      setTeam(project.team);
-      setTitle(project.title);
-      setDescription(project.description);
-    }
-    const users = usersList.filter(
-      user => !team.find(team => team._id === user._id)
-    );
-    setUsers(users);
-  }, [usersList, project]);
-
-  useEffect(() => {
-    console.log("----------effect fetch users---------");
-    getProject(id);
-    fetshUsers();
-  }, [id]);
-  return !project ? (
-    <AppPlaceholder text="Loading..." />
-  ) : (
+  return(
     <div className="projectsbody">
       <section className="board-body flex-col-centered">
       {!projecetDelete && (
@@ -171,7 +164,7 @@ function ProjectBoard(props) {
                 {team.map(user => (
                   <span className="team_item" key={user._id}>
                     {user.username}
-                    {isUpdateTeam && (
+                    {isUpdateTeam && user._id !== project.admin && (
                       <span
                         className="team-item-delete"
                         id={user._id}
@@ -182,7 +175,7 @@ function ProjectBoard(props) {
                           setTeam(
                             team.filter(user => user._id !== e.target.id)
                           );
-                          setUsers([...users, user]);
+                          users = [...users, user];
                         }}
                       >
                         X
@@ -210,9 +203,7 @@ function ProjectBoard(props) {
                         const user = users.find(
                           user => user._id === e.target.value
                         );
-                        setUsers(
-                          users.filter(user => user._id !== e.target.value)
-                        );
+                        users = users.filter(user => user._id !== e.target.value);
                         e.target.value = "";
                         if (user) setTeam([...team, user]);
                       }}
@@ -235,12 +226,12 @@ function ProjectBoard(props) {
                         setTeam(tm);
                         console.log("team =", project.team);
                         console.log("team =", team);
-                        const users = usersList.filter(
+                        users = usersList.filter(
                           user => !tm.find(tm => tm._id === user._id)
                         );
                         console.log("userlist =", usersList);
                         console.log("users =", users);
-                        setUsers(users);
+                        
                         setisUpdateTeam(false);
                       }}
                     />
@@ -300,8 +291,6 @@ const mapStatToProps = state => {
 };
 const mapDistpatchToProps = dispatch => {
   return {
-    getProject: id => dispatch(getProject(id)),
-    fetshUsers: () => dispatch(fetshUsers()),
     updateProject: project => dispatch(updateProject(project)),
     deleteProject: project => dispatch(deleteProject(project))
   };
