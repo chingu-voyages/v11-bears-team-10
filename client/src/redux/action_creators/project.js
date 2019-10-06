@@ -5,8 +5,6 @@ import setError from "./setError";
 
 
 export function createProject(project) {
-  let title = project.title;
-  let description = project.description;
   return (dispatch, getState) => {
     const validation = new Validation(project, {
       title: "min:1",
@@ -15,7 +13,7 @@ export function createProject(project) {
     axios
       .post(
         `/project/${project.admin}`,
-        { title, description },
+        project,
         {
           headers: {
             Authorization: "Bearer " + getState().authToken
@@ -73,9 +71,7 @@ export function deleteProject(id) {
       .then(response => {
         dispatch({
           type: "DELETE_PROJECT",
-          payload: {
-            payload: null,
-          }
+          payload: null
         });
         dispatch({
           type: "UPDATE_USER",
