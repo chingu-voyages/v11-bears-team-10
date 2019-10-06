@@ -23,7 +23,8 @@ const findProject = async (id, res) => {
 };
 
 const createProject = async (userId, req, res) => {
-	const project = req.body;
+  const project = req.body;
+  console.log('project =', project)
   try {
     const newProject = await Project.create({
       admin: userId,
@@ -32,10 +33,10 @@ const createProject = async (userId, req, res) => {
     await newProject.save();
     const user = await User.findByIdAndUpdate(userId, {
       $push: {
-        projectList: { _id: newProject._id, title: newProject.title }
+        projectList: { _id: newProject._id, title: newProject.title, nb_member: 1 }
       }
     }, { new: true });
-    res.status(201).json({ project: newProject, projectList: user.projectList });
+    res.status(201).json({ project: newProject, projectList: user.projectList.reverse() });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
