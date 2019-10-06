@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
 import { updateProject } from "../../redux/action_creators/project";
+import { Link, withRouter } from "react-router-dom"
 
-function TodoPage({ project, updateProject, todo, userId }) {
+function TodoPage({ project, updateProject, todo, userId, history}) {
   const [title, setTitle] = useState(todo.title);
   const [isUpdateTitle, setisUpdateTitle] = useState(false);
 
@@ -16,14 +17,12 @@ function TodoPage({ project, updateProject, todo, userId }) {
   const [assigned_users, setassigned_users] = useState(todo.assigned_users);
   const [isUpdateassigned_users, setisUpdateassigned_users] = useState(false);
 
-  const deleteTodo = () => {
-    const todoId = todo._id;
-    project.todos = project.todos.filter(todo => todo._id !== todoId);
-    updateProject(project);
-  };
+  const [showDelete, setShowDelete ] = useState(false)
+
   console.log("todo =", todo);
   return (
     <div>
+      <Link to={`/project/${project._id}`}> {project.title} </Link>
       <form
           onSubmit={e => {
             e.preventDefault();
@@ -43,6 +42,35 @@ function TodoPage({ project, updateProject, todo, userId }) {
             type="submit"
             value="Mark as complited"
           /> : <span>complited</span>}
+          {userId == project.admin && !showDelete && <input
+            type="button"
+            value="Delete the todo"
+            onClick={() => {
+              setShowDelete(true)
+            }         
+          }
+          />}
+          {userId == project.admin && showDelete && <div>
+          <input
+            type="button"
+            value="Confirm delete todo"
+            onClick={() => {
+              const todoId = todo._id;
+              project.todos = project.todos.filter(todo => todo._id !== todoId);
+              updateProject(project);
+              history.push(`/project/${project._id}`)
+            }         
+          }
+          />
+          <input
+            type="button"
+            value="Cancel"
+            onClick={() => {
+              setShowDelete(false)
+            }         
+          }
+          />
+          </div>}
         </form>
       {!isUpdateTitle && <h1>{title}</h1>}
       {!isUpdateTitle && (
@@ -277,4 +305,4 @@ const mapDispachToProps = dispach => {
 export default connect(
   mapStateToProps,
   mapDispachToProps
-)(TodoPage);
+)(withRouter(TodoPage));
