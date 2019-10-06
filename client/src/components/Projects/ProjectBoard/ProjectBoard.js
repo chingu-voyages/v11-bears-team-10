@@ -19,7 +19,7 @@ function ProjectBoard(props) {
   }
 }
 function Project(props){
-  const { project, usersList, updateProject, deleteProject, history } = props;
+  const { project, usersList, updateProject, deleteProject, history, isAdmin } = props;
   console.log('---------project---------', project)
 
   const [showMessages, setShowMessages] = useState(false);
@@ -48,7 +48,7 @@ function Project(props){
   return(
     <div className="projectsbody">
       <section className="board-body flex-col-centered">
-      {!projecetDelete && (
+      {isAdmin && !projecetDelete && (
         <button
           onClick={() => {
             setProjectDelete(true);
@@ -88,7 +88,7 @@ function Project(props){
             <div>
               <div style={{ display: "flex" }}>
                 {!isUpdateTitle && <h1>{title}</h1>}
-                {!isUpdateTitle && (
+                {isAdmin && !isUpdateTitle && (
                   <button
                     onClick={() => {
                       setisUpdateTitle(true);
@@ -125,7 +125,7 @@ function Project(props){
                 )}
               </div>
               {!isUpdateDescription && <p>{project.description}</p>}
-              {!isUpdateDescription && (
+              {isAdmin && !isUpdateDescription && (
                 <button
                   onClick={() => {
                     setisUpdateDescription(true);
@@ -183,7 +183,7 @@ function Project(props){
                     )}
                   </span>
                 ))}
-                {!isUpdateTeam && (
+                {isAdmin && !isUpdateTeam && (
                   <button onClick={() => setisUpdateTeam(true)}>
                     add/remove people
                   </button>
@@ -286,7 +286,8 @@ function Project(props){
 const mapStatToProps = state => {
   return {
     project: state.project,
-    usersList: state.usersList
+    usersList: state.usersList,
+    isAdmin: state.project && state.project.admin.toString() === state.user._id.toString()
   };
 };
 const mapDistpatchToProps = dispatch => {
