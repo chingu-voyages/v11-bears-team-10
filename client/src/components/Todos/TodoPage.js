@@ -42,7 +42,7 @@ function TodoPage({ project, updateProject, todo, userId, history}) {
             type="submit"
             value="Mark as complited"
           /> : <span>complited</span>}
-          {userId == project.admin && !showDelete && <input
+          {userId === project.admin && !showDelete && <input
             type="button"
             value="Delete the todo"
             onClick={() => {
@@ -50,7 +50,7 @@ function TodoPage({ project, updateProject, todo, userId, history}) {
             }         
           }
           />}
-          {userId == project.admin && showDelete && <div>
+          {userId === project.admin && showDelete && <div>
           <input
             type="button"
             value="Confirm delete todo"

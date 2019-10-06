@@ -1,14 +1,22 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { connect } from "react-redux";
 
 import { Row } from "react-bootstrap";
 import { withRouter } from "react-router-dom";
 
-function ProjectCard({ project, history }) {
+import { getProject } from "../../redux/action_creators/project";
+import { fetshUsers } from "../../redux/action_creators/usersListAction";
+
+function ProjectCard({ project, history, getProject, fetchUsers }) {
 	return (
 		<div
 			className="project-card border border-secondary rounded bottom-shadow-on-hover p-3"
-			onClick={() => history.push(`/project/${project._id}`)}
+			onClick={() => {
+				getProject(project._id)
+				fetchUsers()
+				history.push(`/project/${project._id}`)
+			}}
 			data-aos="fade-down">
 			<h2 className="text-center text-truncate mb-4">{project.title}</h2>
 			<Row noGutters>
@@ -29,4 +37,15 @@ function ProjectCard({ project, history }) {
 	);
 }
 
-export default withRouter(ProjectCard);
+const mapDistpatchToProps = dispatch => {
+  return {
+    getProject: id => dispatch(getProject(id)),
+    fetchUsers: () => dispatch(fetshUsers())
+  };
+};
+
+export default connect(
+  null,
+  mapDistpatchToProps
+)(withRouter(ProjectCard));
+

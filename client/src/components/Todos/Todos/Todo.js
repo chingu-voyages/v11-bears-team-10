@@ -3,9 +3,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 
 
-import { withRouter , Link} from 'react-router-dom'
+import { Link} from 'react-router-dom'
 
-function Todo({history, todo }) {
+function Todo({todo }) {
   
   
   return (
