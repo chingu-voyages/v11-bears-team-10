@@ -9,12 +9,12 @@ const todoListSchema = new Schema({
   completed: { type: Boolean, default: false },
   assigned_users: [
     {
-      username: { type: String, require: true }
+      username: { type: String, required: true }
     }
   ],
   notified_users: [
     {
-      username: { type: String, require: true }
+      username: { type: String, required: true }
     }
   ]
 });
@@ -25,7 +25,7 @@ const messageListSchema = new Schema({
   date_create: { type: Date, default: Date.now },
   user: {
     _id: mongoose.Types.ObjectId,
-    username: { type: String, require: true }
+    username: { type: String, required: true }
   }
 });
 
@@ -39,7 +39,7 @@ const projectSchema = new Schema({
   completed: { type: Boolean, default: false },
   team: [
     {
-      username: { type: String, require: true }
+      username: { type: String, required: true }
     }
   ]
 });
