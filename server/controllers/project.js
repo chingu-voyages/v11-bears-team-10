@@ -58,6 +58,7 @@ const updateProject = async (id, req, res) => {
 };
 
 const deleteProject = async (id, req, res) => {
+  console.log('---------delete project--------------')
   try {
     const project = await Project.findById(id);
     if (!project) return res.status(404).json({ error: 'Not Found' });
@@ -66,9 +67,15 @@ const deleteProject = async (id, req, res) => {
     return res.status(401).send('UnAuthorized');
     
     await Project.findByIdAndDelete(id);
-    const user = await User.findByIdAndUpdate(project.admin, {
+    // const user = await User.findByIdAndUpdate(project.admin, {
+    //   $pull: { projectList: { _id: project._id } }
+    // }, {new: true});
+    const ids = project.team.map(user => user._id)
+    await User.updateMany({_id: {$in: ids}}, {
       $pull: { projectList: { _id: project._id } }
-		}, {new: true});
+    }, {new: true});
+    const user = await User.findById(project.admin)
+    console.log('users delete project =', user)
 		
     res.status(200).json({ project, projectList: user.projectList });
   } catch (error) {
