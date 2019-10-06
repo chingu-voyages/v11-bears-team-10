@@ -81,7 +81,7 @@ function TodoPage({ project, updateProject, todo, userId }) {
             type="button"
             value="cancel"
             onClick={() => {
-              setTitle(project.title);
+              setTitle(todo.title);
               setisUpdateTitle(false);
             }}
           />
