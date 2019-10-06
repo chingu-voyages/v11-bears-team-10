@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import './TodoPage.css'
 import { connect } from "react-redux";
 import { updateProject } from "../../redux/action_creators/project";
 import { Link, withRouter } from "react-router-dom"
@@ -21,7 +22,7 @@ function TodoPage({ project, updateProject, todo, userId, history}) {
 
   console.log("todo =", todo);
   return (
-    <div>
+    <main className="todo-page">
       <Link to={`/project/${project._id}`}> {project.title} </Link>
       <form
           onSubmit={e => {
@@ -38,7 +39,7 @@ function TodoPage({ project, updateProject, todo, userId, history}) {
             setisUpdateTitle(false);
           }}
         >
-          {todo.complited ? todo.assigned_users.find(user => user._id === userId) && <input
+          {!todo.complited ? todo.assigned_users.find(user => user._id === userId) && <input
             type="submit"
             value="Mark as complited"
           /> : <span>complited</span>}
@@ -72,6 +73,7 @@ function TodoPage({ project, updateProject, todo, userId, history}) {
           />
           </div>}
         </form>
+        <div className="element">
       {!isUpdateTitle && <h1>{title}</h1>}
       {!isUpdateTitle && (
         <button
@@ -82,6 +84,7 @@ function TodoPage({ project, updateProject, todo, userId, history}) {
           update
         </button>
       )}
+      </div>
       {isUpdateTitle && (
         <form
           onSubmit={e => {
@@ -116,8 +119,9 @@ function TodoPage({ project, updateProject, todo, userId, history}) {
         </form>
       )}
       <h3>Date creation: {new Date(todo.date_create).toLocaleDateString()}</h3>
+      <div className="element">
       {!isUpdateDateDue && (
-        <h3>Date Due: {new Date(date_due).toLocaleDateString()}</h3>
+        <h3>Date Due: {date_due && new Date(date_due).toLocaleDateString()}</h3>
       )}
       {!isUpdateDateDue && (
         <button
@@ -128,6 +132,7 @@ function TodoPage({ project, updateProject, todo, userId, history}) {
           update
         </button>
       )}
+      </div>
       {isUpdateDateDue && (
         <form
           onSubmit={e => {
@@ -161,7 +166,7 @@ function TodoPage({ project, updateProject, todo, userId, history}) {
           />
         </form>
       )}
-
+ <div className="element">
       {!isUpdateDescription && <p>{todo.description}</p>}
       {!isUpdateDescription && (
         <button
@@ -172,6 +177,7 @@ function TodoPage({ project, updateProject, todo, userId, history}) {
           update
         </button>
       )}
+      </div>
       {isUpdateDescription && (
         <form
           onSubmit={e => {
@@ -283,7 +289,7 @@ function TodoPage({ project, updateProject, todo, userId, history}) {
           </form>
         )}
       </div>
-    </div>
+    </main>
   );
 }
 
