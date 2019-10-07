@@ -11,11 +11,14 @@ function TodoPage({ project, updateProject, todo, userId, history}) {
   const [date_due, setDateDue] = useState(todo.date_due);
   const [isUpdateDateDue, setisUpdateDateDue] = useState(false);
 
-  const [description, setDescription] = useState();
+  const [description, setDescription] = useState(todo.description);
   const [isUpdateDescription, setisUpdateDescription] = useState(false);
 
   const [users, setUsers] = useState(project.team);
   const [assigned_users, setassigned_users] = useState(todo.assigned_users);
+  let datalist = users.filter(
+    user => !assigned_users.find(team => team._id === user._id)
+    )
   const [isUpdateassigned_users, setisUpdateassigned_users] = useState(false);
 
   const [showDelete, setShowDelete ] = useState(false)
@@ -221,7 +224,7 @@ function TodoPage({ project, updateProject, todo, userId, history}) {
                 onClick={e => {
                   const user = assigned_users.find(user => user._id === e.target.id);
                   setassigned_users(assigned_users.filter(user => user._id !== e.target.id));
-                  setUsers([...users, user]);
+                  datalist = [...users, user];
                 }}
               >
                 X
@@ -255,13 +258,13 @@ function TodoPage({ project, updateProject, todo, userId, history}) {
               onChange={e => {
                 console.log("----------onchange---------");
                 const user = users.find(user => user._id === e.target.value);
-                setUsers(users.filter(user => user._id !== e.target.value));
+                datalist = datalist.filter(user => user._id !== e.target.value);
                 e.target.value = "";
                 if (user) setassigned_users([...assigned_users, user]);
               }}
             />
             <datalist id="list-users">
-              {users.map(user => (
+              {datalist.map(user => (
                 <option key={user._id} value={user._id}>
                   {user.username}
                 </option>
@@ -277,12 +280,11 @@ function TodoPage({ project, updateProject, todo, userId, history}) {
                 const tm = todo.assigned_users;
                 setassigned_users(tm);
                 console.log("assigned_users =", todo.assigned_users);
-                console.log("assigned_users =", assigned_users);
-                const userlist = users.filter(
+             
+                datalist = users.filter(
                   user => !tm.find(tm => tm._id === user._id)
                 );
-                console.log("userlist =", userlist);
-                setUsers(userlist);
+               
                 setisUpdateassigned_users(false);
               }}
             />
