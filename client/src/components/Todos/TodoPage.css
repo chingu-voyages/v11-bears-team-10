@@ -1,10 +1,121 @@
-.todo-page{
-  height: 100%;
+.todo-page-main {
+  min-height: 80vh;
+  width: 600px;
+  max-width: 90vw;
+  margin: auto;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  /* align-items: center; */
+  /* justify-content: space-between; */
+  background: #fafafa;
+  border-radius: 20px;
+  box-shadow:  0px 0px 13px 3px rgba(0,0,0,0.5);
+  padding: 1em;
+}
+.top-todo{
+  display: flex;
   justify-content: space-between;
 }
-.element{
-  display: flex
+.completed{
+  width: 50px;
+  height: 50px;
+  background-image: url("../../images/icons/complete.png");
+  background-repeat: no-repeat;
+  background-size: 100%
+}
+.project-title{
+  margin: 1em;
+  text-align: center;
+  border-bottom: double 5px gray;
+}
+.element {
+  display: flex;
+  align-items: flex-end;
+  min-height: 50px;
+  margin: 0 0 1em 0;
+}
+.element label,
+form label,
+.wraper-description label,
+.users-container label {
+  margin: 0 1em;
+}
+.text {
+  flex: 1;
+  border: none;
+  margin: 0;
+  border-bottom: solid gray thin;
+}
+.wraper-description {
+  display: flex;
+}
+.text-description{
+  flex: 1;
+}
+.textarea {
+  flex: 1;
+  height: 100px;
+  padding: 1em;
+}
+.btn-completed {
+  width: 50px;
+  height: 50px;
+  font-size: 10px;
+  border: none;
+  padding:.5em;
+  margin: 1em;
+}
+.btn-pencil,
+.btn-cancel,
+.btn-approve {
+  border: none;
+  min-width: 30px;
+  min-height: 30px;
+  background-size: 100%;
+  background-repeat: no-repeat;
+  background-color: transparent;
+}
+.btn-pencil {
+  background-image: url("../../images/icons/pencil.png");
+}
+.btn-cancel {
+  background-image: url("../../images/icons/Cancel.png");
+}
+.btn-approve {
+  background-image: url("../../images/icons/approve.png");
+}
+.btn-add-users{
+  padding: .5em;
+  border: none;
+  background: lime;
+  border-radius: 1em;
+}
+.wraper-description input {
+  display: block;
+  margin: 0.5em;
+}
+.users-container{
+  min-height: 50px;
+  display: flex;
+  align-items: center;
+}
+.users-container .data-list{
+  border: none;
+  width: 50px;
+}
+.users-container form{
+  display: flex;
+  align-items: center;
+}
+.user_item {
+  margin-right: 2px;
+  padding: 0.5em;
+  border: thin solid;
+  border-radius: 1em;
+  background: blanchedalmond;
+}
+
+.todo-add-message{
+  display: flex;
+  flex-direction: column;
 }

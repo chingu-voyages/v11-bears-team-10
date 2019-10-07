@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 
 import { updateProject } from "../../redux/action_creators/project";
 
-function AddTodoForm({ showForm, handleCloseForm, project, updateProject }) {
+function AddTodoForm({ showForm, handleCloseForm, project, updateProject, user }) {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
 
@@ -23,7 +23,11 @@ function AddTodoForm({ showForm, handleCloseForm, project, updateProject }) {
           e.preventDefault();
           const todo = {
             title,
-            description
+            description,
+            created_by:  {
+              _id: user._id,
+              username: user.username
+            }
           };
           project.todos.unshift(todo);
           updateProject(project);
@@ -85,7 +89,8 @@ function AddTodoForm({ showForm, handleCloseForm, project, updateProject }) {
 
 const mapStateToProps = state => {
   return {
-    project: { ...state.project, todos: [...state.project.todos] }
+    project: { ...state.project, todos: [...state.project.todos] },
+    user: state.user
   };
 };
 
