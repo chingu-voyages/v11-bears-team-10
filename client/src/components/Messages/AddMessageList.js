@@ -8,7 +8,7 @@ function AddMessageList({
   showForm,
   handleCloseForm,
   project,
-  username,
+  user,
   updateProject
 }) {
   const [title, setTitle] = useState("");
@@ -33,7 +33,10 @@ function AddMessageList({
           const message = {
             title,
             text,
-            user: { username }
+            user: { 
+              _id: user._id,
+              username: user.username 
+            }
           };
           project.messages.unshift(message);
           updateProject(project);
@@ -95,7 +98,7 @@ function AddMessageList({
 const mapStateToProps = state => {
   return {
     project: { ...state.project, messages: [...state.project.messages] },
-    username: state.user.username
+    user: state.user
   };
 };
 
