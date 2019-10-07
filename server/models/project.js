@@ -1,6 +1,16 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
+const messageListSchema = new Schema({
+  title: { type: String, required: true },
+  text: { type: String, required: true },
+  date_create: { type: Date, default: Date.now },
+  user: {
+    _id: mongoose.Types.ObjectId,
+    username: { type: String, required: true }
+  }
+});
+
 const todoListSchema = new Schema({
   title: { type: String, required: true },
   description: String,
@@ -16,18 +26,20 @@ const todoListSchema = new Schema({
     {
       username: { type: String, required: true }
     }
-  ]
-});
-
-const messageListSchema = new Schema({
-  title: { type: String, required: true },
-  text: { type: String, required: true },
-  date_create: { type: Date, default: Date.now },
-  user: {
+  ],
+  created_by: {
     _id: mongoose.Types.ObjectId,
     username: { type: String, required: true }
-  }
+  },
+  completed_by: {
+    _id: mongoose.Types.ObjectId,
+    username: { type: String, required: true }
+  },
+  date_completed: Date,
+  messages: [messageListSchema]
 });
+
+
 
 const projectSchema = new Schema({
   title: { type: String, required: true },
@@ -37,6 +49,7 @@ const projectSchema = new Schema({
   todos: [todoListSchema],
   messages: [messageListSchema],
   completed: { type: Boolean, default: false },
+  date_completed: Date,
   team: [
     {
       username: { type: String, required: true }
