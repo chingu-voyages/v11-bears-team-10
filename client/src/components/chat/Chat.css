@@ -1,0 +1,25 @@
+.chat-container{
+  width: 700px;
+  height: 70vh;
+  display: flex;
+  margin: auto;
+  background: #fafafa;
+}
+.chat-left, .chat-right{
+  flex: 1;
+  background: gray;
+}
+.chat-middle{
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+}
+.chat-display{
+  flex: 1;
+}
+.chat-middle form{
+  display: flex;
+}
+.input-chat-message{
+  flex: 1;
+}
