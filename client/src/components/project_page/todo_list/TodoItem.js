@@ -1,7 +1,7 @@
 import React from "react";
 import { ListGroupItem, Row, Col } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import Avatar from "../../reusable_components/Avatar";
+import Avatar from "../../../reusable_components/Avatar";
 import TodoCheckBox from "./TodoCheckBox";
 
 export default function TodoItem({

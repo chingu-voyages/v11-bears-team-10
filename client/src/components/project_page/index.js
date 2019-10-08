@@ -1,12 +1,14 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Row, Col, Tooltip, OverlayTrigger } from "react-bootstrap";
+import { Tooltip, OverlayTrigger, Spinner } from "react-bootstrap";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
+import getProjectById from "../../redux/action_creators/getProjectById";
+
+import DarkTransparentContainer from "../../reusable_components/DarkTransparentContainer";
 import Description from "./Description";
 import Discussion from "./Discussion";
-import TodoList from "./TodoList";
-import DarkTransparentContainer from "../../reusable_components/DarkTransparentContainer";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import TodoList from "./todo_list";
 import TeamMembers from "./TeamMembers";
 
 const tab_icons = [
@@ -38,142 +40,41 @@ class ProjectPage extends Component {
 
 		this.state = {
 			activeTabIconId: tab_icons[0].id,
-			project: {
-				completed: true,
-				_id: "5d950fef9670a300176896c5",
-				admin: "5d950e509670a300176896c4",
-				title: "some random title",
-				description:
-					"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum",
-				date_create: "2019-10-02T21:00:31.029Z",
-				todos: [
-					{
-						completed: false,
-						date_create: "2019-10-03T22:19:48.356Z",
-						assigned_users: [
-							{
-								_id: "5d9676d1d0a00100174414b5",
-								username: "wahywahya"
-							},
-							{
-								_id: "5d9676fad0a00100174414c3",
-								username: "yawhsa"
-							},
-							{
-								_id: "5d950e509670a300176896c4",
-								username: "wowowo"
-							}
-						],
-						notified_users: [],
-						_id: "5d967404d0a0010017441450",
-						title: "todo name todo name todo name",
-						description: "hahah this is a message"
-					},
-					{
-						completed: true,
-						date_create: "2019-10-03T22:21:36.261Z",
-						assigned_users: [],
-						notified_users: [],
-						_id: "5d967470d0a001001744145c",
-						date_due: "2019-10-03T22:19:48.356Z",
-						title: "do this and you'll get money , a lot of it",
-						description: "hahah this is a message"
-					},
-					{
-						completed: false,
-						date_create: "2019-10-03T22:21:36.261Z",
-						assigned_users: [],
-						notified_users: [],
-						_id: "5d967470d0a001001744145f",
-						date_due: "2019-10-03T22:19:48.356Z",
-						title: "some random name",
-						description: "hahah this is a message"
-					},
-					{
-						completed: false,
-						date_create: "2019-10-03T22:21:36.261Z",
-						assigned_users: [],
-						notified_users: [],
-						_id: "5d967470d0a001001744145k",
-						date_due: "2019-10-03T22:19:48.356Z",
-						title: "todo name",
-						description: "hahah this is a message"
-					},
-					{
-						completed: true,
-						date_create: "2019-10-03T22:22:48.432Z",
-						assigned_users: [],
-						notified_users: [],
-						_id: "5d9674b8d0a0010017441469",
-						date_due: "2019-10-25T00:00:00.000Z",
-						title:
-							"this is a message this is a message this is a message this is a messagethis is a mess a messagethis is a message a messagethis",
-						description: "hahah this is a message"
-					}
-				],
-				messages: [
-					{
-						date_create: "2019-10-03T22:09:48.707Z",
-						_id: "5d9671acd0a0010017441419"
-					},
-					{
-						date_create: "2019-10-03T22:11:12.727Z",
-						_id: "5d967200d0a001001744141a",
-						text: ""
-					},
-					{
-						date_create: "2019-10-03T22:11:15.072Z",
-						_id: "5d967203d0a001001744141c",
-						text: "hahah this is a message"
-					},
-					{
-						date_create: "2019-10-03T22:13:15.657Z",
-						_id: "5d96727bd0a001001744141f",
-						text: "hahah this is a message"
-					},
-					{
-						date_create: "2019-10-03T22:13:59.467Z",
-						_id: "5d9672a7d0a0010017441423",
-						text: "hahah this is a message"
-					},
-					{
-						date_create: "2019-10-03T22:15:10.082Z",
-						_id: "5d9672eed0a0010017441428",
-						text: "hahah this is a message"
-					},
-					{
-						date_create: "2019-10-03T22:15:34.362Z",
-						_id: "5d967306d0a001001744142e",
-						text: "hahah this is a message"
-					}
-				],
-				team: [],
-				__v: 0
-			}
+			project: null,
+			fetchingProject: true
 		};
 	}
 
-	// componentDidMount() {
-	// 	window.addEventListener("resize", this.onResize);
-	// }
+	componentDidMount() {
+		this.props.getProjectById(this.props.match.params.id, this.setProject, this.stopSpinner);
+	}
 
-	// componentWillUnmount() {
-	// 	window.removeEventListener("resize", this.onResize);
-	// }
-
-	// // the maximum breakpoint where the layout with tabs is rendered instead of the one with sections
-	// LayoutWithTab_max_breakpoint = 767;
-
-	// isLayoutWithTabs = () => window.innerWidth < this.LayoutWithTab_max_breakpoint + 1;
-
-	// onResize = () => {
-	// 	var isLayoutWithTabs = this.isLayoutWithTabs();
-	// 	if (isLayoutWithTabs !== this.state.isLayoutWithTabs) this.setState({ isLayoutWithTabs });
-	// };
+	stopSpinner = () => this.setState({ fetchingProject: false });
+	setProject = project => this.setState({ project, fetchingProject: false });
 
 	setActiveTab = ({ target: { id } }) => this.setState({ activeTabIconId: id });
 
 	renderContent = () => {
+		if (this.state.fetchingProject)
+			return (
+				<div className="text-center h-100">
+					<Spinner
+						animation="border"
+						variant="primary"
+						className="my-5 big-spinner"
+						role="status">
+						<span className="sr-only">Fetching the project ...</span>
+					</Spinner>
+				</div>
+			);
+
+		if (!this.state.fetchingProject && !this.state.project)
+			return (
+				<div className="text-muted text-center pt-5">
+					faild to get the project from the server
+				</div>
+			);
+
 		switch (this.state.activeTabIconId) {
 			case "project-description-tab-icon":
 				return (
@@ -257,6 +158,7 @@ class ProjectPage extends Component {
 	}
 }
 
-const mapStateToProps = (state, props) => console.log(state, props) || {};
-
-export default connect(mapStateToProps)(ProjectPage);
+export default connect(
+	null,
+	{ getProjectById }
+)(ProjectPage);

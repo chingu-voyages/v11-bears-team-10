@@ -1,7 +1,7 @@
 import React from "react";
 import { Modal, Button, Form, Spinner, ListGroup, ListGroupItem, Row } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import Validation from "../../validation";
+import Validation from "../../../validation";
 import axios from "axios";
 
 export default class AddTodoModal extends React.Component {

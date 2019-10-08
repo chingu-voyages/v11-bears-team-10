@@ -12,6 +12,8 @@ function groupTodosByDateDue(todos) {
 
 	// eslint-disable-next-line no-unused-vars
 	for (let todo of todos) {
+		if (!todo.title) continue;
+
 		if (todo.date_due) {
 			if (!obj[todo.date_due]) obj[todo.date_due] = [todo.date_due];
 			obj[todo.date_due].push(todo);
@@ -46,23 +48,21 @@ export default function TodoList({ todos, removeTodo, addTodo, toggleTodoComplet
 								<Row
 									key={elem}
 									noGutters
-									className="text-muted my-4 mx-xl-4 mx-lg-3 mx-2">
+									className="text-muted my-4 mx-xl-4 mx-lg-3">
 									Due {elem.substring(0, 10)}
 									<hr className="ml-4 flex-fill" />
 								</Row>
 							);
 
-						if (elem.title)
-							return (
-								<TodoItem
-									key={elem._id}
-									className={(index > 1 ? "mt-4 " : "") + "mx-auto rounded"}
-									todo={elem}
-									removeTodo={removeTodo}
-									toggleTodoCompleted={toggleTodoCompleted}
-								/>
-							);
-						return null;
+						return (
+							<TodoItem
+								key={elem._id}
+								className={(index > 1 ? "mt-4 " : "") + "mx-auto rounded"}
+								todo={elem}
+								removeTodo={removeTodo}
+								toggleTodoCompleted={toggleTodoCompleted}
+							/>
+						);
 					})
 				)}
 			</ListGroup>
