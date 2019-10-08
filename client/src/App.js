@@ -33,7 +33,6 @@ function App({ user, error, resetError }) {
 				<Route path="/features" component={Features} />
 				<Route path="/how-it-works" component={HowItWorks} />
 				<Route path="/contact-us" component={ContactUs} />
-				<Route path="/chat" component={Chat} />
 
 				<ProtectedRoute
 					path="/project/:id"

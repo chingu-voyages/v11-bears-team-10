@@ -1,21 +1,30 @@
 import React, { useState } from 'react'
 import openSocket from 'socket.io-client';
 import './Chat.css'
+import { connect } from "react-redux"
 
-const socket = openSocket(`localhost:8000`);
+const socket = openSocket(`127.0.0.1:8000`);
 
-export default function Chat() {
+function Chat({user, currentProject}) {
+  const { projectList } = user
   const [ message, setMessage ] = useState('');
   const [ messageList, setMessageList ] = useState([]);
+  const [ chatRoom, setChatRoom ] = useState(currentProject || {});
   socket.on('chat message', function(msg){
     setMessageList([...messageList, msg])
-    // $('#messages').append($('<li>').text(msg));
-    // window.scrollTo(0, document.body.scrollHeight);
   });
   return (
     <div className="chat-container">
-      <div className="chat-left"></div>
+      <div className="chat-left">
+      <ul>{
+          projectList.map((project) =><li key={project._id} id={project._id} onClick={(e) => {
+            setChatRoom(projectList.find(prj => prj._id === e.target.id))
+          }
+          } >{project.title}</li>)
+        }</ul>
+      </div>
       <div className="chat-middle">
+        <div>{chatRoom.title}</div>
         <div className="chat-display"><ul>{
           messageList.map((message, i) =><li key={i}>{message}</li>)
         }</ul></div>
@@ -36,3 +45,13 @@ export default function Chat() {
     </div>
   )
 }
+
+const mapStateToProps = (state) => {
+  return{
+    user: state.user,
+    currentProject: state.project 
+  }
+}
+
+
+export default connect(mapStateToProps)(Chat)
