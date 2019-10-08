@@ -4,22 +4,13 @@ import { connect } from "react-redux";
 import { updateProject } from "../../redux/action_creators/project";
 import { Link, withRouter } from "react-router-dom";
 
-function TodoPage({
-  project,
-  updateProject,
-  todo,
-  userId,
-  username,
-  history
-}) {
-
+function TodoPage({ project, updateProject, todo, userId, username, history }) {
   const isAdmin = userId === project.admin;
   const isCreatorOfTodo = userId === todo.created_by._id;
-  const isAssignedUser =  todo.assigned_users.find(user => user._id === userId)
-  console.log({isAdmin})
-  console.log({isCreatorOfTodo})
-  console.log({isAssignedUser})
-  
+  const isAssignedUser = todo.assigned_users.find(user => user._id === userId);
+  console.log({ isAdmin });
+  console.log({ isCreatorOfTodo });
+  console.log({ isAssignedUser });
 
   const [title, setTitle] = useState(todo.title);
   const [isUpdateTitle, setisUpdateTitle] = useState(false);
@@ -39,99 +30,111 @@ function TodoPage({
 
   const [showDelete, setShowDelete] = useState(false);
 
-  const [messageTitle, setTitleMessage] = useState("")
-  const [messageText, setMessageText] = useState("")
-  const [showAddMessage, setShowAddMessage] = useState(false)
+  const [messageTitle, setTitleMessage] = useState("");
+  const [messageText, setMessageText] = useState("");
+  const [showAddMessage, setShowAddMessage] = useState(false);
 
   console.log("todo =", todo);
   return (
     <main className="todo-page-main">
-      <Link className="project-title" to={`/project/${project._id}`}> {project.title} </Link>
+      <Link className="project-title" to={`/project/${project._id}`}>
+        {project.title}
+      </Link>
       <div className="top-todo">
-      
-      <form
-        onSubmit={e => {
-          e.preventDefault();
-          const todoId = todo._id;
-          const todos = project.todos.map(todo => {
-            if (todo._id === todoId) {
-              todo.completed = true;
-              todo.completed_by = {
-                _id: userId,
-                username
+        <form
+          onSubmit={e => {
+            e.preventDefault();
+            const todoId = todo._id;
+            const todos = project.todos.map(todo => {
+              if (todo._id === todoId) {
+                todo.completed = true;
+                todo.completed_by = {
+                  _id: userId,
+                  username
+                };
+                todo.date_completed = new Date();
+                console.log({ todo });
               }
-              todo.date_completed = new Date()
-              console.log({todo})
-            }
-            return todo;
-          });
-          const update = { ...project, todos };
-          updateProject(update);
-          setisUpdateTitle(false);
-        }}
-      >
-        {!todo.completed ? ( (isAssignedUser ) && (
-            <button 
-            className="btn-completed" 
-            type="submit" 
-            >Mark as<br />completed</button>
-          )
-        ) : (
-          <div className="completed" title="Complited"></div>
-        )}
-         </form>
+              return todo;
+            });
+            const update = { ...project, todos };
+            updateProject(update);
+            setisUpdateTitle(false);
+          }}
+        >
+          {!todo.completed ? (
+            isAssignedUser && (
+              <button className="btn-completed" type="submit">
+                Mark as
+                <br />
+                completed
+              </button>
+            )
+          ) : (
+            <div className="completed" title="Complited"></div>
+          )}
+        </form>
 
-         <form>
-        {(isAdmin || isCreatorOfTodo) && !showDelete && (
-          <input
-            type="button"
-            value="Delete the todo"
-            onClick={() => {
-              setShowDelete(true);
-            }}
-          />
-        )}       
-
-        {(isAdmin || isCreatorOfTodo)  && showDelete && (
-          <div>
+        <form>
+          {(isAdmin || isCreatorOfTodo) && !showDelete && (
             <input
               type="button"
-              value="Confirm delete todo"
+              value="Delete the todo"
               onClick={() => {
-                const todoId = todo._id;
-                project.todos = project.todos.filter(
-                  todo => todo._id !== todoId
-                );
-                updateProject(project);
-                history.push(`/project/${project._id}`);
+                setShowDelete(true);
               }}
             />
-            <input 
-              type="button"
-              value="Cancel"
+          )}
+
+          {(isAdmin || isCreatorOfTodo) && showDelete && (
+            <div>
+              <input
+                type="button"
+                value="Confirm delete todo"
+                onClick={() => {
+                  const todoId = todo._id;
+                  project.todos = project.todos.filter(
+                    todo => todo._id !== todoId
+                  );
+                  updateProject(project);
+                  history.push(`/project/${project._id}`);
+                }}
+              />
+              <input
+                type="button"
+                value="Cancel"
+                onClick={() => {
+                  setShowDelete(false);
+                }}
+              />
+            </div>
+          )}
+        </form>
+      </div>
+
+      <div style={{ textAlign: "right", marginTop: "1em" , textDecoration: "underline"}}>
+        Created on {new Date(todo.date_create).toLocaleString()} by{" "}
+        {username}
+      </div>
+
+      {!isUpdateTitle && (
+        <div className="element">
+          <label>Title: </label>
+          <span className="text">{title}</span>
+          {!todo.completed && (isAdmin || isCreatorOfTodo) && (
+            <button
+              className="btn-pencil"
               onClick={() => {
-                setShowDelete(false);
+                setisUpdateTitle(true);
               }}
             />
+          )}
         </div>
-        )}
-          </form>
-     </div>
-     
-        {!isUpdateTitle && 
-         <div className="element">
-         <label>Title: </label>
-        <span className="text">{title}</span>        
-          {!todo.completed && (isAdmin || isCreatorOfTodo) && <button className="btn-pencil"
-            onClick={() => {
-              setisUpdateTitle(true);
-            }}
-          />}
-         </div>
-        }
-      
+      )}
+
       {isUpdateTitle && (
-        <form className="element"
+        <form
+          className="element"
           onSubmit={e => {
             e.preventDefault();
             const todoId = todo._id;
@@ -147,14 +150,16 @@ function TodoPage({
           }}
         >
           <label>Title: </label>
-          <input className="text"
+          <input
+            className="text"
             type="text"
             value={title}
             onChange={e => setTitle(e.target.value)}
             required
           />
           <input className="btn-approve" type="submit" value="" />
-          <input className="btn-cancel"
+          <input
+            className="btn-cancel"
             type="button"
             value=""
             onClick={() => {
@@ -164,23 +169,26 @@ function TodoPage({
           />
         </form>
       )}
-      <div className="element">
-        <label>Date creation:</label> 
-        <span className="text">{new Date(todo.date_create).toLocaleDateString()}</span> 
-      </div>
-        {!isUpdateDateDue &&     
-           <div className="element">       
-             <label>Date Due: </label>    
-             <span className="text">{date_due && new Date(date_due).toLocaleDateString()}</span>
-          {!todo.completed && (isAdmin || isCreatorOfTodo) &&  <button className="btn-pencil"
-            onClick={() => {
-              setisUpdateDateDue(true);
-            }}
-          />}
-          </div>
-        }
+
+      {!isUpdateDateDue && (
+        <div className="element">
+          <label>Date Due: </label>
+          <span className="text">
+            {date_due && new Date(date_due).toLocaleDateString()}
+          </span>
+          {!todo.completed && (isAdmin || isCreatorOfTodo) && (
+            <button
+              className="btn-pencil"
+              onClick={() => {
+                setisUpdateDateDue(true);
+              }}
+            />
+          )}
+        </div>
+      )}
       {isUpdateDateDue && (
-        <form className="element"
+        <form
+          className="element"
           onSubmit={e => {
             e.preventDefault();
             const todoId = todo._id;
@@ -196,14 +204,16 @@ function TodoPage({
           }}
         >
           <label>Date Due:</label>
-          <input className="text"
+          <input
+            className="text"
             type="date"
             value={date_due}
             onChange={e => setDateDue(e.target.value)}
             required
           />
           <input className="btn-approve" type="submit" value="" />
-          <input className="btn-cancel"
+          <input
+            className="btn-cancel"
             type="button"
             value=""
             onClick={() => {
@@ -213,55 +223,7 @@ function TodoPage({
           />
         </form>
       )}
-      
-        {!isUpdateDescription && 
-        <div className="wraper-description">
-        <label>Description:</label>
-        <p className="text-description">{todo.description}</p>
-                 
-          {!todo.completed  && (isAdmin || isCreatorOfTodo) &&  <button className="btn-pencil"
-            onClick={() => {
-              setisUpdateDescription(true);
-            }}
-          />}
-           </div>
-        }
-     
-      {isUpdateDescription && (
-        <form className="wraper-description"
-          onSubmit={e => {
-            e.preventDefault();
-            const todoId = todo._id;
-            const todos = project.todos.map(todo => {
-              if (todo._id === todoId) {
-                todo.description = description;
-              }
-              return todo;
-            });
-            const update = { ...project, todos };
-            updateProject(update);
-            setisUpdateDescription(false);
-          }}
-        >
-          <label>Description:</label>
-          <textarea className="textarea"
-            value={description}
-            onChange={e => setDescription(e.target.value)}
-            required
-          />
-          <div>
-          <input className="btn-approve" type="submit" value="" />
-          <input className="btn-cancel"
-            type="button"
-            value=""
-            onClick={() => {
-              setDescription(todo.description);
-              setisUpdateDescription(false);
-            }}
-          />
-          </div>
-        </form>
-      )}
+
       <div className="users-container">
         <label>Assigned users:</label>
         {assigned_users.map(user => (
@@ -286,11 +248,16 @@ function TodoPage({
             )}
           </span>
         ))}
-        {!todo.completed  && !isUpdateassigned_users && (isAdmin || isCreatorOfTodo) && (
-          <button className="btn-add-users" onClick={() => setisUpdateassigned_users(true)}>
-            assign/remove members
-          </button>
-        )}
+        {!todo.completed &&
+          !isUpdateassigned_users &&
+          (isAdmin || isCreatorOfTodo) && (
+            <button
+              className="btn-add-users"
+              onClick={() => setisUpdateassigned_users(true)}
+            >
+              assign/remove members
+            </button>
+          )}
         {isUpdateassigned_users && (
           <form
             onSubmit={e => {
@@ -307,7 +274,8 @@ function TodoPage({
               setisUpdateassigned_users(false);
             }}
           >
-            <input className="data-list"
+            <input
+              className="data-list"
               list="list-users"
               autoFocus
               onChange={e => {
@@ -327,7 +295,8 @@ function TodoPage({
             </datalist>
             <br />
             <input className="btn-approve" type="submit" value="" />
-            <input className="btn-cancel"
+            <input
+              className="btn-cancel"
               type="button"
               value=""
               onClick={() => {
@@ -345,87 +314,150 @@ function TodoPage({
             />
           </form>
         )}
-        
       </div>
-      {todo.completed && (
-      <div className="element">
-        <label>Completed by:</label> 
-        <span className="text">{todo.completed_by.username}</span> 
-      </div>
+
+      {!isUpdateDescription && (
+        <div className="wraper-description">
+          <label>Description:</label>
+          <p className="text-description">{todo.description}</p>
+
+          {!todo.completed && (isAdmin || isCreatorOfTodo) && (
+            <button
+              className="btn-pencil"
+              onClick={() => {
+                setisUpdateDescription(true);
+              }}
+            />
+          )}
+        </div>
       )}
-      {todo.completed && (<div className="element">
-        <label>Completed on:</label> 
-        <span className="text">{todo.date_completed && new Date(todo.date_completed).toLocaleDateString()}</span> 
-      </div>)}
+
+      {isUpdateDescription && (
+        <form
+          className="wraper-description"
+          onSubmit={e => {
+            e.preventDefault();
+            const todoId = todo._id;
+            const todos = project.todos.map(todo => {
+              if (todo._id === todoId) {
+                todo.description = description;
+              }
+              return todo;
+            });
+            const update = { ...project, todos };
+            updateProject(update);
+            setisUpdateDescription(false);
+          }}
+        >
+          <label>Description:</label>
+          <textarea
+            className="textarea"
+            value={description}
+            onChange={e => setDescription(e.target.value)}
+            required
+          />
+          <div>
+            <input className="btn-approve" type="submit" value="" />
+            <input
+              className="btn-cancel"
+              type="button"
+              value=""
+              onClick={() => {
+                setDescription(todo.description);
+                setisUpdateDescription(false);
+              }}
+            />
+          </div>
+        </form>
+      )}
+
+      {todo.completed && (
+        <div style={{ margin: "1em 0", textDecoration: "underline" }}>
+          Closed by: {todo.completed_by.username} on{" "}
+          {todo.date_completed &&
+            new Date(todo.date_completed).toLocaleString()}
+        </div>
+      )}
+
       <div>
-          <div>Messages:</div>
-        {todo.messages.map((msg) => <div key={msg._id} >
-          <div className="message-username">{msg.user.username}</div>
-          <p className='message-text' >{msg.text}</p>
-        </div>
-        )}
-        {!showAddMessage && !todo.completed && <button 
-        className="btn-show-add-message"
-        onClick={(e) => {
-          setShowAddMessage(true)
-        }
-        }
-        >Add a message</button> }
-        </div>
+        <div style={{borderBottom:"thin solid"}}>Messages({todo.messages.length}):</div>
+        {todo.messages.map(msg => (
+          <div key={msg._id}>
+            <div className="message-username">{msg.user.username}</div>
+            <p className="message-text">{msg.text}</p>
+          </div>
+        ))}
+        {!showAddMessage &&
+          !todo.completed &&
+          (isAdmin || isAssignedUser || isCreatorOfTodo) && (
+            <button
+              className="btn-show-add-message"
+              onClick={e => {
+                setShowAddMessage(true);
+              }}
+            >
+              Add a message
+            </button>
+          )}
+      </div>
 
-      {showAddMessage && (<form className="todo-add-message"
-       onSubmit={e => {
-        e.preventDefault();
-        const todoId = todo._id;
-        const message = {
-          title: messageTitle,
-          text: messageText,
-          user: { 
-            _id: userId,
-            username
-          }
-        };
-        const todos = project.todos.map(todo => {
-          if (todo._id === todoId) {
-            todo.messages.unshift(message)
-          }
-          return todo;
-        });
-        const update = { ...project, todos };
-        setMessageText('')
-        setTitleMessage('')
-        updateProject(update)
-        setShowAddMessage(false)
-      }}
-      >
-        
-        <input type="text" required placeholder="Title" value={messageTitle} onChange={(e) => {
-          setTitleMessage(e.target.value)
-        }
-        } />
-        <textarea 
-        value={messageText} 
-        required
-        onChange={(e) => {
-          setMessageText(e.target.value)
-        }
-        
-        } ></textarea>
-        <div>
-        <input type="submit" value="Add message"/>
-        <input type="button" value="close" onClick={() => {
-           setMessageText('')
-           setTitleMessage('')
-           setShowAddMessage(false)
-        }
-        
-          
-        } />
-        </div>
-        
-
-      </form>)}
-      
+      {showAddMessage && (
+        <form
+          className="todo-add-message"
+          onSubmit={e => {
+            e.preventDefault();
+            const todoId = todo._id;
+            const message = {
+              title: messageTitle,
+              text: messageText,
+              user: {
+                _id: userId,
+                username
+              }
+            };
+            const todos = project.todos.map(todo => {
+              if (todo._id === todoId) {
+                todo.messages.push(message);
+              }
+              return todo;
+            });
+            const update = { ...project, todos };
+            setMessageText("");
+            setTitleMessage("");
+            updateProject(update);
+            setShowAddMessage(false);
+          }}
+        >
+          <input
+            type="text"
+            required
+            placeholder="Title"
+            value={messageTitle}
+            onChange={e => {
+              setTitleMessage(e.target.value);
+            }}
+          />
+          <textarea
+            value={messageText}
+            required
+            onChange={e => {
+              setMessageText(e.target.value);
+            }}
+          ></textarea>
+          <div>
+            <input type="submit" value="Add message" />
+            <input
+              type="button"
+              value="close"
+              onClick={() => {
+                setMessageText("");
+                setTitleMessage("");
+                setShowAddMessage(false);
+              }}
+            />
+          </div>
+        </form>
+      )}
     </main>
   );
 }
@@ -434,7 +466,7 @@ const mapStateToProps = (state, ownProps) => {
   const id = ownProps.match.params.id;
   return {
     project: state.project,
-    todo: state.project && state.project.todos.find(todo => todo._id === id) ,
+    todo: state.project && state.project.todos.find(todo => todo._id === id),
     userId: state.user._id,
     username: state.user.username
   };
