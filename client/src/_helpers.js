@@ -93,3 +93,67 @@ export function removeClassName(target, className) {
 		}
 	}
 }
+
+function validateDay(year, month, day) {
+	if (day < 1) return false;
+
+	switch (month) {
+		case 1:
+		case 3:
+		case 5:
+		case 7:
+		case 8:
+		case 10:
+		case 12:
+			if (day > 31) return false;
+			break;
+
+		case 4:
+		case 6:
+		case 9:
+		case 11:
+			if (day > 30) return false;
+			break;
+
+		case 2:
+			if ((year % 4 > 0 && day > 28) || (year % 4 === 0 && day > 29)) return false;
+			break;
+
+		default:
+			return false;
+	}
+	return true;
+}
+
+export default function validateDate(date) {
+	if (!date) return false;
+
+	var segments = date.split("-");
+	var year = 0;
+	var month = 0;
+
+	for (let i = 0; i < 3; i++) {
+		if (!segments[i]) return false;
+
+		if (i === 0) {
+			if (!/^[0-9]{4}$/.test(segments[i])) return false;
+			else year = parseInt(segments[i]);
+		}
+
+		if (i === 1) {
+			if (!/^[0-9]{2}$/.test(segments[i])) return false;
+
+			month = parseInt(segments[i]);
+
+			if (month < 1 || month > 12) return false;
+		}
+
+		if (
+			i === 2 &&
+			(!/^[0-9]{2}$/.test(segments[i]) || !validateDay(year, month, parseInt(segments[i])))
+		)
+			return false;
+	}
+
+	return true;
+}

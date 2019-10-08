@@ -32,25 +32,65 @@
 .avatar {
 	width: 40px;
 	height: 40px;
-	border-radius: 50%;
-	cursor: pointer;
 
-	&-placeholder {
-		position: relative;
+	&.pull-left {
+		margin-left: -0.85rem;
+	}
+
+	&.pull-right {
+		margin-right: -0.85rem;
+	}
+
+	&-sm {
+		width: 30px;
+		height: 30px;
+
+		&.pull-left {
+			margin-left: -0.55rem;
+		}
+
+		&.pull-right {
+			margin-right: -0.55rem;
+		}
+	}
+
+	&,
+	&-sm {
+		cursor: pointer;
+		border-radius: 50%;
+
+		&.avatar-placeholder {
+			position: relative;
+			text-align: center;
+			color: $light;
+			background-color: $secondary;
+			transition: background-color 0.2s;
+
+			&.border {
+				border-width: 2px !important;
+			}
+
+			&:hover {
+				background-color: $dark;
+			}
+		}
+	}
+
+	&.avatar-placeholder {
 		@include font-size(18px);
-		text-align: center;
-		color: $light;
-		background-color: $secondary;
-		transition: background-color 0.2s;
 		line-height: 40px;
 
 		&.border {
-			border-width: 2px !important;
 			line-height: 36px;
 		}
+	}
 
-		&:hover {
-			background-color: $dark;
+	&-sm.avatar-placeholder {
+		@include font-size(14px);
+		line-height: 30px;
+
+		&.border {
+			line-height: 26px;
 		}
 	}
 }
@@ -104,7 +144,7 @@ $spinner-size: 8;
 section .section- {
 	&title {
 		@include font-size(1.1rem);
-		margin-bottom: 0 !important;
+		margin-bottom: 0;
 	}
 
 	&paragraph {
@@ -126,5 +166,12 @@ section .section- {
 	}
 	&:active {
 		text-decoration: none !important;
+	}
+}
+
+.line-through-primary {
+	&,
+	& label {
+		text-decoration: line-through $primary;
 	}
 }

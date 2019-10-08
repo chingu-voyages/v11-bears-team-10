@@ -1,6 +1,16 @@
 import React, { useState } from "react";
+import { OverlayTrigger, Tooltip } from "react-bootstrap";
 
-export default function Avatar({ src, username, className }) {
+export default function Avatar({
+	src,
+	username,
+	className,
+	pullRight,
+	pullLeft,
+	sm,
+	withBorder,
+	withTooltip
+}) {
 	const [isLoaded, setLoaded] = useState(false);
 
 	if (!isLoaded && src) {
@@ -11,12 +21,28 @@ export default function Avatar({ src, username, className }) {
 	}
 
 	var _className = className ? " " + className : "";
+	if (pullLeft) _className += " pull-left";
+	if (pullRight) _className += " pull-right";
+	if (withBorder) _className += " border border-light";
+
+	var baseClass = sm ? "avatar-sm" : "avatar";
 
 	// display the previously cached image
-	if (isLoaded) return <img src={src} alt={username} className={"avatar" + _className} />;
+	if (isLoaded) return <img src={src} alt={username} className={baseClass + _className} />;
 
 	// or display a placeholder if no image is available yet
+
+	const _div = (
+		<div className={baseClass + " avatar-placeholder" + _className}>
+			{username.substring(0, 2)}
+		</div>
+	);
+
+	if (!withTooltip) return _div;
+
 	return (
-		<div className={"avatar avatar-placeholder" + _className}>{username.substring(0, 2)}</div>
+		<OverlayTrigger overlay={<Tooltip id="tooltip-AVATAR">{username}</Tooltip>}>
+			{_div}
+		</OverlayTrigger>
 	);
 }
