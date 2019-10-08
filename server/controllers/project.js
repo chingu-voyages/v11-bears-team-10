@@ -45,7 +45,7 @@ const createProject = async (userId, req, res) => {
     );
     res
       .status(201)
-      .json({ project: newProject, projectList: user.projectList.reverse() });
+      .json({ project: newProject, projectList: user.projectList });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
