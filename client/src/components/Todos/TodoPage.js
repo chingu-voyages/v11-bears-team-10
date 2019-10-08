@@ -380,10 +380,14 @@ function TodoPage({ project, updateProject, todo, userId, username, history }) {
       )}
 
       <div>
-        <div style={{borderBottom:"thin solid"}}>Messages({todo.messages.length}):</div>
+        <div style={{borderBottom:"thin solid"}}>Messages ({todo.messages.length}):</div>
         {todo.messages.map(msg => (
-          <div key={msg._id}>
+          <div key={msg._id} className="message-container">
+            <div className="message-top">
             <div className="message-username">{msg.user.username}</div>
+            <div>{new Date(msg.date_create).toLocaleString()}</div>
+            </div>
+           <div className="message-title">{msg.title}</div>
             <p className="message-text">{msg.text}</p>
           </div>
         ))}

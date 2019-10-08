@@ -121,3 +121,30 @@ form label,
   display: flex;
   flex-direction: column;
 }
+.btn-show-add-message{
+  border: none;
+  margin: 1em 0;
+  padding: .5em;
+  border-radius: .5em;
+  background: rgb(26, 199, 26);
+  color: white;
+}
+.btn-show-add-message:hover{
+  background: rgba(0, 255, 0, 1)
+}
+.message-container{
+  margin-top: 1em;
+  border-bottom: thin solid;
+}
+.message-top{
+  display: flex;
+  justify-content: space-between;
+}
+.message-title{
+  text-decoration: underline;
+  text-transform: capitalize;
+  text-align: center;
+}
+.message-text{
+  text-align: justify;
+}
