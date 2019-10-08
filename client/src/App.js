@@ -20,6 +20,8 @@ import TodoPage from './components/Todos/TodoPage'
 import ErrorPage from "./errors/ErrorPage";
 import ErrorToast from "./errors/ErrorToast";
 
+import Chat from "./components/chat/Chat"
+
 function App({ user, error, resetError }) {
 	return (
 		<BrowserRouter>
@@ -31,6 +33,7 @@ function App({ user, error, resetError }) {
 				<Route path="/features" component={Features} />
 				<Route path="/how-it-works" component={HowItWorks} />
 				<Route path="/contact-us" component={ContactUs} />
+				<Route path="/chat" component={Chat} />
 
 				<ProtectedRoute
 					path="/project/:id"
@@ -49,6 +52,12 @@ function App({ user, error, resetError }) {
 					redirectIf={!user}
 					redirectTo="/login"
 					component={Dashboard}
+				/>
+					<ProtectedRoute
+					path="/chat"
+					redirectIf={!user}
+					redirectTo="/login"
+					component={Chat}
 				/>
 				<ProtectedRoute
 					path="/login"

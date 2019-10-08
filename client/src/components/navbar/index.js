@@ -96,6 +96,11 @@ export default class NavBar extends Component {
 								Contact us
 							</NavLink>
 						</NavItem>
+						<NavItem as="li" className="ml-md-2 my-md-0 my-2" onClick={this.shrink}>
+							<NavLink to="/chat" className="nav-link">
+								Chat
+							</NavLink>
+						</NavItem>
 					</Nav>
 
 					{this.props.user ? (
