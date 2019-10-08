@@ -364,7 +364,7 @@ function TodoPage({
           <p className='message-text' >{msg.text}</p>
         </div>
         )}
-        {!showAddMessage && <button 
+        {!showAddMessage && !todo.completed && <button 
         className="btn-show-add-message"
         onClick={(e) => {
           setShowAddMessage(true)
