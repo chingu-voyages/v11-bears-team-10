@@ -1,3 +1,4 @@
 #error-page-message {
-	background-color: rgba(#011038, 0.75);
+	background-color: rgb(240, 141, 61);
+	@include font-size(1.5rem);
 }
