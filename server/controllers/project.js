@@ -85,7 +85,7 @@ async function updateUserProjectList(
 ) {
   const nb_todos = project.todos.length;
   const nb_msg = project.messages.length;
-  const nb_member = project.team.length + 1;
+  const nb_member = project.team.length ;
   const completed = project.completed;
   await Promise.all(
     addPrjToUsers.map(async userId => {
