@@ -410,6 +410,7 @@ function TodoPage({ project, updateProject, todo, userId, username, history }) {
           className="todo-add-message"
           onSubmit={e => {
             e.preventDefault();
+            if(!messageText) return
             const todoId = todo._id;
             const message = {
               title: messageTitle,
@@ -443,7 +444,6 @@ function TodoPage({ project, updateProject, todo, userId, username, history }) {
           />
           <textarea
             value={messageText}
-            required
             onChange={e => {
               setMessageText(e.target.value);
             }}

@@ -120,7 +120,15 @@ form label,
 .todo-add-message{
   display: flex;
   flex-direction: column;
+  margin-top: 1em;
 }
+.todo-add-message input{
+  margin-bottom: .5em;
+}
+.todo-add-message textarea{
+  margin-bottom: .5em;
+}
+
 .btn-show-add-message{
   border: none;
   margin: 1em 0;
@@ -134,7 +142,9 @@ form label,
 }
 .message-container{
   margin-top: 1em;
-  border-bottom: thin solid;
+  border-radius: 5px;
+  background: rgba(0, 0, 0, 0.1);
+  padding: 0.5em;
 }
 .message-top{
   display: flex;
