@@ -4,6 +4,7 @@ import { Tooltip, OverlayTrigger, Spinner } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import getProjectById from "../../redux/action_creators/getProjectById";
+import updateProjectById from "../../redux/action_creators/updateProjectById";
 
 import DarkTransparentContainer from "../../reusable_components/DarkTransparentContainer";
 import Description from "./Description";
@@ -102,10 +103,20 @@ class ProjectPage extends Component {
 		}
 	};
 
-	addTodo = todo =>
-		this.setState(({ project }) => ({
-			project: { ...project, todos: [...project.todos, todo] }
-		}));
+	addTodo = (todo, callback, error_callback) => {
+		var _project = { ...this.state.project, todos: [...this.state.project.todos, todo] };
+
+		this.props.updateProjectById(
+			_project,
+
+			updatedProject => {
+				this.setProject(updatedProject);
+				callback();
+			},
+
+			error_callback
+		);
+	};
 
 	removeTodo = id =>
 		this.setState(({ project }) => ({
@@ -156,5 +167,5 @@ class ProjectPage extends Component {
 
 export default connect(
 	null,
-	{ getProjectById }
+	{ getProjectById, updateProjectById }
 )(ProjectPage);

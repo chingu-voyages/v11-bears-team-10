@@ -57,7 +57,9 @@ export default function TodoList({ todos, team, removeTodo, addTodo, toggleTodoC
 						return (
 							<TodoItem
 								key={elem._id}
-								className={(index > 1 ? "mt-4 " : "") + "mx-auto rounded"}
+								className={
+									(index !== group.length - 1 ? "mb-4 " : "") + "mx-auto rounded"
+								}
 								todo={elem}
 								removeTodo={removeTodo}
 								toggleTodoCompleted={toggleTodoCompleted}

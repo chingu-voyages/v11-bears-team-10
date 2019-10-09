@@ -104,7 +104,7 @@ form label.required:after {
 	position: fixed;
 	bottom: 0;
 	right: 0;
-	z-index: $zindex-fixed;
+	z-index: 9999999;
 }
 
 $spinner-size: 8;

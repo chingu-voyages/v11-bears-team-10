@@ -47,17 +47,21 @@ export default class AddTodoModal extends React.Component {
 			};
 		});
 
+	stopSpinner = () => this.setState({ submitting: false });
+
 	onSubmit = () => {
-		var validation = new Validation(this.state.data, {
-			title: "required",
-			date_due: "date"
-		});
+		var rules = {
+			title: "required"
+		};
+
+		if (this.state.data.date_due) rules.date_due = "date";
+
+		var validation = new Validation(this.state.data, rules);
 		validation.validate();
 
 		if (validation.passes)
-			this.setState(
-				{ show: false, submitting: true },
-				this.props.onSubmit.bind(null, this.state.data)
+			this.setState({ submitting: true }, () =>
+				this.props.onSubmit(this.state.data, this.close, this.stopSpinner)
 			);
 		else this.invalidate(validation.errors);
 	};
