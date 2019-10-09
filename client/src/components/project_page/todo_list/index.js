@@ -28,7 +28,7 @@ function groupTodosByDateDue(todos) {
 	return _todos;
 }
 
-export default function TodoList({ todos, removeTodo, addTodo, toggleTodoCompleted }) {
+export default function TodoList({ todos, team, removeTodo, addTodo, toggleTodoCompleted }) {
 	return (
 		<section className="px-3 pt-3 pb-4 bg-white flex-fill">
 			<Row noGutters>
@@ -37,7 +37,7 @@ export default function TodoList({ todos, removeTodo, addTodo, toggleTodoComplet
 					<FontAwesomeIcon icon="save" className="mr-2" />
 					save
 				</Button>
-				<AddTodoModal onSubmit={addTodo} />
+				<AddTodoModal onSubmit={addTodo} team={team} />
 			</Row>
 			<hr className="w-100" />
 			<ListGroup as="ul" className="py-2">

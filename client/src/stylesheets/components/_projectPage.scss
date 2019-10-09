@@ -12,12 +12,12 @@
 }
 
 #add-todo-form {
-	ul#assigned-user-suggestion-list {
+	ul#assigned-user-suggestions-list {
 		position: absolute;
 		bottom: calc(100% - 1.5rem);
 		right: 0;
 		max-width: 100%;
-		padding-top: 1rem;
+		padding: 1rem 0;
 
 		li {
 			cursor: pointer;

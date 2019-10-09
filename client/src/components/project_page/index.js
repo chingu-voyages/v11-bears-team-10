@@ -87,6 +87,7 @@ class ProjectPage extends Component {
 						removeTodo={this.removeTodo}
 						toggleTodoCompleted={this.toggleTodoCompleted}
 						todos={this.state.project.todos}
+						team={this.state.project.team}
 					/>
 				);
 

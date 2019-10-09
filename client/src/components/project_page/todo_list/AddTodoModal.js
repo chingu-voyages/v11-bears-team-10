@@ -2,7 +2,6 @@ import React from "react";
 import { Modal, Button, Form, Spinner, ListGroup, ListGroupItem, Row } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Validation from "../../../validation";
-import axios from "axios";
 
 export default class AddTodoModal extends React.Component {
 	constructor(props) {
@@ -11,7 +10,6 @@ export default class AddTodoModal extends React.Component {
 		this.initialState = {
 			submitting: false,
 			show: false,
-			usersList: [],
 			assigned_user_search: "",
 			assigned_users_suggestion: [],
 			data: {
@@ -29,10 +27,6 @@ export default class AddTodoModal extends React.Component {
 		this.state = this.initialState;
 	}
 
-	componentDidMount() {
-		axios.get("/users").then(r => this.setState({ usersList: r.data.users }));
-	}
-
 	show = () =>
 		this.setState({
 			show: true
@@ -40,8 +34,7 @@ export default class AddTodoModal extends React.Component {
 
 	close = () => this.setState({ show: false, submitting: false });
 
-	afterClose = () =>
-		this.setState(prevState => ({ ...this.initialState, usersList: prevState.usersList }));
+	afterClose = () => this.setState(prevState => this.initialState);
 
 	invalidate = (errors = {}) =>
 		this.setState(({ validation }) => {
@@ -79,12 +72,12 @@ export default class AddTodoModal extends React.Component {
 		}));
 
 	onChange_assigned_user_search = ({ target: { value } }) =>
-		this.setState(prevState => ({
+		this.setState({
 			assigned_user_search: value,
 			assigned_users_suggestion: value
-				? prevState.usersList.filter(user => user.username.includes(value))
+				? this.props.team.filter(user => user.username.includes(value))
 				: []
-		}));
+		});
 
 	onFocus_assigned_user_search = () =>
 		this.onChange_assigned_user_search({
@@ -190,10 +183,10 @@ export default class AddTodoModal extends React.Component {
 								/>
 								<small className="text-muted my-2 px-2">only team members</small>
 								{this.state.assigned_users_suggestion.length > 0 && (
-									<ListGroup as="ul" id="assigned-user-suggestion-list">
+									<ListGroup as="ul" id="assigned-user-suggestions-list">
 										{this.state.assigned_users_suggestion.map(user => (
 											<ListGroupItem
-												key={"assigned-user-suggestion-" + user._id}
+												key={"assigned-user-suggestion-" + user.username}
 												onMouseDown={this.addAssignedUser.bind(this, user)}
 												as="li">
 												{user.username}
@@ -207,10 +200,10 @@ export default class AddTodoModal extends React.Component {
 										noGutters
 										id="assigned-users-list"
 										className="p-0 mt-3">
-										{this.state.data.assigned_users.map((user, index) => (
+										{this.state.data.assigned_users.map(user => (
 											<ListGroupItem
 												as="li"
-												key={"assigned-user-name-" + user._id}
+												key={"assigned-user-name-" + user.username}
 												className="mr-2 mb-2">
 												{user.username}
 												<FontAwesomeIcon
