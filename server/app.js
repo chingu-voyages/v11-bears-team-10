@@ -18,16 +18,8 @@ const projectRouter = require('./routes/project');
 const authRouter = require('./routes/auth');
 
 const app = express();
-var server = require('http').Server(app);
-var io = require('socket.io')(server);
 
-server.listen(8000);
-// WARNING: app.listen(80) will NOT work here!
-io.on('connection', function(socket){
-  socket.on('chat message', function(msg){
-    io.emit('chat message', msg);
-  });
-});
+require('./chat')(app);
 
 const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('./public/swagger/swagger.json');
