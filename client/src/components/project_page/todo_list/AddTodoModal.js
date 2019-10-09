@@ -134,7 +134,7 @@ export default class AddTodoModal extends React.Component {
 					<Modal.Body>
 						<Form id="add-todo-form">
 							<Form.Group controlId="title">
-								<Form.Label>Title</Form.Label>
+								<Form.Label className="required">Title</Form.Label>
 								<Form.Control
 									isInvalid={this.state.validation.title.length}
 									onChange={this.onChange}
