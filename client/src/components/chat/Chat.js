@@ -30,6 +30,7 @@ function Chat({user, currentProject}) {
         }</ul></div>
         <form onSubmit={(e) => {
           e.preventDefault();
+          if(!message) return
           socket.emit('chat message', message);
           setMessage('')
         }
