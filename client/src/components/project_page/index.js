@@ -11,25 +11,21 @@ import Discussion from "./Discussion";
 import TodoList from "./todo_list";
 import TeamMembers from "./TeamMembers";
 
-const tab_icons = [
+const tabs = [
 	{
 		name: "project description",
-		id: "project-description-tab-icon",
 		fa_icon: "home"
 	},
 	{
 		name: "todos",
-		id: "todos-tab-icon",
 		fa_icon: "tasks"
 	},
 	{
 		name: "discussion",
-		id: "discussion-tab-icon",
 		fa_icon: "comments"
 	},
 	{
 		name: "team members",
-		id: "team-members-tab-icon",
 		fa_icon: "users"
 	}
 ];
@@ -39,7 +35,7 @@ class ProjectPage extends Component {
 		super(props);
 
 		this.state = {
-			activeTabIconId: tab_icons[0].id,
+			activeTabIndex: 0,
 			project: null,
 			fetchingProject: true
 		};
@@ -52,7 +48,7 @@ class ProjectPage extends Component {
 	stopSpinner = () => this.setState({ fetchingProject: false });
 	setProject = project => this.setState({ project, fetchingProject: false });
 
-	setActiveTab = ({ target: { id } }) => this.setState({ activeTabIconId: id });
+	setActiveTabIndex = index => this.setState({ activeTabIndex: index });
 
 	renderContent = () => {
 		if (this.state.fetchingProject)
@@ -75,8 +71,8 @@ class ProjectPage extends Component {
 				</div>
 			);
 
-		switch (this.state.activeTabIconId) {
-			case "project-description-tab-icon":
+		switch (this.state.activeTabIndex) {
+			case 0:
 				return (
 					<Description
 						title={this.state.project.title}
@@ -84,7 +80,7 @@ class ProjectPage extends Component {
 					/>
 				);
 
-			case "todos-tab-icon":
+			case 1:
 				return (
 					<TodoList
 						addTodo={this.addTodo}
@@ -94,10 +90,10 @@ class ProjectPage extends Component {
 					/>
 				);
 
-			case "discussion-tab-icon":
+			case 2:
 				return <Discussion />;
 
-			case "team-members-tab-icon":
+			case 3:
 				return <TeamMembers />;
 
 			default:
@@ -130,17 +126,16 @@ class ProjectPage extends Component {
 			<DarkTransparentContainer>
 				<div className="h-100 bg-transparent d-flex flex-column flex-md-row flex-fill bottom-shadow rounded overflow-hidden">
 					<nav id="project-page-navbar" className="d-flex flex-row flex-md-column">
-						{tab_icons.map(tab_icon => {
+						{tabs.map((tab, index) => {
 							return (
 								<OverlayTrigger
-									key={tab_icon.id}
-									overlay={<Tooltip>{tab_icon.name}</Tooltip>}>
+									key={tab.name}
+									overlay={<Tooltip>{tab.name}</Tooltip>}>
 									<FontAwesomeIcon
-										id={tab_icon.id}
-										onClick={this.setActiveTab}
-										icon={tab_icon.fa_icon}
+										onClick={this.setActiveTabIndex.bind(this, index)}
+										icon={tab.fa_icon}
 										className={
-											tab_icon.id === this.state.activeTabIconId
+											index === this.state.activeTabIndex
 												? "active"
 												: undefined
 										}
