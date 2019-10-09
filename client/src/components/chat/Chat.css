@@ -1,5 +1,5 @@
 .chat-container{
-  width: 700px;
+  width: 100%;
   height: 70vh;
   display: flex;
   margin: auto;
@@ -7,7 +7,8 @@
 }
 .chat-left, .chat-right{
   flex: 1;
-  background: gray;
+  background: #caefff;
+  border: thick solid blue;
 }
 .chat-middle{
   flex: 2;
@@ -22,4 +23,11 @@
 }
 .input-chat-message{
   flex: 1;
+  border: thin solid #caefff;
+}
+.chat-title{
+  background: #caefff;
+  border: thick solid blue;
+  border-left: none;
+  border-right: none;
 }
