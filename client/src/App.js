@@ -18,12 +18,16 @@ import Dashboard from "./components/dashboard";
 import ProjectPage from "./components/Projects/ProjectBoard/ProjectBoard";
 import TodoPage from './components/Todos/TodoPage'
 import ErrorPage from "./errors/ErrorPage";
-import ErrorToast from "./errors/ErrorToast";
+import getErrorMessage from "./errors/getErrorMessage";
+import MessageToast from "./reusable_components/MessageToast";
 
 function App({ user, error, resetError }) {
 	return (
 		<BrowserRouter>
-			<ErrorToast error={error} onClose={resetError} delay={3000} />
+			{error && (
+				<MessageToast message={getErrorMessage(error)} error onClose={resetError} delay={3000} />
+			)}
+			
 			<NavBar user={user} />
 
 			<Switch>
