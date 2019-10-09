@@ -26,8 +26,7 @@ export default class MessageToast extends Component {
 		});
 
 	componentDidUpdate(prevProps) {
-		if (this.props.message && this.props.message !== prevProps.message)
-			this.extendShowDuration();
+		if (this.props.content !== prevProps.content) this.extendShowDuration();
 	}
 
 	render() {
@@ -42,7 +41,7 @@ export default class MessageToast extends Component {
 				autohide
 				delay={this.props.delay}
 				onClose={this.debounced_onClose}>
-				{this.props.message}
+				{this.props.content}
 			</Toast>
 		);
 	}

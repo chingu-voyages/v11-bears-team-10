@@ -1,14 +1,12 @@
 import axios from "axios";
-import setError from "./setError";
+import setToastError from "./setToastError";
 
 const updateProjectById = (project, callback, error_callback) => dispatch =>
 	axios
 		.put(`project/${project._id}`, project)
 		.then(r => callback(r.data.project))
 		.catch(e => {
-			if (!e.response) dispatch(setError({ requestTimeout: e.code === "ECONNABORTED" }));
-			else dispatch(setError({ statusCode: e.response.status }));
-
+			dispatch(setToastError(e));
 			error_callback();
 		});
 

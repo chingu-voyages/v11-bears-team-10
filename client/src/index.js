@@ -29,12 +29,11 @@ const DEFAULT_INITIAL_STATE = {
 	authToken: null,
 
 	/**
-	 * null if no error , or an object containing 0 or more of these properties :
-	 * message : string
-	 * statusCode : int
-	 * requestTimeout : bool
+	 * null if no error , or an object containing these properties :
+	 * type : string (error | success)
+	 * content : anything that can be rendered by react
 	 */
-	error: null,
+	toastMessage: null,
 
 	project: null
 };

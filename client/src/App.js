@@ -2,7 +2,7 @@ import React from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 
 import { connect } from "react-redux";
-import resetError from "./redux/action_creators/resetError";
+import resetToastMessage from "./redux/action_creators/resetToastMessage";
 
 import ProtectedRoute from "./reusable_components/ProtectedRoute";
 
@@ -16,18 +16,25 @@ import RegisterForm from "./components/RegisterForm";
 import Footer from "./components/Footer";
 import Dashboard from "./components/dashboard";
 import ProjectPage from "./components/Projects/ProjectBoard/ProjectBoard";
-import TodoPage from './components/Todos/TodoPage'
+// import ProjectPage from "./components/project_page";
+import TodoPage from "./components/Todos/TodoPage";
+
 import ErrorPage from "./errors/ErrorPage";
-import getErrorMessage from "./errors/getErrorMessage";
 import MessageToast from "./reusable_components/MessageToast";
 
-function App({ user, error, resetError }) {
+function App({ user, toastMessage, resetToastMessage }) {
 	return (
 		<BrowserRouter>
-			{error && (
-				<MessageToast message={getErrorMessage(error)} error onClose={resetError} delay={3000} />
+			{toastMessage && toastMessage.content && (
+				<MessageToast
+					content={toastMessage.content}
+					error={toastMessage.type === "error"}
+					success={toastMessage.type === "success"}
+					onClose={resetToastMessage}
+					delay={4000}
+				/>
 			)}
-			
+
 			<NavBar user={user} />
 
 			<Switch>
@@ -75,6 +82,6 @@ function App({ user, error, resetError }) {
 }
 
 export default connect(
-	({ user, error }) => ({ user, error }),
-	{ resetError }
+	({ user, toastMessage }) => ({ user, toastMessage }),
+	{ resetToastMessage }
 )(App);
