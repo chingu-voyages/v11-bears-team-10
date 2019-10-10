@@ -1,0 +1,8 @@
+.dark-transparent-container {
+	flex: 1;
+	background-color: rgba(#011038, 0.15);
+
+	@include media-breakpoint-up(sm) {
+		border-radius: 0.25rem !important; // the same as .rounded from bootstrap
+	}
+}

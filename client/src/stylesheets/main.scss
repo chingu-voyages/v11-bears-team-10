@@ -20,6 +20,10 @@ $enable-responsive-font-sizes: true;
 @import "./components/navbar";
 @import "./components/errorPage";
 
+@import "./reusable_components/Avatar.scss";
+@import "./reusable_components/DarkTransparentContainer.scss";
+@import "./reusable_components/UserSuggestionsFormGroup.scss";
+
 html {
 	scroll-behavior: smooth;
 	@media (prefers-reduced-motion: reduce) {

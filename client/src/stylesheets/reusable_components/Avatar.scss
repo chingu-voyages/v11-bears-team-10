@@ -1,0 +1,65 @@
+.avatar {
+	width: 40px;
+	height: 40px;
+
+	&.pull-left {
+		margin-left: -0.85rem;
+	}
+
+	&.pull-right {
+		margin-right: -0.85rem;
+	}
+
+	&-sm {
+		width: 30px;
+		height: 30px;
+
+		&.pull-left {
+			margin-left: -0.55rem;
+		}
+
+		&.pull-right {
+			margin-right: -0.55rem;
+		}
+	}
+
+	&,
+	&-sm {
+		cursor: pointer;
+		border-radius: 50%;
+
+		&.avatar-placeholder {
+			position: relative;
+			text-align: center;
+			color: $light;
+			background-color: $secondary;
+			transition: background-color 0.2s;
+
+			&.border {
+				border-width: 2px !important;
+			}
+
+			&:hover {
+				background-color: $dark;
+			}
+		}
+	}
+
+	&.avatar-placeholder {
+		@include font-size(18px);
+		line-height: 40px;
+
+		&.border {
+			line-height: 36px;
+		}
+	}
+
+	&-sm.avatar-placeholder {
+		@include font-size(14px);
+		line-height: 30px;
+
+		&.border {
+			line-height: 26px;
+		}
+	}
+}
