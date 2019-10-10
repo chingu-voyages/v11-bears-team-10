@@ -22,7 +22,8 @@
 			background-color: $secondary;
 			color: $light;
 
-			&:hover {
+			&:hover,
+			&.active-suggestion {
 				background-color: $dark;
 			}
 		}

@@ -165,7 +165,7 @@ export default class AddTodoModal extends React.Component {
 									placeholder="type a name"
 									comment="only team members"
 									usersToPickFrom={this.props.team}
-									onSuggestionClick={this.addAssignedUser}
+									onSuggestionSelect={this.addAssignedUser}
 									suggestionsGoingUp
 								/>
 							) : (

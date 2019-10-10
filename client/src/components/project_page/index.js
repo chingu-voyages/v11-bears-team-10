@@ -47,7 +47,21 @@ class ProjectPage extends Component {
 	}
 
 	stopSpinner = () => this.setState({ fetchingProject: false });
-	setProject = project => this.setState({ project, fetchingProject: false });
+	setProject = project =>
+		this.setState({
+			project: {
+				...project,
+				team: [
+					{ username: "haha" },
+					{ username: "spiderman" },
+					{ username: "spixla" },
+					{ username: "splatrra" },
+					{ username: "humberger" },
+					{ username: "aywa" }
+				]
+			},
+			fetchingProject: false
+		});
 
 	setActiveTabIndex = index => this.setState({ activeTabIndex: index });
 
