@@ -31,12 +31,16 @@ export default class MessageToast extends Component {
 
 	render() {
 		var bg = "primary";
+		var className = `p-3 bg-${bg} text-light text-center m-2 fixed-bottom-right`;
+
 		if (this.props.error && !this.props.success) bg = "danger";
 		if (!this.props.error && this.props.success) bg = "success";
+		if (this.props.className) className += " " + this.props.className;
 
 		return (
 			<Toast
-				className={`p-3 bg-${bg} text-light text-center m-2 fixed-bottom-right`}
+				id={this.props.id}
+				className={className}
 				show={this.state.show}
 				autohide
 				delay={this.props.delay}
