@@ -8,12 +8,14 @@ module.exports = app => {
 
   io.on("connection", function(socket) {
     socket.on("create", function(projectList) {
+      console.log("projcetlis =", projectList)
       projectList.forEach(project => {
         socket.on(project, async function(msg) {
+          console.log(project, msg)
           try {
             const message = await MessageChat.create(msg);
             await message.save();
-            socket.broadcast.emit(project, message);
+            io.emit(project, message);
           } catch (error) {
             console.error(error);
           }
@@ -37,6 +39,7 @@ module.exports = app => {
     socket.on("login", async function(username) {
       try {
         socket.username = username;
+        console.log('user login =', username)
         const finduser = await ChatUser.findOne({ username });
         if (!finduser) {
           const user = await ChatUser.create({ username });
