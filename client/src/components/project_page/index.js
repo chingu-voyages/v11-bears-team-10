@@ -87,6 +87,7 @@ class ProjectPage extends Component {
 						addTodo={this.addTodo}
 						removeTodo={this.removeTodo}
 						toggleTodoCompleted={this.toggleTodoCompleted}
+						updateProjectInDatabase={this.updateProjectInDatabase}
 						todos={this.state.project.todos}
 						team={this.state.project.team}
 					/>
@@ -108,6 +109,19 @@ class ProjectPage extends Component {
 
 		this.props.updateProjectById(
 			_project,
+
+			updatedProject => {
+				this.setProject(updatedProject);
+				callback();
+			},
+
+			error_callback
+		);
+	};
+
+	updateProjectInDatabase = (callback, error_callback) => {
+		this.props.updateProjectById(
+			this.state.project,
 
 			updatedProject => {
 				this.setProject(updatedProject);

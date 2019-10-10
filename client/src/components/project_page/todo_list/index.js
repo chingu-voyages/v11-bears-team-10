@@ -1,5 +1,5 @@
-import React from "react";
-import { ListGroup, Row, Button } from "react-bootstrap";
+import React, { Component } from "react";
+import { ListGroup, Row, Button, Spinner } from "react-bootstrap";
 import TodoItem from "./TodoItem";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import AddTodoModal from "./AddTodoModal";
@@ -28,46 +28,83 @@ function groupTodosByDateDue(todos) {
 	return _todos;
 }
 
-export default function TodoList({ todos, team, removeTodo, addTodo, toggleTodoCompleted }) {
-	return (
-		<section className="px-3 pt-3 pb-4 bg-white flex-fill">
-			<Row noGutters>
-				<h1 className="section-title text-center my-auto mr-auto">Todo list</h1>
-				<Button variant="success" className="mr-2">
-					<FontAwesomeIcon icon="save" className="mr-2" />
-					save
-				</Button>
-				<AddTodoModal onSubmit={addTodo} team={team} />
-			</Row>
-			<hr className="w-100" />
-			<ListGroup as="ul" className="py-2">
-				{groupTodosByDateDue(todos).map(group =>
-					group.map((elem, index) => {
-						if (typeof elem === "string")
-							return (
-								<Row
-									key={elem}
-									noGutters
-									className="text-muted my-4 mx-xl-4 mx-lg-3">
-									Due {elem.substring(0, 10)}
-									<hr className="ml-4 flex-fill" />
-								</Row>
-							);
+export default class TodoList extends Component {
+	constructor(props) {
+		super(props);
 
-						return (
-							<TodoItem
-								key={elem._id}
-								className={
-									(index !== group.length - 1 ? "mb-4 " : "") + "mx-auto rounded"
-								}
-								todo={elem}
-								removeTodo={removeTodo}
-								toggleTodoCompleted={toggleTodoCompleted}
-							/>
-						);
-					})
-				)}
-			</ListGroup>
-		</section>
-	);
+		this.state = {
+			updatingProject: false
+		};
+	}
+
+	stopSaveButtonSpinner = () => this.setState({ updatingProject: false });
+
+	saveProject = () =>
+		this.setState(
+			{ updatingProject: true },
+			this.props.updateProjectInDatabase(
+				this.stopSaveButtonSpinner,
+				this.stopSaveButtonSpinner
+			)
+		);
+
+	render() {
+		const { todos, team, removeTodo, addTodo, toggleTodoCompleted } = this.props;
+		return (
+			<>
+				<Row noGutters>
+					<h1 className="section-title text-center my-auto mr-auto">Todo list</h1>
+					<Button variant="success" className="mr-2" onClick={this.saveProject}>
+						{this.state.updatingProject ? (
+							<Spinner
+								className="mx-2"
+								as="span"
+								aria-hidden="true"
+								animation="border"
+								role="status"
+								size="sm">
+								<span className="sr-only">Updating project ...</span>
+							</Spinner>
+						) : (
+							<>
+								<FontAwesomeIcon icon="save" className="mr-2" />
+								save
+							</>
+						)}
+					</Button>
+					<AddTodoModal onSubmit={addTodo} team={team} />
+				</Row>
+				<hr className="w-100" />
+				<ListGroup as="ul" className="py-2">
+					{groupTodosByDateDue(todos).map(group =>
+						group.map((elem, index) => {
+							if (typeof elem === "string")
+								return (
+									<Row
+										key={elem}
+										noGutters
+										className="text-muted my-4 mx-xl-4 mx-lg-3">
+										Due {elem.substring(0, 10)}
+										<hr className="ml-4 flex-fill" />
+									</Row>
+								);
+
+							return (
+								<TodoItem
+									key={elem._id}
+									className={
+										(index !== group.length - 1 ? "mb-4 " : "") +
+										"mx-auto rounded"
+									}
+									todo={elem}
+									removeTodo={removeTodo}
+									toggleTodoCompleted={toggleTodoCompleted}
+								/>
+							);
+						})
+					)}
+				</ListGroup>
+			</>
+		);
+	}
 }
