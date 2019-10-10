@@ -41,7 +41,7 @@ class RegisterForm extends Component {
 			this.props.register(this.state.data, this.invalidate)
 		);
 
-	onKeyDown = ({ keyCode }) => keyCode === 13 && this.onSubmit();
+	onKeyDown = ({ code, key }) => (key === "Enter" || code === "Enter") && this.onSubmit();
 
 	render() {
 		return (

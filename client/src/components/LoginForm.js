@@ -41,7 +41,7 @@ class LoginForm extends React.Component {
 			errors: { ...prevState.errors, [id]: [] }
 		}));
 
-	onKeyDown = ({ keyCode }) => keyCode === 13 && this.onSubmit();
+	onKeyDown = ({ code, key }) => (key === "Enter" || code === "Enter") && this.onSubmit();
 
 	render() {
 		return (
