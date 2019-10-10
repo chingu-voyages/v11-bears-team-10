@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 
 import { connect } from "react-redux";
@@ -16,69 +16,77 @@ import RegisterForm from "./components/RegisterForm";
 import Footer from "./components/Footer";
 import Dashboard from "./components/dashboard";
 import ProjectPage from "./components/Projects/ProjectBoard/ProjectBoard";
-import TodoPage from './components/Todos/TodoPage'
+import TodoPage from "./components/Todos/TodoPage";
 import ErrorPage from "./errors/ErrorPage";
 import ErrorToast from "./errors/ErrorToast";
 
-import Chat from "./components/chat/Chat"
+import Chat from "./components/chat/Chat";
+import configSocketIo from "./redux/action_creators/chatAction";
 
-function App({ user, error, resetError }) {
-	return (
-		<BrowserRouter>
-			<ErrorToast error={error} onClose={resetError} delay={3000} />
-			<NavBar user={user} />
+function App({ user, error, resetError, configSocketIo }) {
+  useEffect(() => {
+    if (user) configSocketIo();
+  }, [configSocketIo, user]);
+  return (
+    <BrowserRouter>
+      <ErrorToast error={error} onClose={resetError} delay={3000} />
+      <NavBar user={user} />
 
-			<Switch>
-				<Route path="/" exact component={LandingPage} />
-				<Route path="/features" component={Features} />
-				<Route path="/how-it-works" component={HowItWorks} />
-				<Route path="/contact-us" component={ContactUs} />
+      <Switch>
+        <Route path="/" exact component={LandingPage} />
+        <Route path="/features" component={Features} />
+        <Route path="/how-it-works" component={HowItWorks} />
+        <Route path="/contact-us" component={ContactUs} />
 
-				<ProtectedRoute
-					path="/project/:id"
-					redirectIf={!user}
-					redirectTo="/login"
-					component={ProjectPage}
-				/>
-				<ProtectedRoute
-					path="/todo/:id"
-					redirectIf={!user}
-					redirectTo="/login"
-					component={TodoPage}
-				/>
-				<ProtectedRoute
-					path="/dashboard"
-					redirectIf={!user}
-					redirectTo="/login"
-					component={Dashboard}
-				/>
-					<ProtectedRoute
-					path="/chat"
-					redirectIf={!user}
-					redirectTo="/login"
-					component={Chat}
-				/>
-				<ProtectedRoute
-					path="/login"
-					redirectIf={user}
-					redirectTo="/dashboard"
-					component={LoginForm}
-				/>
-				<ProtectedRoute
-					path="/register"
-					redirectIf={user}
-					redirectTo="/dashboard"
-					component={RegisterForm}
-				/>
+        <ProtectedRoute
+          path="/project/:id"
+          redirectIf={!user}
+          redirectTo="/login"
+          component={ProjectPage}
+        />
+        <ProtectedRoute
+          path="/todo/:id"
+          redirectIf={!user}
+          redirectTo="/login"
+          component={TodoPage}
+        />
+        <ProtectedRoute
+          path="/dashboard"
+          redirectIf={!user}
+          redirectTo="/login"
+          component={Dashboard}
+        />
+        <ProtectedRoute
+          path="/chat"
+          redirectIf={!user}
+          redirectTo="/login"
+          component={Chat}
+        />
+        <ProtectedRoute
+          path="/login"
+          redirectIf={user}
+          redirectTo="/dashboard"
+          component={LoginForm}
+        />
+        <ProtectedRoute
+          path="/register"
+          redirectIf={user}
+          redirectTo="/dashboard"
+          component={RegisterForm}
+        />
 
-				<Route render={() => <ErrorPage error={{ statusCode: 404 }} />} />
-			</Switch>
-			<Footer />
-		</BrowserRouter>
-	);
+        <Route render={() => <ErrorPage error={{ statusCode: 404 }} />} />
+      </Switch>
+      <Footer />
+    </BrowserRouter>
+  );
 }
+const mapDistpachToProps = dispatch => ({
+  configSocketIo: () => dispatch(configSocketIo()),
+  resetError
+});
 
 export default connect(
-	({ user, error }) => ({ user, error }),
-	{ resetError }
+  ({ user, error }) => ({ user, error }),
+  mapDistpachToProps
 )(App);
