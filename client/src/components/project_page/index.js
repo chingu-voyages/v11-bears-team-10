@@ -49,17 +49,7 @@ class ProjectPage extends Component {
 	stopSpinner = () => this.setState({ fetchingProject: false });
 	setProject = project =>
 		this.setState({
-			project: {
-				...project,
-				team: [
-					{ username: "haha" },
-					{ username: "spiderman" },
-					{ username: "spixla" },
-					{ username: "splatrra" },
-					{ username: "humberger" },
-					{ username: "aywa" }
-				]
-			},
+			project,
 			fetchingProject: false
 		});
 
