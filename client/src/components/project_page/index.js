@@ -47,11 +47,7 @@ class ProjectPage extends Component {
 	}
 
 	stopSpinner = () => this.setState({ fetchingProject: false });
-	setProject = project =>
-		this.setState({
-			project,
-			fetchingProject: false
-		});
+	setProject = project => this.setState({ project, fetchingProject: false });
 
 	setActiveTabIndex = index => this.setState({ activeTabIndex: index });
 

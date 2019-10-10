@@ -37,6 +37,7 @@ export default class UserSuggestionsFormGroup extends Component {
 
 		switch (_keyCode) {
 			case "Enter":
+				if (this.state.activeSuggestionIndex === -1) return;
 				this.onSuggestionSelect(
 					this.state.suggestions_list[this.state.activeSuggestionIndex]
 				);
