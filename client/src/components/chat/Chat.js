@@ -1,55 +1,82 @@
-import React, { useState, useEffect } from "react";
+import React, { Component } from 'react'
+
 import openSocket from "socket.io-client";
 import "./Chat.css";
 import { connect } from "react-redux";
 
 const socket = openSocket(`127.0.0.1:8000`);
 
-function Chat({ user, currentProject }) {
-  const { projectList } = user;
 
-  const [message, setMessage] = useState("");
-  const [allMessages, setAllMessages] = useState({});
-  const [chatRoom, setChatRoom] = useState(
-    currentProject || { ...projectList[0] }
-  );
-  const [users, setUsers] = useState({});
 
-  projectList.forEach(prj => {
-    socket.on(prj.title, function(msg) {
-      // console.log('prj title =', prj.title)
-      let update = [msg];
-      if (allMessages[prj.title]) {
-        update = [...allMessages[prj.title], msg];
-      }
-      setAllMessages({ ...allMessages, [prj.title]: update });
-    });
-  });
-  socket.on("users", function(userlist) {
-    console.log("userlist =", userlist)
-    setUsers({ ...userlist });
-  });
+ 
 
-  useEffect(() => {
+class Chat extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      allMessages:{},
+      message:'jkjkkj',
+      users:[],
+      chatRoom: this.props.currentProject || { ...this.props.user.projectList[0] || [] },
+     
+      
+    }
+  }
+
+  updateUsers = (users) => {
+    this.setState({users})
+  }
+  
+  handleChange = (e) => {
+    this.setState({message: e.target.value});
+    console.log('this message=', this.state.message)
+   }
+
+  componentDidMount(){
     console.log("useeffect emit create");
-    const projectTitles = projectList.map(prj => prj.title);
+   
+   if(this.props.user.projectList){
+    const projectTitles = this.props.user.projectList.map(prj => prj.title) ;
     socket.emit("create", projectTitles);
-    socket.emit("login", user.username);
-  }, [projectList, user]);
 
-  return (
-    <div className="chat-container">
+    this.props.user.projectList.forEach(prj => {
+      socket.on(prj.title, function(msg) {
+        let update = [msg];
+        if (this.state.allMessages[prj.title]) {
+          update = [...this.state.allMessages[prj.title], msg];
+        }
+        this.setState({allMessages: { ...this.state.allMessages, [prj.title]: update }});
+
+      });
+    });
+   }
+
+    if(this.props.user){
+      socket.emit("login", this.props.user.username);
+    }
+
+    socket.on("users", function(userlist) {
+      console.log("on user");
+      this.updateUsers(userlist)
+    });
+
+  }
+  
+  render() {
+    return (
+      <div>
+        <div className="chat-container">
       <div className="chat-left">
         <ul>
-          {projectList.map(project => (
+          {this.props.user.projectList.map(project => (
             <li
               key={project._id}
               id={project._id}
               onClick={e => {
-                const project = projectList.find(
+                const project = this.props.user.projectList.find(
                   prj => prj._id === e.target.id
                 );
-                setChatRoom(project);
+                this.setState({chatRoom: project});
                 console.log("chatRoom.title =", project.title);
               }}
             >
@@ -59,13 +86,19 @@ function Chat({ user, currentProject }) {
         </ul>
       </div>
       <div className="chat-middle">
-        <div className="chat-title">{chatRoom.title}</div>
+        <div className="chat-title">{this.state.chatRoom && this.state.chatRoom.title}</div>
         <div className="chat-display">
           <ul>
-            {allMessages[chatRoom.title] &&
-              allMessages[chatRoom.title].map((msg, i) => (
+            {this.state.chatRoom && this.state.allMessages[this.state.chatRoom.title] &&
+              this.state.allMessages[this.state.chatRoom.title].map((msg, i) => (
                 <li key={i}>
-                  {msg.username}: {msg.message}
+                  <div>
+                    <span className="chat-msg-username">{msg.username}:</span>
+                    <span className="chat-msg-date">
+                      {new Date(msg.date).toLocaleString()}
+                    </span>
+                  </div>
+                  <p>{msg.message}</p>
                 </li>
               ))}
           </ul>
@@ -73,36 +106,42 @@ function Chat({ user, currentProject }) {
         <form
           onSubmit={e => {
             e.preventDefault();
-            if (!message) return;
-            socket.emit(chatRoom.title, { username: user.username, message });
-            setMessage("");
+            console.log('submit', this.state.message)
+            if (!this.state.message) return;
+            console.log('submit ....')
+            socket.emit(this.state.chatRoom.title, { username: this.props.user.username, message: this.state.message });
+            let update = [{ username: this.props.user.username, message: this.state.message }];
+            if (this.state.allMessages[this.state.chatRoom.title]) {
+              update = [...this.state.allMessages[this.state.chatRoom.title], { username: this.props.user.username, message: this.state.message }];
+            }
+            this.setState({allMessages: { ...this.state.allMessages, [this.state.chatRoom.title]: update }});
+            this.setState({message: ''})
           }}
         >
           <input
             className="input-chat-message"
             type="text"
-            value={message}
-            onChange={e => {
-              setMessage(e.target.value);
-            }}
+            value={this.message}
+            onChange={this.handleChange}
           />
           <input className="btn-chat-send" type="submit" value="Send" />
         </form>
       </div>
       <div className="chat-right">
         <ul>
-          {
-            Object.entries(users).map(([key, username]) => (
-              <li key={key}>
-                {username}
-              </li>
-    
-            ))}
+          {this.state.users && this.state.users.map((user, i) => (
+            <li key={i}>{user.username}</li>
+          ))}
         </ul>
       </div>
     </div>
-  );
+      </div>
+    )
+  }
 }
+
+
+
 
 const mapStateToProps = state => {
   return {

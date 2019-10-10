@@ -1,3 +1,5 @@
+const { ChatUser, MessageChat } = require("../models/chat");
+
 module.exports = app => {
   var server = require("http").Server(app);
   var io = require("socket.io")(server);
@@ -7,19 +9,52 @@ module.exports = app => {
   io.on("connection", function(socket) {
     socket.on("create", function(projectList) {
       projectList.forEach(project => {
-        socket.on(project, function(msg) {
-          console.log("project room=", project, msg);
-          io.emit(project, msg);
+        socket.on(project, async function(msg) {
+          try {
+            const message = await MessageChat.create(msg);
+            await message.save();
+            socket.broadcast.emit(project, message);
+          } catch (error) {
+            console.error(error);
+          }
         });
       });
     });
-    socket.on('login', function(username){
-      
-      socket.userlist = socket.userlist ? {...socket.userlist, [username]:username} : {[username]:username}
-      io.emit('users', socket.userlist)
+
+    socket.on('disconnect', async() => {
+     try {
+      if(socket.username){
+        await ChatUser.findOneAndDelete({username: socket.username})
+        const users = await ChatUser.find();
+        io.emit("users", users);
+      }
+      console.log("disconnected", socket.username)
+     } catch (error) {
+       console.error(error)
+     }
     })
-    socket.on('users', function(){
-      io.emit('users', socket.userlist)
-    })
+
+    socket.on("login", async function(username) {
+      try {
+        socket.username = username;
+        const finduser = await ChatUser.findOne({ username });
+        if (!finduser) {
+          const user = await ChatUser.create({ username });
+          await user.save();
+        }
+        const users = await ChatUser.find();
+        io.emit("users", users);
+      } catch (error) {
+        console.error(error);
+      }
+    });
+    socket.on("users", async function() {
+      try {
+        const users = await ChatUser.find();
+        io.emit("users", users);
+      } catch (error) {
+        console.error(error);
+      }
+    });
   });
 };
