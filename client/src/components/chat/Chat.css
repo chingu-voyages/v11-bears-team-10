@@ -1,3 +1,8 @@
+.chat-main-container{
+  background: #0b032d;
+  height: 81.5vh;
+  padding: 2em;
+}
 .chat-container{
   width: 95%;
   max-width: 900px;
@@ -6,56 +11,97 @@
   display: flex;
   flex-wrap: wrap-reverse;
   margin: auto;
-  background: #fafafa;
+  background: #222831;
+  color: #fafafa;
+  border-radius: 20px;
 }
+
 .chat-container ul{
   padding: 0;  
   
 }
 .chat-container li{
   list-style: none;
-  margin: .5em;
-  padding: .5em;
-}
-.chat-container li div{
-  display: flex;
-  justify-content: space-between;
- 
-}
-.chat-container li p{
-  padding: 0.5em;
-  background: gray;
-  color: #fafafa;
-  border-radius: 15px;
 }
 .chat-msg-date{
   font-size: .8em;
 }
 .chat-left, .chat-right{
-  flex: 1;
-  background: #caefff;
-  border: thick solid blue;
+  flex: 1.5;
+  color: #fafafa;
+  padding: .5em;
+}
+.left-title, .right-title{
+  padding: 2em 0 1em;
+  text-align: center;
+}
+.list-wrapper{
+  background: #393e46;
+  
+}
+.list-wrapper li{
+  display: flex;
+  justify-content: space-between;
 }
 .chat-middle{
   flex: 3;
   display: flex;
   flex-direction: column;
+  background: #393e46;
+  max-height: 100%;
 }
 
-.chat-display ul{
+.chat-display{
+  height: 100%;
   max-height: 60vh;
   flex: 1;
-  overflow: scroll;
+  overflow-y: scroll;
+  padding: .5em 0;
+  
+}
+.chat-display ul{
+  max-height: 60vh;
+}
+.chat-display li{
+  list-style: none;
+  margin:   0 .5em;
+  padding: 0 .5em;
+  background: #393e46
+}
+.chat-display li div{
+  display: flex;
+  justify-content: space-between;
+ 
+}
+.chat-display li p{
+  padding: 0.5em;
+  background: gray;
+  color: #fafafa;
+  border-radius: 15px;
 }
 .chat-middle form{
   display: flex;
 }
 .input-chat-message{
   flex: 1;
-  border: thin solid #caefff;
+  border: thin solid #222831;
+  background: gray;
+  color: #fafafa;
+  padding-left: .5em;
 }
 .chat-title{
-  background: #caefff;
-  border-top: thick solid blue;
+  text-align: center; 
+  background: #222831;
+  padding: 1em 0;
  
+}
+.btn-chat-send{
+  border: thin solid #222831;
+  border-left: none;
+  min-width: 30px;
+  min-height: 30px;
+  background-size: 100%;
+  background-repeat: no-repeat;
+  background-color: gray;
+  background-image: url("../../images/icons/message.png");
 }
