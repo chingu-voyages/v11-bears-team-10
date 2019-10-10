@@ -1,6 +1,7 @@
 import React from "react";
-import { Modal, Button, Form, Spinner, ListGroup, ListGroupItem, Row } from "react-bootstrap";
+import { Modal, Button, Form, Spinner, ListGroupItem, Row } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import UserSuggestionsFormGroup from "../../../reusable_components/UserSuggestionsFormGroup";
 import Validation from "../../../validation";
 
 export default class AddTodoModal extends React.Component {
@@ -10,8 +11,6 @@ export default class AddTodoModal extends React.Component {
 		this.initialState = {
 			submitting: false,
 			show: false,
-			assigned_user_search: "",
-			assigned_users_suggestion: [],
 			data: {
 				title: "",
 				description: "",
@@ -75,19 +74,6 @@ export default class AddTodoModal extends React.Component {
 			}
 		}));
 
-	onChange_assigned_user_search = ({ target: { value } }) =>
-		this.setState({
-			assigned_user_search: value,
-			assigned_users_suggestion: value
-				? this.props.team.filter(user => user.username.includes(value))
-				: []
-		});
-
-	onFocus_assigned_user_search = () =>
-		this.onChange_assigned_user_search({
-			target: { value: this.state.assigned_user_search }
-		});
-
 	addAssignedUser = user =>
 		this.setState(prevState => {
 			// eslint-disable-next-line no-unused-vars
@@ -111,8 +97,6 @@ export default class AddTodoModal extends React.Component {
 				)
 			}
 		}));
-
-	clearAssignedUsersSuggestion = () => this.setState({ assigned_users_suggestion: [] });
 
 	render() {
 		return (
@@ -174,55 +158,44 @@ export default class AddTodoModal extends React.Component {
 								</Form.Control.Feedback>
 							</Form.Group>
 
-							<Form.Group
-								controlId="assigned-users-search-bar"
-								className="position-relative">
-								<Form.Label>Assigned users</Form.Label>
-								<Form.Control
-									onBlur={this.clearAssignedUsersSuggestion}
-									onFocus={this.onFocus_assigned_user_search}
-									onChange={this.onChange_assigned_user_search}
-									value={this.state.assigned_user_search}
+							{this.props.team.length ? (
+								<UserSuggestionsFormGroup
+									controlId="assigned-users-search-bar"
+									label="Assigned users"
 									placeholder="type a name"
+									comment="only team members"
+									usersToPickFrom={this.props.team}
+									onSuggestionClick={this.addAssignedUser}
+									suggestionsGoingUp
 								/>
-								<small className="text-muted my-2 px-2">only team members</small>
-								{this.state.assigned_users_suggestion.length > 0 && (
-									<ListGroup as="ul" id="assigned-user-suggestions-list">
-										{this.state.assigned_users_suggestion.map(user => (
-											<ListGroupItem
-												key={"assigned-user-suggestion-" + user.username}
-												onMouseDown={this.addAssignedUser.bind(this, user)}
-												as="li">
-												{user.username}
-											</ListGroupItem>
-										))}
-									</ListGroup>
-								)}
-								{this.state.data.assigned_users.length > 0 && (
-									<Row
-										as="ul"
-										noGutters
-										id="assigned-users-list"
-										className="p-0 mt-3">
-										{this.state.data.assigned_users.map(user => (
-											<ListGroupItem
-												as="li"
-												key={"assigned-user-name-" + user.username}
-												className="mr-2 mb-2">
-												{user.username}
-												<FontAwesomeIcon
-													icon="times"
-													className="times-red-circle ml-2 my-auto"
-													onClick={this.removeAssignedUser.bind(
-														this,
-														user
-													)}
-												/>
-											</ListGroupItem>
-										))}
-									</Row>
-								)}
-							</Form.Group>
+							) : (
+								<div className="text-muted">
+									add team members to the project so you can assign them to the
+									created todo
+								</div>
+							)}
+
+							{this.state.data.assigned_users.length > 0 && (
+								<Row
+									as="ul"
+									noGutters
+									id="assigned-users-list"
+									className="p-0 mt-3">
+									{this.state.data.assigned_users.map(user => (
+										<ListGroupItem
+											as="li"
+											key={"assigned-user-name-" + user.username}
+											className="mr-2 mb-2">
+											{user.username}
+											<FontAwesomeIcon
+												icon="times"
+												className="times-red-circle ml-2 my-auto"
+												onClick={this.removeAssignedUser.bind(this, user)}
+											/>
+										</ListGroupItem>
+									))}
+								</Row>
+							)}
 						</Form>
 					</Modal.Body>
 

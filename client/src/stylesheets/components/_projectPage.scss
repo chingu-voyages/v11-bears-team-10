@@ -11,13 +11,24 @@
 	}
 }
 
-#add-todo-form {
-	ul#assigned-user-suggestions-list {
+.user-suggestions-form-group {
+	position: relative;
+
+	&.suggestions-going- {
+		&up ul {
+			bottom: 0;
+		}
+
+		&down ul {
+			top: 0;
+		}
+	}
+
+	ul {
 		position: absolute;
-		bottom: calc(100% - 1.5rem);
 		right: 0;
 		max-width: 100%;
-		padding: 1rem 0;
+		padding: 0.5rem;
 
 		li {
 			cursor: pointer;
@@ -39,7 +50,7 @@
 
 	background-color: $background-color;
 	width: $icon-size;
-	
+
 	@include media-breakpoint-down(sm) {
 		width: 100%;
 		height: $icon-size;
