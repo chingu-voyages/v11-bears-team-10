@@ -1,118 +1,117 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "./Chat.css";
 import { connect } from "react-redux";
-import { sendMessage } from "../../redux/action_creators/chatAction";
+import {
+  sendMessage,
+  resetCounter
+} from "../../redux/action_creators/chatAction";
 
-import configSocketIo from "../../redux/action_creators/chatAction";
-
-function Chat({ user, currentProject, messages = [], userList = [] , configSocketIo}) {
+function Chat({
+  user,
+  messages = [],
+  userList = [],
+  counter,
+  dispatch
+}) {
   const { projectList } = user;
-console.log("chat userlist =", userList)
-console.log('messages =', messages)
   const [message, setMessage] = useState("");
 
-  const [chatRoom, setChatRoom] = useState(
-    currentProject || { ...projectList[0] }
-  );
+  const [chatRoom, setChatRoom] = useState(projectList[0].title);
+  const messagesRef = useRef();
   useEffect(() => {
-  configSocketIo();
-  },[projectList]);
+    messagesRef.current.scrollTop = messagesRef.current.scrollHeight;
+  }, [messages]);
 
   return (
-    <div className="chat-container">
-      <div className="chat-left">
-        <ul>
-          {projectList.map(project => (
-            <li
-              key={project._id}
-              id={project._id}
-              onClick={e => {
-                const project = projectList.find(
-                  prj => prj._id === e.target.id
-                );
-                setChatRoom(project);
-                console.log("chatRoom.title =", project.title);
-              }}
-            >
-              {project.title}
-            </li>
-          ))}
-        </ul>
-      </div>
-      <div className="chat-middle">
-        <div className="chat-title">{chatRoom.title}</div>
-        <div className="chat-display">
-          <ul>
-            {messages[chatRoom.title] &&
-              messages[chatRoom.title].map((msg, i) => (
-                <li key={i}>
-                  <div>
-                    <span className="chat-msg-username">{msg.username}:</span>
-                    <span className="chat-msg-date">
-                      {new Date(msg.date).toLocaleString()}
-                    </span>
-                  </div>
-                  <p>{msg.message}</p>
+    <main className="chat-main-container">
+      <div className="chat-container">
+        <div className="chat-left">
+          <div className="left-title">Rooms</div>
+          <div className="list-wrapper">
+            <ul>
+              {projectList.map(project => (
+                <li
+                  key={project._id}
+                  id={project._id}
+                  onClick={() => {
+                    setChatRoom(project.title);
+                    dispatch(resetCounter(chatRoom));
+                  }}
+                >
+                  <span># {project.title}</span>
+                  {project.title !== chatRoom &&
+                    counter[project.title] !== 0 && (
+                      <span className='msg-counter'>{counter[project.title]}</span>
+                    )}
                 </li>
               ))}
-          </ul>
+            </ul>
+          </div>
         </div>
-        <form
-          onSubmit={e => {
-            e.preventDefault();
-            console.log("submit =", message);
-            console.log({
-              chatRoom: chatRoom.title,
-              username: user.username,
-              message
-            });
-            if (!message) return;
-            // socket.emit(chatRoom.title, { username: user.username, message });
-            // let update = [{ username: user.username, message }];
-            // if (messages[chatRoom.title]) {
-            //   update = [...messages[chatRoom.title], { username: user.username, message }];
-            // }
-            // setmessages({ ...messages, [chatRoom.title]: update });
-            // setMessage("");
-            sendMessage({
-              chatRoom: chatRoom.title,
-              username: user.username,
-              message
-            });
-          }}
-        >
-          <input
-            className="input-chat-message"
-            type="text"
-            value={message}
-            onChange={e => {
-              setMessage(e.target.value);
+        <div className="chat-middle">
+          <div className="chat-title">{chatRoom}</div>
+          <div className="chat-display" ref={messagesRef}>
+            <ul>
+              {messages[chatRoom] &&
+                messages[chatRoom].map((msg, i) => (
+                  <li key={i}>
+                    <div>
+                      <span className="chat-msg-username">{msg.username}:</span>
+                      <span className="chat-msg-date">
+                        {new Date(msg.date).toLocaleString()}
+                      </span>
+                    </div>
+                    <p>{msg.message}</p>
+                  </li>
+                ))}
+            </ul>
+          </div>
+          <form
+            onSubmit={e => {
+              e.preventDefault();
+              if (!message) return;
+              sendMessage({
+                chatRoom: chatRoom,
+                username: user.username,
+                message
+              });
+              setMessage("");
+              dispatch(resetCounter(chatRoom));
             }}
-          />
-          <input className="btn-chat-send" type="submit" value="Send" />
-        </form>
+          >
+            <input
+              className="input-chat-message"
+              type="text"
+              value={message}
+              onChange={e => {
+                setMessage(e.target.value);
+              }}
+            />
+            <input className="btn-chat-send" type="submit" value="" />
+          </form>
+        </div>
+        <div className="chat-right">
+          <div className="right-title">Online...!</div>
+          <div className="list-wrapper">
+            <ul>
+              {userList.map((user, i) => (
+                <li key={i}>{user.username}</li>
+              ))}
+            </ul>
+          </div>
+        </div>
       </div>
-      <div className="chat-right">
-        <ul>
-          {/* {userlist && userList.map((user, i) => (
-            <li key={i}>{user.username}</li>
-          ))} */}
-        </ul>
-      </div>
-    </div>
+    </main>
   );
 }
 
 const mapStateToProps = state => {
   return {
     user: state.user,
-    currentProject: state.project,
     messages: state.chat.messages,
-    userList: state.chat.userList || []
+    userList: state.chat.userList || [],
+    counter: state.chat.newMessagesCounter || {}
   };
 };
-const mapDistpachToProps = dispatch => ({
-  configSocketIo: () => dispatch(configSocketIo())
-});
 
-export default connect(mapStateToProps, mapDistpachToProps)(Chat);
+export default connect(mapStateToProps)(Chat);
