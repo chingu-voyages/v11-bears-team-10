@@ -11,7 +11,7 @@ const messageSchema = new Schema({
   message: String,
   username: String,
   date: { type: Date, default: Date.now }
-}, { capped: { size: 1024, max: 1000 }});
+}, { capped: { size: 10240, max: 1000 }});
 
 const ChatUser = mongoose.model("ChatUser", userChatSchema);
 const MessageChat = mongoose.model("MessageChat", messageSchema);
