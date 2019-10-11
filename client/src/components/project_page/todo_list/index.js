@@ -75,35 +75,41 @@ export default class TodoList extends Component {
 					<AddTodoModal onSubmit={addTodo} team={team} admin_id={admin_id} />
 				</Row>
 				<hr className="w-100" />
-				<ListGroup as="ul" className="py-2">
-					{groupTodosByDateDue(todos).map(group =>
-						group.map((elem, index) => {
-							if (typeof elem === "string")
-								return (
-									<Row
-										key={elem}
-										noGutters
-										className="text-muted my-4 mx-xl-4 mx-lg-3">
-										Due {elem.substring(0, 10)}
-										<hr className="ml-4 flex-fill" />
-									</Row>
-								);
+				{todos.length ? (
+					<ListGroup as="ul" className="py-2">
+						{groupTodosByDateDue(todos).map(group =>
+							group.map((elem, index) => {
+								if (typeof elem === "string")
+									return (
+										<Row
+											key={elem}
+											noGutters
+											className="text-muted my-4 mx-xl-4 mx-lg-3">
+											Due {elem.substring(0, 10)}
+											<hr className="ml-4 flex-fill" />
+										</Row>
+									);
 
-							return (
-								<TodoItem
-									key={elem._id}
-									className={
-										(index !== group.length - 1 ? "mb-4 " : "") +
-										"mx-auto rounded"
-									}
-									todo={elem}
-									removeTodo={removeTodo}
-									toggleTodoCompleted={toggleTodoCompleted}
-								/>
-							);
-						})
-					)}
-				</ListGroup>
+								return (
+									<TodoItem
+										key={elem._id}
+										className={
+											(index !== group.length - 1 ? "mb-4 " : "") +
+											"mx-auto rounded"
+										}
+										todo={elem}
+										removeTodo={removeTodo}
+										toggleTodoCompleted={toggleTodoCompleted}
+									/>
+								);
+							})
+						)}
+					</ListGroup>
+				) : (
+					<p className="lead text-muted text-center pt-5">
+						they're are no todos for this project .
+					</p>
+				)}
 			</>
 		);
 	}

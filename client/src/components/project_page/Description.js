@@ -1,11 +1,13 @@
 import React from "react";
 
-export default function Description(props) {
+export default function Description({ description, title }) {
+	var className = "section-paragraph px-2 pt-4";
+	if (!description) className += " text-muted";
 	return (
 		<>
-			<h1 className="section-title text-center">{props.title}</h1>
-			<hr className="w-100" />
-			<p className="section-paragraph px-2">{props.description}</p>
+			<h3 className="text-center">{title}</h3>
+			<hr className="w-50" />
+			<p className={className}>{description || "this project needs a description ."}</p>
 		</>
 	);
 }
