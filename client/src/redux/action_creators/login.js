@@ -1,7 +1,7 @@
 import axios from "axios";
 import Validation from "../../validation";
 import setUser from "./setUser";
-import setError from "./setError";
+import setToastError from "./setToastError";
 
 export default function login(data, invalidate, invalidCredentials) {
 	return dispatch => {
@@ -19,13 +19,10 @@ export default function login(data, invalidate, invalidCredentials) {
 			.then(response => dispatch(setUser(response.data.user, response.data.token)))
 
 			.catch(e => {
-				if (!e.response)
-					return dispatch(setError({ requestTimeout: e.code === "ECONNABORTED" }));
-
-				if (e.response.status === 401 || e.response.status === 422)
+				if (e.response && (e.response.status === 401 || e.response.status === 422))
 					return invalidCredentials();
 
-				dispatch(setError({ statusCode: e.response.status }));
+				dispatch(setToastError(e));
 				invalidate(); // stop the spinner
 			});
 	};

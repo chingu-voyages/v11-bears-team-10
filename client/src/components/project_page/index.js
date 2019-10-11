@@ -1,44 +1,224 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { Tooltip, OverlayTrigger, Spinner } from "react-bootstrap";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import LayoutWithTabs from "./LayoutWithTabs";
-import LayoutWithoutTabs from "./LayoutWithoutTabs";
+import getProjectById from "../../redux/action_creators/getProjectById";
+import updateProjectById from "../../redux/action_creators/updateProjectById";
+import { isStorageAvailable, setLocalStorageItems } from "../../_helpers";
+
 import DarkTransparentContainer from "../../reusable_components/DarkTransparentContainer";
+import Description from "./Description";
+import Discussion from "./Discussion";
+import TodoList from "./todo_list";
+import TeamMembers from "./TeamMembers";
+
+const tabs = [
+	{
+		name: "project description",
+		fa_icon: "home"
+	},
+	{
+		name: "todos",
+		fa_icon: "tasks"
+	},
+	{
+		name: "discussion",
+		fa_icon: "comments"
+	},
+	{
+		name: "team members",
+		fa_icon: "users"
+	}
+];
 
 class ProjectPage extends Component {
 	constructor(props) {
 		super(props);
 
-		this.state = { isLayoutWithTabs: this.isLayoutWithTabs() };
+		this.state = {
+			activeTabIndex:
+				(isStorageAvailable() &&
+					localStorage.getItem("project_id") === this.props.match.params.id &&
+					parseInt(localStorage.getItem("activeTabIndex"))) ||
+				0,
+			project: null,
+			fetchingProject: true,
+			allUsersList: null
+		};
 	}
 
 	componentDidMount() {
-		window.addEventListener("resize", this.onResize);
+		this.props.getProjectById(this.props.match.params.id, this.setProject, this.stopSpinner);
 	}
 
-	componentWillUnmount() {
-		window.removeEventListener("resize", this.onResize);
-	}
+	stopSpinner = () => this.setState({ fetchingProject: false });
 
-	// the maximum breakpoint where the layout with tabs is rendered instead of the one with sections
-	LayoutWithTab_max_breakpoint = 767;
+	setProject = project => {
+		if (isStorageAvailable() && localStorage.getItem("project_id") !== project._id)
+			setLocalStorageItems({ project_id: project._id, activeTabIndex: 0 });
 
-	isLayoutWithTabs = () => window.innerWidth < this.LayoutWithTab_max_breakpoint + 1;
-
-	onResize = () => {
-		var isLayoutWithTabs = this.isLayoutWithTabs();
-		if (isLayoutWithTabs !== this.state.isLayoutWithTabs) this.setState({ isLayoutWithTabs });
+		this.setState({ project, fetchingProject: false });
 	};
+
+	setAllUsersList = allUsersList => this.setState({ allUsersList });
+
+	setActiveTabIndex = index => {
+		if (isStorageAvailable()) localStorage.setItem("activeTabIndex", index);
+
+		this.setState({ activeTabIndex: index });
+	};
+
+	renderContent = () => {
+		if (this.state.fetchingProject)
+			return (
+				<div className="text-center h-100">
+					<Spinner
+						animation="border"
+						variant="primary"
+						className="my-5 big-spinner"
+						role="status">
+						<span className="sr-only">Fetching the project ...</span>
+					</Spinner>
+				</div>
+			);
+
+		if (!this.state.fetchingProject && !this.state.project)
+			return (
+				<div className="text-muted text-center pt-5">
+					faild to get the project from the server
+				</div>
+			);
+
+		switch (this.state.activeTabIndex) {
+			case 0:
+				return (
+					<Description
+						title={this.state.project.title}
+						description={this.state.project.description}
+					/>
+				);
+
+			case 1:
+				return (
+					<TodoList
+						addTodo={this.addTodo}
+						removeTodo={this.removeTodo}
+						toggleTodoCompleted={this.toggleTodoCompleted}
+						updateProjectInDatabase={this.updateProjectInDatabase}
+						todos={this.state.project.todos}
+						team={this.state.project.team}
+						admin_id={this.state.project.admin}
+					/>
+				);
+
+			case 2:
+				return <Discussion />;
+
+			case 3:
+				return (
+					<TeamMembers
+						team={this.state.project.team}
+						updateProjectInDatabase={this.updateProjectInDatabase}
+						removeTeamMember={this.removeTeamMember}
+						addTeamMember={this.addTeamMember}
+						allUsersList={this.state.allUsersList}
+						setAllUsersList={this.setAllUsersList}
+						admin_id={this.state.project.admin}
+					/>
+				);
+
+			default:
+				return null;
+		}
+	};
+
+	addTodo = (todo, callback, error_callback) => {
+		var _project = { ...this.state.project, todos: [...this.state.project.todos, todo] };
+
+		this.props.updateProjectById(
+			_project,
+
+			updatedProject => {
+				this.setProject(updatedProject);
+				callback();
+			},
+
+			error_callback
+		);
+	};
+
+	updateProjectInDatabase = (callback, error_callback) => {
+		this.props.updateProjectById(
+			this.state.project,
+
+			updatedProject => {
+				this.setProject(updatedProject);
+				callback();
+			},
+
+			error_callback
+		);
+	};
+
+	removeTodo = id =>
+		this.setState(({ project }) => ({
+			project: { ...project, todos: project.todos.filter(todo => todo._id !== id) }
+		}));
+
+	removeTeamMember = teamMember =>
+		this.setState(({ project }) => ({
+			project: { ...project, team: project.team.filter(user => user._id !== teamMember._id) }
+		}));
+
+	addTeamMember = teamMember =>
+		this.setState(({ project }) => ({
+			project: { ...project, team: [teamMember, ...project.team] }
+		}));
+
+	toggleTodoCompleted = id =>
+		this.setState(({ project }) => ({
+			project: {
+				...project,
+				todos: project.todos.map(todo =>
+					todo._id !== id ? todo : { ...todo, completed: !todo.completed }
+				)
+			}
+		}));
 
 	render() {
 		return (
 			<DarkTransparentContainer>
-				{this.state.isLayoutWithTabs ? <LayoutWithTabs /> : <LayoutWithoutTabs />}
+				<div className="h-100 bg-transparent d-flex flex-column flex-md-row flex-fill bottom-shadow rounded overflow-hidden">
+					<nav id="project-page-navbar" className="d-flex flex-row flex-md-column">
+						{tabs.map((tab, index) => {
+							return (
+								<OverlayTrigger
+									key={tab.name}
+									overlay={<Tooltip>{tab.name}</Tooltip>}>
+									<FontAwesomeIcon
+										onClick={this.setActiveTabIndex.bind(this, index)}
+										icon={tab.fa_icon}
+										className={
+											index === this.state.activeTabIndex
+												? "active"
+												: undefined
+										}
+									/>
+								</OverlayTrigger>
+							);
+						})}
+					</nav>
+					<section className="px-3 py-3 bg-white flex-fill">
+						{this.renderContent()}
+					</section>
+				</div>
 			</DarkTransparentContainer>
 		);
 	}
 }
 
-const mapStateToProps = (state, props) => console.log(state, props) || {};
-
-export default connect(mapStateToProps)(ProjectPage);
+export default connect(
+	null,
+	{ getProjectById, updateProjectById }
+)(ProjectPage);

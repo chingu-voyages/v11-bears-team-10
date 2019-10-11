@@ -22,7 +22,7 @@ function TodosBaord({todos}) {
 
   return (
     <>
-      <div className="add-todo  flex-col-centered" onClick={openForm}>
+      <div className="add-todo  d-flex flex-col-centered" onClick={openForm}>
         <FontAwesomeIcon icon="plus-square" className="plus-todo" />
       </div>
       <AddTodo showForm={showModal} handleCloseForm={closeModal} />

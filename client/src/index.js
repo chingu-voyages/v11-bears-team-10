@@ -25,69 +25,66 @@ axios.defaults.baseURL = process.env.REACT_APP_BACKEND_API_BASE_URL;
 axios.defaults.timeout = parseInt(process.env.REACT_APP_REQUEST_TIMEOUT);
 
 const DEFAULT_INITIAL_STATE = {
-  user: null,
-  authToken: null,
+	user: null,
+	authToken: null,
 
-  /**
-   * null if no error , or an object containing 0 or more of these properties :
-   * message : string
-   * statusCode : int
-   * requestTimeout : bool
-   */
-  error: null,
+	/**
+	 * null if no error , or an object containing these properties :
+	 * type : string (error | success)
+	 * content : anything that can be rendered by react
+	 */
+	toastMessage: null,
 
-  project: null
+	project: null
 };
 
 const renderApp = INITIAL_STATE =>
-  render(
-    <Provider store={configureAppStore(INITIAL_STATE)}>
-      <App />
-    </Provider>,
-    document.getElementById("root")
-  );
+	render(
+		<Provider store={configureAppStore(INITIAL_STATE)}>
+			<App />
+		</Provider>,
+		document.getElementById("root")
+	);
 
 const renderPlaceholder = () =>
-  render(
-    <AppPlaceholder text="Authenticating..." />,
-    document.getElementById("root")
-  );
+	render(<AppPlaceholder text="Authenticating..." />, document.getElementById("root"));
 
 const renderErrorPage = error =>
-  render(
-    <>
-      <ErrorPage error={error} />
-      <Footer />
-    </>,
-    document.getElementById("root")
-  );
+	render(
+		<>
+			<ErrorPage error={error} />
+			<Footer />
+		</>,
+		document.getElementById("root")
+	);
 
 // authentication before rendering the App component
 const { user_id, authToken } = getLocalStorageItems("user_id", "authToken");
 
 if (user_id && authToken) {
-  renderPlaceholder();
+	renderPlaceholder();
 
-  axios
-    .get(`/users/${user_id}`, {
-      headers: { Authorization: "Bearer " + authToken }
-    })
+	axios
+		.get(`/users/${user_id}`, {
+			headers: { Authorization: "Bearer " + authToken }
+		})
 
-    .then(response => {
-      axios.defaults.headers.common["Authorization"] = "Bearer " + authToken;
-      renderApp({
-        ...DEFAULT_INITIAL_STATE,
-        authToken,
-        user: response.data.user
-      });
-    })
+		.then(response => {
+			axios.defaults.headers.common["Authorization"] = "Bearer " + authToken;
 
-    .catch(e => {
-      if (e.response) {
-        removeLocalStorageItems("authToken", "user_id");
-        renderApp(DEFAULT_INITIAL_STATE);
-      } else renderErrorPage({ requestTimeout: e.code === "ECONNABORTED" });
-    });
+			renderApp({
+				...DEFAULT_INITIAL_STATE,
+				authToken,
+				user: response.data.user
+			});
+		})
+
+		.catch(e => {
+			if (e.response) {
+				removeLocalStorageItems("authToken", "user_id");
+				renderApp(DEFAULT_INITIAL_STATE);
+			} else renderErrorPage({ requestTimeout: e.code === "ECONNABORTED" });
+		});
 } else renderApp(DEFAULT_INITIAL_STATE);
 
 // If you want your app to work offline and load faster, you can change

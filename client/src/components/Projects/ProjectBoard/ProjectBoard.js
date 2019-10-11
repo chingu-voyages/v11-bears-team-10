@@ -84,7 +84,7 @@ function Project(props){
         </form>
       )}
         <div className="content" data-aos="fade-in">
-          <section className="projects-summary flex-col" data-aos="fade-up">
+          <section className="projects-summary d-flex flex-col" data-aos="fade-up">
             <div>
               <div style={{ display: "flex" }}>
                 {!isUpdateTitle && <h1>{title}</h1>}
@@ -240,9 +240,9 @@ function Project(props){
               </div>
             </div>
             <hr />
-            <section className="flex-row projects-items">
-              <div className="flex-row">
-                <div className="summary-icon flex-row-centered summary-icon-clicked">
+            <section className="d-flex flex-row projects-items">
+              <div className="d-flex flex-row">
+                <div className="summary-icon d-flex flex-row-centered summary-icon-clicked">
                   <FontAwesomeIcon icon="list-ul" />
                 </div>
                 <div
@@ -255,8 +255,8 @@ function Project(props){
                   <h3>Todos</h3>
                 </div>
               </div>
-              <div className="flex-row">
-                <div className="summary-icon flex-row-centered">
+              <div className="d-flex flex-row">
+                <div className="summary-icon d-flex flex-row-centered">
                   <FontAwesomeIcon icon="sticky-note" />
                 </div>
                 <div
@@ -271,7 +271,7 @@ function Project(props){
               </div>
             </section>
           </section>
-          <section className="flex-col" data-aos="fade-up">
+          <section className="d-flex flex-col" data-aos="fade-up">
             {showMessages ? (
               <MessageBoard />
             ) : (

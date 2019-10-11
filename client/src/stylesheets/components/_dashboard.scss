@@ -1,11 +1,4 @@
 //helpers
-.flex-row {
-	@include align-flex-item(row);
-}
-
-.flex-col {
-	@include align-flex-item(column);
-}
 
 .flex-col-centered {
 	@include align-flex-item(column);

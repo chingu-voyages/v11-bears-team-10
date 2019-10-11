@@ -1,13 +1,17 @@
-const IS_STORAGE_AVAILABLE = (function(type = "localStorage") {
+var IS_STORAGE_AVAILABLE = null;
+
+export function isStorageAvailable(type = "localStorage") {
+	if (IS_STORAGE_AVAILABLE !== null) return IS_STORAGE_AVAILABLE;
+
 	var storage;
 	try {
 		storage = window[type];
 		var x = "__storage_test__";
 		storage.setItem(x, x);
 		storage.removeItem(x);
-		return true;
+		IS_STORAGE_AVAILABLE = true;
 	} catch (e) {
-		return (
+		IS_STORAGE_AVAILABLE =
 			e instanceof DOMException &&
 			// everything except Firefox
 			(e.code === 22 ||
@@ -19,10 +23,11 @@ const IS_STORAGE_AVAILABLE = (function(type = "localStorage") {
 				// Firefox
 				e.name === "NS_ERROR_DOM_QUOTA_REACHED") &&
 			// acknowledge QuotaExceededError only if there's something already stored
-			(storage && storage.length !== 0)
-		);
+			(storage && storage.length !== 0);
 	}
-})();
+
+	return IS_STORAGE_AVAILABLE;
+}
 
 export function isArrayOfStrings(arr) {
 	if (!Array.isArray(arr) || !arr.length) return false;
@@ -34,7 +39,7 @@ export function isArrayOfStrings(arr) {
 }
 
 export function setLocalStorageItems(object) {
-	if (!IS_STORAGE_AVAILABLE) return false;
+	if (!isStorageAvailable()) return false;
 
 	if (typeof object === "object")
 		// eslint-disable-next-line no-unused-vars
@@ -45,7 +50,7 @@ export function setLocalStorageItems(object) {
 }
 
 export function removeLocalStorageItems(...keys) {
-	if (!IS_STORAGE_AVAILABLE) return false;
+	if (!isStorageAvailable()) return false;
 
 	if (isArrayOfStrings(keys))
 		// eslint-disable-next-line no-unused-vars
@@ -56,7 +61,7 @@ export function removeLocalStorageItems(...keys) {
 }
 
 export function getLocalStorageItems(...keys) {
-	if (!IS_STORAGE_AVAILABLE) return {};
+	if (!isStorageAvailable()) return {};
 
 	if (!isArrayOfStrings(keys))
 		throw Error("parameters passed to getLocalStorageItems must be strings");
@@ -92,4 +97,68 @@ export function removeClassName(target, className) {
 			else element.removeAttribute("class");
 		}
 	}
+}
+
+function validateDay(year, month, day) {
+	if (day < 1) return false;
+
+	switch (month) {
+		case 1:
+		case 3:
+		case 5:
+		case 7:
+		case 8:
+		case 10:
+		case 12:
+			if (day > 31) return false;
+			break;
+
+		case 4:
+		case 6:
+		case 9:
+		case 11:
+			if (day > 30) return false;
+			break;
+
+		case 2:
+			if ((year % 4 > 0 && day > 28) || (year % 4 === 0 && day > 29)) return false;
+			break;
+
+		default:
+			return false;
+	}
+	return true;
+}
+
+export default function validateDate(date) {
+	if (!date) return false;
+
+	var segments = date.split("-");
+	var year = 0;
+	var month = 0;
+
+	for (let i = 0; i < 3; i++) {
+		if (!segments[i]) return false;
+
+		if (i === 0) {
+			if (!/^[0-9]{4}$/.test(segments[i])) return false;
+			else year = parseInt(segments[i]);
+		}
+
+		if (i === 1) {
+			if (!/^[0-9]{2}$/.test(segments[i])) return false;
+
+			month = parseInt(segments[i]);
+
+			if (month < 1 || month > 12) return false;
+		}
+
+		if (
+			i === 2 &&
+			(!/^[0-9]{2}$/.test(segments[i]) || !validateDay(year, month, parseInt(segments[i])))
+		)
+			return false;
+	}
+
+	return true;
 }

@@ -1,3 +1,42 @@
-#project-title {
-	width: max-content;
+.times-red-circle {
+	width: 1.2rem !important;
+	height: 1.2rem !important;
+	padding: 0.2rem !important;
+	border-radius: 50%;
+	color: $danger;
+	transition: background-color 0.15s, color 0.15s;
+	&:hover {
+		background-color: $danger;
+		color: white;
+	}
+}
+
+#project-page-navbar {
+	$background-color: rgb(240, 141, 61);
+	$color: $light;
+	$icon-size: 3.5rem;
+	$icon-padding: $icon-size * 0.33;
+
+	background-color: $background-color;
+	width: $icon-size;
+
+	@include media-breakpoint-down(sm) {
+		width: 100%;
+		height: $icon-size;
+	}
+
+	svg {
+		color: $color;
+		width: $icon-size;
+		height: $icon-size;
+		padding: $icon-padding;
+
+		&:hover {
+			background-color: darken($background-color, 5%);
+		}
+
+		&.active {
+			background-color: darken($background-color, 10%);
+		}
+	}
 }

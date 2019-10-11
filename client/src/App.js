@@ -2,9 +2,11 @@ import React, { useEffect } from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 
 import { connect } from "react-redux";
-import resetError from "./redux/action_creators/resetError";
+import resetToastMessage from "./redux/action_creators/resetToastMessage";
+import configSocketIo from "./redux/action_creators/chatAction";
 
 import ProtectedRoute from "./reusable_components/ProtectedRoute";
+import MessageToast from "./reusable_components/MessageToast";
 
 import NavBar from "./components/navbar";
 import LandingPage from "./components/LandingPage";
@@ -17,20 +19,26 @@ import Footer from "./components/Footer";
 import Dashboard from "./components/dashboard";
 import ProjectPage from "./components/Projects/ProjectBoard/ProjectBoard";
 import TodoPage from "./components/Todos/TodoPage";
-import ErrorPage from "./errors/ErrorPage";
-import ErrorToast from "./errors/ErrorToast";
-
 import Chat from "./components/chat/Chat";
-import configSocketIo from "./redux/action_creators/chatAction";
+import ErrorPage from "./errors/ErrorPage";
 
-function App({ user, error, resetError, configSocketIo }) {
+function App({ user, toastMessage, resetToastMessage, configSocketIo }) {
   useEffect(() => {
     if (user) configSocketIo();
   }, [configSocketIo, user]);
   return (
-    <BrowserRouter>
-      <ErrorToast error={error} onClose={resetError} delay={3000} />
-      <NavBar user={user} />
+		<BrowserRouter>
+			{toastMessage && toastMessage.content && (
+				<MessageToast
+					content={toastMessage.content}
+					error={toastMessage.type === "error"}
+					success={toastMessage.type === "success"}
+					onClose={resetToastMessage}
+					delay={4000}
+				/>
+			)}
+
+			<NavBar user={user} />
 
       <Switch>
         <Route path="/" exact component={LandingPage} />
@@ -83,10 +91,10 @@ function App({ user, error, resetError, configSocketIo }) {
 }
 const mapDistpachToProps = dispatch => ({
   configSocketIo: () => dispatch(configSocketIo()),
-  resetError
+  resetToastMessage
 });
 
 export default connect(
-  ({ user, error }) => ({ user, error }),
+  ({ user, toastMessage }) => ({ user, toastMessage }),
   mapDistpachToProps
 )(App);

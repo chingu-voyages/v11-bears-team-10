@@ -1,3 +1,5 @@
+import validateDate from "../_helpers";
+
 /* eslint-disable no-control-regex */
 
 // all callbacks must return true if the validation passes, or an error string
@@ -28,5 +30,7 @@ export default {
 		);
 	},
 
-	required: (attribute, value) => !!value || `${attribute} is required`
+	required: (attribute, value) => !!value || `${attribute} is required`,
+	
+	date: (attribute, date) => validateDate(date) || "invalid date"
 };

@@ -29,32 +29,6 @@
 	}
 }
 
-.avatar {
-	width: 40px;
-	height: 40px;
-	border-radius: 50%;
-	cursor: pointer;
-
-	&-placeholder {
-		position: relative;
-		@include font-size(18px);
-		text-align: center;
-		color: $light;
-		background-color: $secondary;
-		transition: background-color 0.2s;
-		line-height: 40px;
-
-		&.border {
-			border-width: 2px !important;
-			line-height: 36px;
-		}
-
-		&:hover {
-			background-color: $dark;
-		}
-	}
-}
-
 form label.required:after {
 	color: red;
 	content: " *";
@@ -64,7 +38,7 @@ form label.required:after {
 	position: fixed;
 	bottom: 0;
 	right: 0;
-	z-index: $zindex-fixed;
+	z-index: 9999999;
 }
 
 $spinner-size: 8;
@@ -92,19 +66,10 @@ $spinner-size: 8;
 	background-color: transparent !important;
 }
 
-.dark-transparent-container {
-	flex: 1;
-	background-color: rgba(#011038, 0.15);
-
-	@include media-breakpoint-up(sm) {
-		border-radius: 0.25rem !important; // the same as .rounded from bootstrap
-	}
-}
-
 section .section- {
 	&title {
 		@include font-size(1.1rem);
-		margin-bottom: 0 !important;
+		margin-bottom: 0;
 	}
 
 	&paragraph {
@@ -126,5 +91,12 @@ section .section- {
 	}
 	&:active {
 		text-decoration: none !important;
+	}
+}
+
+.line-through-primary {
+	&,
+	& label {
+		text-decoration: line-through $primary;
 	}
 }
