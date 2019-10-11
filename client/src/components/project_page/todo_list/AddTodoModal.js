@@ -75,18 +75,12 @@ export default class AddTodoModal extends React.Component {
 		}));
 
 	addAssignedUser = user =>
-		this.setState(prevState => {
-			// eslint-disable-next-line no-unused-vars
-			for (let _user of prevState.data.assigned_users)
-				if (_user.username === user.username) return null;
-
-			return {
-				data: {
-					...prevState.data,
-					assigned_users: [...prevState.data.assigned_users, user]
-				}
-			};
-		});
+		this.setState(prevState => ({
+			data: {
+				...prevState.data,
+				assigned_users: [...prevState.data.assigned_users, user]
+			}
+		}));
 
 	removeAssignedUser = user =>
 		this.setState(prevState => ({
@@ -164,7 +158,11 @@ export default class AddTodoModal extends React.Component {
 									label="Assigned users"
 									placeholder="type a name"
 									comment="only team members"
-									usersToPickFrom={this.props.team}
+									usersToPickFrom={this.props.team.filter(teamMember =>
+										this.state.data.assigned_users.every(
+											user => user.username !== teamMember.username
+										)
+									)}
 									onSuggestionSelect={this.addAssignedUser}
 									suggestionsGoingUp
 								/>
@@ -176,11 +174,7 @@ export default class AddTodoModal extends React.Component {
 							)}
 
 							{this.state.data.assigned_users.length > 0 && (
-								<Row
-									as="ul"
-									noGutters
-									id="assigned-users-list"
-									className="p-0">
+								<Row as="ul" noGutters id="assigned-users-list" className="p-0">
 									{this.state.data.assigned_users.map(user => (
 										<ListGroupItem
 											as="li"
