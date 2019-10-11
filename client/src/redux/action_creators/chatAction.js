@@ -1,7 +1,7 @@
 import openSocket from "socket.io-client";
 import axios from "axios";
 
-const socket = openSocket(`http://localhost:3001`);
+const socket = openSocket(process.env.REACT_APP_BACKEND_API_CHAT_URL);
 
 export default function configureSocketIo() {
   return (dispatch, getstate) => {
