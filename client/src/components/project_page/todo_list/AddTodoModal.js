@@ -163,6 +163,7 @@ export default class AddTodoModal extends React.Component {
 											user => user.username !== teamMember.username
 										)
 									)}
+									admin_id={this.props.admin_id}
 									onSuggestionSelect={this.addAssignedUser}
 									suggestionsGoingUp
 								/>

@@ -105,6 +105,7 @@ class TeamMembers extends Component {
 									  )
 									: []
 							}
+							admin_id={this.props.admin_id}
 							onSuggestionSelect={this.props.addTeamMember}
 						/>
 					</Col>

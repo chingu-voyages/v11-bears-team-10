@@ -1,5 +1,12 @@
 import React, { Component } from "react";
-import { FormGroup, ListGroup, ListGroupItem, FormLabel, FormControl } from "react-bootstrap";
+import {
+	FormGroup,
+	ListGroup,
+	ListGroupItem,
+	FormLabel,
+	FormControl,
+	Badge
+} from "react-bootstrap";
 
 export default class UserSuggestionsFormGroup extends Component {
 	constructor(props) {
@@ -100,6 +107,11 @@ export default class UserSuggestionsFormGroup extends Component {
 								onMouseDown={this.onSuggestionSelect.bind(this, user)}
 								as="li">
 								{user.username}
+								{this.props.admin_id === user._id && (
+									<Badge variant="light" className="ml-2">
+										admin
+									</Badge>
+								)}
 							</ListGroupItem>
 						))}
 					</ListGroup>
