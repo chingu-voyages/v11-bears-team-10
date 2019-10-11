@@ -20,9 +20,8 @@ function Chat({
   const { projectList } = user;
   const [message, setMessage] = useState("");
 
-  const [chatRoom, setChatRoom] = useState(projectList[0].title);
-  const [currentProject, setCurrentProject] = useState((projectList[0]))
-  let typing = false
+  const [chatRoom, setChatRoom] = useState(projectList.length ? projectList[0].title : '');
+  const [currentProject, setCurrentProject] = useState(projectList.length ? projectList[0] : '')
   const messagesRef = useRef();
   useEffect(() => {
     messagesRef.current.scrollTop = messagesRef.current.scrollHeight;
