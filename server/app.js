@@ -16,8 +16,11 @@ const indexRouter = require('./routes/index');
 const userRouter = require('./routes/user');
 const projectRouter = require('./routes/project');
 const authRouter = require('./routes/auth');
+const chatRouter = require('./routes/chat')
 
 const app = express();
+
+
 
 const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('./public/swagger/swagger.json');
@@ -47,6 +50,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 // authorised routes without token
 app.use(authRouter);
 app.use('/', indexRouter);
+app.use('/v1/messages', chatRouter)
 
 // restrict access to other routes
 app.use(passport.authenticate('jwt', { session: false }), (req, res, next) => {

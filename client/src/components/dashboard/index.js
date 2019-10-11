@@ -6,16 +6,18 @@ import Summary from "./Summary";
 import ProjectsList from "./ProjectsList";
 
 class Dashboard extends Component {
-	render() {
-		return (
-			<DarkTransparentContainer>
-				<Summary projectList={this.props.projectList} />
-				<ProjectsList projectList={this.props.projectList} />
-			</DarkTransparentContainer>
-		);
-	}
+  render() {
+    return (
+      <DarkTransparentContainer>
+        <Summary projectList={this.props.projectList} />
+        <ProjectsList projectList={this.props.projectList} />
+      </DarkTransparentContainer>
+    );
+  }
 }
 
-const mapStateToProps = state => ({ projectList: state.user.projectList.reverse() || [] });
+const mapStateToProps = state => ({
+  projectList: state.user.projectList.reverse() || []
+});
 
 export default connect(mapStateToProps)(Dashboard);
