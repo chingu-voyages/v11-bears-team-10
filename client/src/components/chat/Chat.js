@@ -31,7 +31,7 @@ function Chat({
           <div className="list-wrapper">
             <ul>
               {projectList.map(project => (
-                <li
+                <li className={project._id === currentProject._id ? "active-room": ""}
                   key={project._id}
                   id={project._id}
                   onClick={() => {
@@ -40,9 +40,9 @@ function Chat({
                     dispatch(resetCounter(currentProject._id));
                   }}
                 >
-                  <span># {project.title}</span>
+                  <span className="room-name">{`# ${project.title}`}</span>
                   {project.title !== chatRoom &&
-                    counter[project._id] !== 0 && (
+                    counter[project._id] > 0 && (
                       <span className='msg-counter'>{counter[project._id]}</span>
                     )}
                 </li>
@@ -51,7 +51,7 @@ function Chat({
           </div>
         </div>
         <div className="chat-middle">
-          <div className="chat-title">{chatRoom}</div>
+          <div className="chat-title"># {chatRoom}</div>
           <div className="chat-display" ref={messagesRef}>
             <ul>
               {messages[currentProject._id] &&

@@ -12,7 +12,6 @@ export default function configureSocketIo() {
 
     projectList.forEach(prj => {
       socket.on(prj._id, function(msg) {
-      console.log("message recieved =", msg)
         const messages = getstate().chat.messages || {};
         const newMessagesCounter = getstate().chat.newMessagesCounter || {}
         if (!messages[prj._id]) {
@@ -38,7 +37,6 @@ export default function configureSocketIo() {
 
     axios.get(`/messages?rooms=${projectsID}`)
     .then(response =>{
-      console.log('get messages =', response)
       const messages = response.data.messagesList
       dispatch({
         type: "UPDATE_MESSAGES_LIST",
@@ -47,17 +45,14 @@ export default function configureSocketIo() {
     })
     .catch(e => {
       console.log('error =', e)
-      // if (!e.response)
-      //   dispatch(setError({ requestTimeout: e.code === "ECONNABORTED" }));
-      // else if (e.response.status !== 401)
-      //   dispatch(setError({ statusCode: e.response.status }));
     });
 
   };
 }
 export async function sendMessage({ room, username, message }) {
-  console.log('sendmessage =', message)
-  await socket.emit(room, { username, message, room });
+  const msgID = username + Date.now()
+  console.log("msgID =", msgID)
+  await socket.emit(room, { username, message, room, msgID });
 }
 export function resetCounter(prj){
   return dispatch =>{
