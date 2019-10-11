@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import getProjectById from "../../redux/action_creators/getProjectById";
 import updateProjectById from "../../redux/action_creators/updateProjectById";
+import { isStorageAvailable, setLocalStorageItems } from "../../_helpers";
 
 import DarkTransparentContainer from "../../reusable_components/DarkTransparentContainer";
 import Description from "./Description";
@@ -36,7 +37,11 @@ class ProjectPage extends Component {
 		super(props);
 
 		this.state = {
-			activeTabIndex: 0,
+			activeTabIndex:
+				(isStorageAvailable() &&
+					localStorage.getItem("project_id") === this.props.match.params.id &&
+					parseInt(localStorage.getItem("activeTabIndex"))) ||
+				0,
 			project: null,
 			fetchingProject: true
 		};
@@ -47,9 +52,19 @@ class ProjectPage extends Component {
 	}
 
 	stopSpinner = () => this.setState({ fetchingProject: false });
-	setProject = project => this.setState({ project, fetchingProject: false });
+	
+	setProject = project => {
+		if (isStorageAvailable() && localStorage.getItem("project_id") !== project._id)
+			setLocalStorageItems({ project_id: project._id, activeTabIndex: 0 });
 
-	setActiveTabIndex = index => this.setState({ activeTabIndex: index });
+		this.setState({ project, fetchingProject: false });
+	};
+
+	setActiveTabIndex = index => {
+		if (isStorageAvailable()) localStorage.setItem("activeTabIndex", index);
+
+		this.setState({ activeTabIndex: index });
+	};
 
 	renderContent = () => {
 		if (this.state.fetchingProject)
