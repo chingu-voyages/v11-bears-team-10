@@ -17,6 +17,7 @@ function Chat({
   const [message, setMessage] = useState("");
 
   const [chatRoom, setChatRoom] = useState(projectList[0].title);
+  const [currentProject, setCurrentProject] = useState((projectList[0]))
   const messagesRef = useRef();
   useEffect(() => {
     messagesRef.current.scrollTop = messagesRef.current.scrollHeight;
@@ -35,13 +36,14 @@ function Chat({
                   id={project._id}
                   onClick={() => {
                     setChatRoom(project.title);
-                    dispatch(resetCounter(chatRoom));
+                    setCurrentProject(project)
+                    dispatch(resetCounter(project._id));
                   }}
                 >
                   <span># {project.title}</span>
                   {project.title !== chatRoom &&
-                    counter[project.title] !== 0 && (
-                      <span className='msg-counter'>{counter[project.title]}</span>
+                    counter[project._id] !== 0 && (
+                      <span className='msg-counter'>{counter[project._id]}</span>
                     )}
                 </li>
               ))}
@@ -52,8 +54,8 @@ function Chat({
           <div className="chat-title">{chatRoom}</div>
           <div className="chat-display" ref={messagesRef}>
             <ul>
-              {messages[chatRoom] &&
-                messages[chatRoom].map((msg, i) => (
+              {messages[currentProject._id] &&
+                messages[currentProject._id].map((msg, i) => (
                   <li key={i}>
                     <div>
                       <span className="chat-msg-username">{msg.username}:</span>
@@ -71,12 +73,12 @@ function Chat({
               e.preventDefault();
               if (!message) return;
               sendMessage({
-                chatRoom: chatRoom,
+                room: currentProject._id,
                 username: user.username,
                 message
               });
               setMessage("");
-              dispatch(resetCounter(chatRoom));
+              dispatch(resetCounter(currentProject._id));
             }}
           >
             <input

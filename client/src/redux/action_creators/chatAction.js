@@ -10,34 +10,35 @@ export default function configureSocketIo() {
     });
 
     projectList.forEach(prj => {
-      socket.on(prj.title, function(msg) {
+      socket.on(prj._id, function(msg) {
       console.log("message recieved =", msg)
         const messages = getstate().chat.messages || {};
         const newMessagesCounter = getstate().chat.newMessagesCounter || {}
-        if (!messages[prj.title]) {
-          messages[prj.title] = [];
+        if (!messages[prj._id]) {
+          messages[prj._id] = [];
         }
-        if(messages[prj.title].find(message => message._id === msg._id)) return
-        const update = [...messages[prj.title], msg];
-        const counter = newMessagesCounter[prj.title] ?  newMessagesCounter[prj.title] + 1 : 1;
+        if(messages[prj._id].find(message => message._id === msg._id)) return
+        const update = [...messages[prj._id], msg];
+        const counter = newMessagesCounter[prj._id] ?  newMessagesCounter[prj._id] + 1 : 1;
         dispatch({
           type: "UPDATE_MESSAGES_LIST",
-          messages: { ...messages, [prj.title]: update }
+          messages: { ...messages, [prj._id]: update }
         });
         dispatch({
           type: "UPDATE_MESSAGES_COUNTER",
-          updateCounter: { [prj.title]: counter }
+          updateCounter: { [prj._id]: counter }
         });
       });
     });
 
-    const projectTitles = projectList.map(prj => prj.title);
-    socket.emit("create", projectTitles);
+    const projectsID = projectList.map(prj => prj._id);
+    socket.emit("create", projectsID);
     socket.emit("login", getstate().user.username);
   };
 }
-export async function sendMessage({ chatRoom, username, message }) {
-  await socket.emit(chatRoom, { username, message });
+export async function sendMessage({ room, username, message }) {
+  console.log('sendmessage =', message)
+  await socket.emit(room, { username, message, room });
 }
 export function resetCounter(prj){
   return dispatch =>{
