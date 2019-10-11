@@ -31,7 +31,7 @@ app.use('/v1/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.use(helmet());
 app.use(cors());
-require('./chat')(app);
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
