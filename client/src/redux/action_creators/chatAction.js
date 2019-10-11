@@ -10,6 +10,11 @@ export default function configureSocketIo() {
       dispatch({ type: "SET_CHAT_USERS", userList });
     });
 
+    socket.on('isTyping', function(username){
+      dispatch({ type: "IS_TYPING", isTyping: username})
+      console.log("is typing =", username)
+    })
+
     projectList.forEach(prj => {
       socket.on(prj._id, function(msg) {
         const messages = getstate().chat.messages || {};
@@ -49,10 +54,9 @@ export default function configureSocketIo() {
 
   };
 }
-export async function sendMessage({ room, username, message }) {
+export function sendMessage({ room, username, message }) {
   const msgID = username + Date.now()
-  console.log("msgID =", msgID)
-  await socket.emit(room, { username, message, room, msgID });
+  socket.emit(room, { username, message, room, msgID });
 }
 export function resetCounter(prj){
   return dispatch =>{
@@ -60,5 +64,17 @@ export function resetCounter(prj){
       type: "UPDATE_MESSAGES_COUNTER",
       updateCounter: { [prj]: 0 }
     });
+  }
+}
+export function iamTyping(username){
+  console.log("--------------------username----------- =", username)
+  socket.emit('isTyping', username)
+}
+export function setTypingInterval(interval){
+  return dispatch => {
+    dispatch({
+      type: 'SET_INTERVAL',
+      interval
+    })
   }
 }

@@ -6,6 +6,10 @@ const chat = (state = {}, action) => {
       return { ...state, userList: [...action.userList] };
     case "UPDATE_MESSAGES_COUNTER":
       return { ...state, newMessagesCounter: {...state.newMessagesCounter, ...action.updateCounter } };
+      case "IS_TYPING":
+      return { ...state, isTyping: action.isTyping };
+    case "SET_INTERVAL":
+      return { ...state, interval: action.interval };
     default:
       return state;
   }

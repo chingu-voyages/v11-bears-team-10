@@ -23,6 +23,10 @@ module.exports = app => {
       });
     });
 
+    socket.on("isTyping", function(username){
+      io.emit("isTyping", username)
+    })
+
     socket.on('disconnect', async() => {
      try {
       if(socket.username){

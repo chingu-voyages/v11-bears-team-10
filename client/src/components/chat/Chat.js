@@ -3,7 +3,9 @@ import "./Chat.css";
 import { connect } from "react-redux";
 import {
   sendMessage,
-  resetCounter
+  resetCounter,
+  iamTyping,
+  setTypingInterval
 } from "../../redux/action_creators/chatAction";
 
 function Chat({
@@ -11,6 +13,8 @@ function Chat({
   messages = [],
   userList = [],
   counter,
+  isTyping,
+  timeout,
   dispatch
 }) {
   const { projectList } = user;
@@ -18,6 +22,7 @@ function Chat({
 
   const [chatRoom, setChatRoom] = useState(projectList[0].title);
   const [currentProject, setCurrentProject] = useState((projectList[0]))
+  let typing = false
   const messagesRef = useRef();
   useEffect(() => {
     messagesRef.current.scrollTop = messagesRef.current.scrollHeight;
@@ -87,6 +92,12 @@ function Chat({
               value={message}
               onChange={e => {
                 setMessage(e.target.value);
+                // iamTyping(user.username)
+                // clearTimeout(timeout)
+                // const timer = setTimeout(() => {
+                //   iamTyping('')
+                // }, 5000);
+                // setTypingInterval(timer)
               }}
             />
             <input className="btn-chat-send" type="submit" value="" />
@@ -97,7 +108,7 @@ function Chat({
           <div className="list-wrapper">
             <ul>
               {userList.map((user, i) => (
-                <li key={i}>{user.username}</li>
+                <li key={i}>{user.username} {isTyping === user.username ? "is typing..." : ""}</li>
               ))}
             </ul>
           </div>
@@ -112,7 +123,9 @@ const mapStateToProps = state => {
     user: state.user,
     messages: state.chat.messages,
     userList: state.chat.userList || [],
-    counter: state.chat.newMessagesCounter || {}
+    counter: state.chat.newMessagesCounter || {},
+    isTyping: state.chat.isTyping || '',
+    timeout: state.chat.interval
   };
 };
 
