@@ -1,3 +1,4 @@
+
 .chat-main-container{
   background: #0b032d;
   height: 81.5vh;
@@ -9,11 +10,12 @@
   height: 70vh;
   max-height: 70vh;
   display: flex;
-  flex-wrap: wrap-reverse;
+  
   margin: auto;
   background: #222831;
   color: #fafafa;
   border-radius: 20px;
+  overflow: hidden;
 }
 
 .chat-container ul{
@@ -30,6 +32,10 @@
   flex: 1.5;
   color: #fafafa;
   padding: .5em;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  margin-bottom: 1em;
 }
 .left-title, .right-title{
   padding: 2em 0 1em;
@@ -37,11 +43,38 @@
 }
 .list-wrapper{
   background: #393e46;
+  flex: 1;
+  border-radius: 5px;
+  padding: 1em 0;
+  overflow: auto;
+  
+}
+.list-wrapper ul{
+  display: flex;
+  flex-direction: column;
+  max-width: 100%;
   
 }
 .list-wrapper li{
   display: flex;
   justify-content: space-between;
+  padding: 0 .5em;
+  
+  
+}
+.room-name{
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.active-room{
+  background: #0b032d;
+  color: #fafafa;
+}
+.list-wrapper li:hover{
+  background: #fafafa;
+  color: black;
+  cursor: pointer;
 }
 .chat-middle{
   flex: 3;
@@ -49,6 +82,7 @@
   flex-direction: column;
   background: #393e46;
   max-height: 100%;
+  overflow: hidden;
 }
 
 .chat-display{
@@ -56,12 +90,12 @@
   max-height: 60vh;
   flex: 1;
   overflow-y: scroll;
-  padding: .5em 0;
+  padding: .5em 0 ;
   
 }
-.chat-display ul{
+/* .chat-display ul{
   max-height: 60vh;
-}
+} */
 .chat-display li{
   list-style: none;
   margin:   0 .5em;
@@ -88,11 +122,15 @@
   background: gray;
   color: #fafafa;
   padding-left: .5em;
+  
 }
 .chat-title{
   text-align: center; 
   background: #222831;
   padding: 1em 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
  
 }
 .btn-chat-send{
@@ -104,4 +142,9 @@
   background-repeat: no-repeat;
   background-color: gray;
   background-image: url("../../images/icons/message.png");
+}
+.msg-counter{
+  background: red;
+  padding: 0 .5em;
+  border-radius: 50%;
 }
