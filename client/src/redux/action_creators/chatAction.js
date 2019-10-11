@@ -1,4 +1,5 @@
 import openSocket from "socket.io-client";
+import axios from "axios";
 
 const socket = openSocket(`127.0.0.1:8000`);
 
@@ -34,6 +35,24 @@ export default function configureSocketIo() {
     const projectsID = projectList.map(prj => prj._id);
     socket.emit("create", projectsID);
     socket.emit("login", getstate().user.username);
+
+    axios.get(`/messages?rooms=${projectsID}`)
+    .then(response =>{
+      console.log('get messages =', response)
+      const messages = response.data.messagesList
+      dispatch({
+        type: "UPDATE_MESSAGES_LIST",
+        messages
+      });
+    })
+    .catch(e => {
+      console.log('error =', e)
+      // if (!e.response)
+      //   dispatch(setError({ requestTimeout: e.code === "ECONNABORTED" }));
+      // else if (e.response.status !== 401)
+      //   dispatch(setError({ statusCode: e.response.status }));
+    });
+
   };
 }
 export async function sendMessage({ room, username, message }) {

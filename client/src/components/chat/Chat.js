@@ -21,7 +21,7 @@ function Chat({
   const messagesRef = useRef();
   useEffect(() => {
     messagesRef.current.scrollTop = messagesRef.current.scrollHeight;
-  }, [messages]);
+  }, [messages, currentProject]);
 
   return (
     <main className="chat-main-container">
@@ -37,7 +37,7 @@ function Chat({
                   onClick={() => {
                     setChatRoom(project.title);
                     setCurrentProject(project)
-                    dispatch(resetCounter(project._id));
+                    dispatch(resetCounter(currentProject._id));
                   }}
                 >
                   <span># {project.title}</span>
