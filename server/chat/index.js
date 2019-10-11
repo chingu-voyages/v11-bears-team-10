@@ -1,10 +1,9 @@
 const { ChatUser, MessageChat } = require("../models/chat");
 
-module.exports = app => {
-  var server = require("http").Server(app);
-  var io = require("socket.io")(server, { origins: '*:*'});
-  server.listen(8000);
-  // WARNING: app.listen(80) will NOT work here!
+module.exports = server => {
+  // var server = require("http").Server(app);
+  var io = require("socket.io")(server);
+ 
 
   io.on("connection", function(socket) {
     socket.on("create", function(projectList) {

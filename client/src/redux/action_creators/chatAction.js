@@ -1,7 +1,7 @@
 import openSocket from "socket.io-client";
 import axios from "axios";
 
-const socket = openSocket(`127.0.0.1:8000`);
+const socket = openSocket(`http://localhost:3001`);
 
 export default function configureSocketIo() {
   return (dispatch, getstate) => {
