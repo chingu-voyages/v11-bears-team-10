@@ -11,7 +11,6 @@ const findMessages = async (req, res) => {
     projectIDs.map(async id => {
       try {
         const messages = await MessageChat.find({room: id}).limit(10);
-        console.log('messages =', messages)
         messagesList[id] = [...messages]
       } catch (error) {
         res.status(500).json({ error: error.message });

@@ -11,6 +11,8 @@ module.exports = app => {
       projectList.forEach(project => {
         socket.on(project, async function(msg) {
           try {
+            const findDouble = await MessageChat.findOne({msgID: msg.msgID})
+            if(findDouble) return
             const message = await MessageChat.create(msg);
             await message.save();
             io.emit(project, message);
