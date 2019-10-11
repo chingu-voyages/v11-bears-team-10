@@ -180,7 +180,7 @@ export default class AddTodoModal extends React.Component {
 									as="ul"
 									noGutters
 									id="assigned-users-list"
-									className="p-0 mt-3">
+									className="p-0">
 									{this.state.data.assigned_users.map(user => (
 										<ListGroupItem
 											as="li"
