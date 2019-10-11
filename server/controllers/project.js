@@ -23,7 +23,6 @@ const findProject = async (id, res) => {
 
 const createProject = async (userId, req, res) => {
   const project = req.body;
-  console.log("project =", project);
   try {
     const newProject = await Project.create({
       admin: userId,
@@ -129,7 +128,6 @@ async function updateUserProjectList(
 }
 
 const deleteProject = async (id, req, res) => {
-  console.log("---------delete project--------------");
   try {
     const project = await Project.findById(id);
     if (!project) return res.status(404).json({ error: "Not Found" });
@@ -148,7 +146,6 @@ const deleteProject = async (id, req, res) => {
       { new: true }
     );
     const user = await User.findById(project.admin);
-    console.log("users delete project =", user);
 
     res.status(200).json({ project, projectList: user.projectList });
   } catch (error) {

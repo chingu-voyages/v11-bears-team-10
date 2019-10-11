@@ -3,7 +3,9 @@ import "./Chat.css";
 import { connect } from "react-redux";
 import {
   sendMessage,
-  resetCounter
+  resetCounter,
+  iamTyping,
+  setTypingInterval
 } from "../../redux/action_creators/chatAction";
 
 function Chat({
@@ -11,16 +13,20 @@ function Chat({
   messages = [],
   userList = [],
   counter,
+  isTyping,
+  timeout,
   dispatch
 }) {
   const { projectList } = user;
   const [message, setMessage] = useState("");
 
   const [chatRoom, setChatRoom] = useState(projectList[0].title);
+  const [currentProject, setCurrentProject] = useState((projectList[0]))
+  let typing = false
   const messagesRef = useRef();
   useEffect(() => {
     messagesRef.current.scrollTop = messagesRef.current.scrollHeight;
-  }, [messages]);
+  }, [messages, currentProject]);
 
   return (
     <main className="chat-main-container">
@@ -30,18 +36,19 @@ function Chat({
           <div className="list-wrapper">
             <ul>
               {projectList.map(project => (
-                <li
+                <li className={project._id === currentProject._id ? "active-room": ""}
                   key={project._id}
                   id={project._id}
                   onClick={() => {
                     setChatRoom(project.title);
-                    dispatch(resetCounter(chatRoom));
+                    setCurrentProject(project)
+                    dispatch(resetCounter(currentProject._id));
                   }}
                 >
-                  <span># {project.title}</span>
+                  <span className="room-name">{`# ${project.title}`}</span>
                   {project.title !== chatRoom &&
-                    counter[project.title] !== 0 && (
-                      <span className='msg-counter'>{counter[project.title]}</span>
+                    counter[project._id] > 0 && (
+                      <span className='msg-counter'>{counter[project._id]}</span>
                     )}
                 </li>
               ))}
@@ -49,11 +56,11 @@ function Chat({
           </div>
         </div>
         <div className="chat-middle">
-          <div className="chat-title">{chatRoom}</div>
+          <div className="chat-title"># {chatRoom}</div>
           <div className="chat-display" ref={messagesRef}>
             <ul>
-              {messages[chatRoom] &&
-                messages[chatRoom].map((msg, i) => (
+              {messages[currentProject._id] &&
+                messages[currentProject._id].map((msg, i) => (
                   <li key={i}>
                     <div>
                       <span className="chat-msg-username">{msg.username}:</span>
@@ -71,12 +78,12 @@ function Chat({
               e.preventDefault();
               if (!message) return;
               sendMessage({
-                chatRoom: chatRoom,
+                room: currentProject._id,
                 username: user.username,
                 message
               });
               setMessage("");
-              dispatch(resetCounter(chatRoom));
+              dispatch(resetCounter(currentProject._id));
             }}
           >
             <input
@@ -85,6 +92,12 @@ function Chat({
               value={message}
               onChange={e => {
                 setMessage(e.target.value);
+                // iamTyping(user.username)
+                // clearTimeout(timeout)
+                // const timer = setTimeout(() => {
+                //   iamTyping('')
+                // }, 5000);
+                // setTypingInterval(timer)
               }}
             />
             <input className="btn-chat-send" type="submit" value="" />
@@ -95,7 +108,7 @@ function Chat({
           <div className="list-wrapper">
             <ul>
               {userList.map((user, i) => (
-                <li key={i}>{user.username}</li>
+                <li key={i}>{user.username} {isTyping === user.username ? "is typing..." : ""}</li>
               ))}
             </ul>
           </div>
@@ -110,7 +123,9 @@ const mapStateToProps = state => {
     user: state.user,
     messages: state.chat.messages,
     userList: state.chat.userList || [],
-    counter: state.chat.newMessagesCounter || {}
+    counter: state.chat.newMessagesCounter || {},
+    isTyping: state.chat.isTyping || '',
+    timeout: state.chat.interval
   };
 };
 

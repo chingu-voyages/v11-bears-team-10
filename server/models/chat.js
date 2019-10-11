@@ -7,10 +7,12 @@ const userChatSchema = new Schema({
 });
 
 const messageSchema = new Schema({
+  room: mongoose.Types.ObjectId,
   message: String,
   username: String,
+  msgID: String,
   date: { type: Date, default: Date.now }
-});
+}, { capped: { size: 10240, max: 1000 }});
 
 const ChatUser = mongoose.model("ChatUser", userChatSchema);
 const MessageChat = mongoose.model("MessageChat", messageSchema);
