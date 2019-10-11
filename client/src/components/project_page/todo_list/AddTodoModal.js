@@ -1,5 +1,5 @@
 import React from "react";
-import { Modal, Button, Form, Spinner, ListGroupItem, Row } from "react-bootstrap";
+import { Modal, Button, Form, Spinner, ListGroupItem, Row, Badge } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import UserSuggestionsFormGroup from "../../../reusable_components/UserSuggestionsFormGroup";
 import Validation from "../../../validation";
@@ -174,13 +174,20 @@ export default class AddTodoModal extends React.Component {
 							)}
 
 							{this.state.data.assigned_users.length > 0 && (
-								<Row as="ul" noGutters id="assigned-users-list" className="p-0">
+								<Row as="ul" noGutters className="p-0">
 									{this.state.data.assigned_users.map(user => (
 										<ListGroupItem
 											as="li"
 											key={"assigned-user-name-" + user.username}
 											className="mr-2 mb-2">
 											{user.username}
+
+											{this.props.admin_id === user._id && (
+												<Badge variant="info" className="ml-2">
+													admin
+												</Badge>
+											)}
+
 											<FontAwesomeIcon
 												icon="times"
 												className="times-red-circle ml-2 my-auto"

@@ -49,7 +49,7 @@ export default class TodoList extends Component {
 		);
 
 	render() {
-		const { todos, team, removeTodo, addTodo, toggleTodoCompleted } = this.props;
+		const { todos, team, removeTodo, addTodo, toggleTodoCompleted, admin_id } = this.props;
 		return (
 			<>
 				<Row noGutters>
@@ -72,7 +72,7 @@ export default class TodoList extends Component {
 							</>
 						)}
 					</Button>
-					<AddTodoModal onSubmit={addTodo} team={team} />
+					<AddTodoModal onSubmit={addTodo} team={team} admin_id={admin_id} />
 				</Row>
 				<hr className="w-100" />
 				<ListGroup as="ul" className="py-2">

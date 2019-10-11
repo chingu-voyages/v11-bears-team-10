@@ -75,7 +75,7 @@ export default class UserSuggestionsFormGroup extends Component {
 
 		return (
 			<FormGroup controlId={this.props.controlId} className={_className}>
-				<FormLabel>{this.props.label}</FormLabel>
+				<FormLabel className={this.props.labelClassName}>{this.props.label}</FormLabel>
 				<FormControl
 					onBlur={this.onBlur}
 					onFocus={this.onFocus}

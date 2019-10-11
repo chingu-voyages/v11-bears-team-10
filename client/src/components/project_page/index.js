@@ -43,7 +43,8 @@ class ProjectPage extends Component {
 					parseInt(localStorage.getItem("activeTabIndex"))) ||
 				0,
 			project: null,
-			fetchingProject: true
+			fetchingProject: true,
+			allUsersList: null
 		};
 	}
 
@@ -52,13 +53,15 @@ class ProjectPage extends Component {
 	}
 
 	stopSpinner = () => this.setState({ fetchingProject: false });
-	
+
 	setProject = project => {
 		if (isStorageAvailable() && localStorage.getItem("project_id") !== project._id)
 			setLocalStorageItems({ project_id: project._id, activeTabIndex: 0 });
 
 		this.setState({ project, fetchingProject: false });
 	};
+
+	setAllUsersList = allUsersList => this.setState({ allUsersList });
 
 	setActiveTabIndex = index => {
 		if (isStorageAvailable()) localStorage.setItem("activeTabIndex", index);
@@ -105,6 +108,7 @@ class ProjectPage extends Component {
 						updateProjectInDatabase={this.updateProjectInDatabase}
 						todos={this.state.project.todos}
 						team={this.state.project.team}
+						admin_id={this.state.project.admin}
 					/>
 				);
 
@@ -112,7 +116,17 @@ class ProjectPage extends Component {
 				return <Discussion />;
 
 			case 3:
-				return <TeamMembers />;
+				return (
+					<TeamMembers
+						team={this.state.project.team}
+						updateProjectInDatabase={this.updateProjectInDatabase}
+						removeTeamMember={this.removeTeamMember}
+						addTeamMember={this.addTeamMember}
+						allUsersList={this.state.allUsersList}
+						setAllUsersList={this.setAllUsersList}
+						admin_id={this.state.project.admin}
+					/>
+				);
 
 			default:
 				return null;
@@ -150,6 +164,16 @@ class ProjectPage extends Component {
 	removeTodo = id =>
 		this.setState(({ project }) => ({
 			project: { ...project, todos: project.todos.filter(todo => todo._id !== id) }
+		}));
+
+	removeTeamMember = teamMember =>
+		this.setState(({ project }) => ({
+			project: { ...project, team: project.team.filter(user => user._id !== teamMember._id) }
+		}));
+
+	addTeamMember = teamMember =>
+		this.setState(({ project }) => ({
+			project: { ...project, team: [teamMember, ...project.team] }
 		}));
 
 	toggleTodoCompleted = id =>
