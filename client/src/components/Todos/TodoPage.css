@@ -1,19 +1,5 @@
-.todo-page-main {
-  min-height: 80vh;
-  width: 600px;
-  max-width: 90vw;
-  margin: auto;
-  display: flex;
-  flex-direction: column;
-  /* align-items: center; */
-  /* justify-content: space-between; */
-  background: #fafafa;
-  border-radius: 20px;
-  box-shadow:  0px 0px 13px 3px rgba(0,0,0,0.5);
-  padding: 1em;
-  padding-bottom: 5em;
-}
-.top-todo{
+
+/* .top-todo{
   display: flex;
   justify-content: space-between;
 }
@@ -66,8 +52,8 @@ form label,
   border: none;
   padding:.5em;
   margin: 1em;
-}
-.btn-pencil,
+} */
+/* .btn-pencil,
 .btn-cancel,
 .btn-approve {
   border: none;
@@ -91,8 +77,8 @@ form label,
   border: none;
   background: lime;
   border-radius: 1em;
-}
-.wraper-description input {
+} */
+/* .wraper-description input {
   display: block;
   margin: 0.5em;
 }
@@ -157,4 +143,4 @@ form label,
 }
 .message-text{
   text-align: justify;
-}
+} */

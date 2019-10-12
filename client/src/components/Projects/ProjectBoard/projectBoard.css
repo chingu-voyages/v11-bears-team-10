@@ -1,13 +1,271 @@
-.team-container{
+html,
+body {
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+}
+.main-project, .todo-page-main {
+  font-family: sans-serif;
+  background: #444;
+  flex: 1;
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  
+}
+/* -------------------------------------------
+                  SECTION PROJECT
+---------------------------------------------- */
+.sect-project, .sect-todo {
+  grid-column: 1;
+  box-shadow: 0 0 5px 1px rgba(0, 0, 0, 0.5);
+  background: #ffffff;
+  position: relative;
+}
+.sect-project-header{
   display: flex;
+  justify-content: space-between;
 }
-.team_item{
-  border: thin solid black;
-  padding: .5em;
-  border-radius: 1em;
-  margin: 5px;
+.opts-hide{
+  display: none;
 }
-.team-item-delete{
-  margin-left: 1em;
+.sect-project-completed {
+  min-width: 50px;
+  min-height: 50px;
+  background-color: #fff;
+  border-radius: 50%;
+  background-size: 100%;
+  background-repeat: no-repeat;
+  background-image: url("../../../images/icons/complete.png");
+}
+.sect-project-opts-wraper{
+  position: relative;
   cursor: pointer;
+}
+.sect-project-opts{
+  position: absolute;
+  right: 50%;
+  border: solid thin black;
+  border-bottom: none;
+  background: #fff;
+ 
+}
+.sect-project-btn-opts{
+  min-width: 50px;
+  min-height: 50px;
+  background-color: #fff;
+  border-radius: 50%;
+  box-shadow: inset 0 0 1px 4px rgba(0, 0, 0, 0.5);
+  background-size: 100%;
+  background-repeat: no-repeat;
+  background-image: url("../../../images/icons/options.png");
+}
+.sect-project-btn-opts:hover{
+  transform: scale(1.1)
+}
+.sect-project-opts-item{
+  border-bottom: #444 solid thin;
+  padding: 0 .5em;
+}
+.sect-project-opts-item:hover{
+  background: #444;
+  color: white;
+}
+.sect-project-title,
+.sect-project-description-wraper {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+.sect-project-title h1 {
+  margin: auto;
+  text-decoration: underline;
+}
+.sect-project-form-title-update {
+  display: flex;
+  align-items: center;
+  margin: 0.5em 0;
+}
+.sect-project-description-wraper {
+  align-items: flex-start;
+  margin-top: 0.5em;
+}
+.sect-project-description-wraper p {
+  flex: 1;
+  padding: .5em 1em;
+  margin-right: 0.5em;
+  border-radius: 20px;
+  background: rgba(0, 0, 0, 0.05);
+}
+.sect-project-form-description,
+.sect-project-form-team {
+  display: flex;
+  flex-direction: column;
+}
+.sect-project-form-description .btns-update-wraper,
+.sect-project-form-team .btns-update-wraper {
+  display: flex;
+  justify-content: space-around;
+  padding: 0.5em;
+}
+.sect-project-creator {
+  margin: 0.5em 0;
+  text-decoration: underline;
+}
+.sect-project-team {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.sect-project-team-title {
+  text-decoration: underline;
+  margin: 0.5em 0 -0.3em;
+}
+.sect-project-team .btn-edit {
+  padding: 0.3em 0.5em;
+}
+.team_item {
+  margin: 0.5em 0.2em;
+  padding: 0.3em 0.8em;
+  border-radius: 1em;
+  background: #444;
+  color: #fff;
+  cursor: default;
+}
+.team-item-delete {
+  margin-left: 0.5em;
+  margin-right: -0.5em;
+  padding: 0 0.3em;
+  border: thin solid white;
+  border-radius: 50%;
+  vertical-align: super;
+}
+.team-item-delete:hover {
+  cursor: pointer;
+  color: #444;
+  background: white;
+}
+.sect-project-form-delete {
+  position: absolute;
+  top: 30%;
+  right: 2em;;
+  background: #444;
+  padding: 1em;
+  border-radius: 1em;
+
+}
+.input-text {
+  flex: 1;
+  text-align: center;
+}
+.btn-edit {
+  border: solid thin #444;
+  background: white;
+  color: #444;
+  border-radius: 10px;
+  font-style: italic;
+}
+.btn-edit:hover {
+  background: #444;
+  color: white;
+}
+.btn-save,
+.btn-cancel {
+  border: none;
+  width: 80px;
+  border-radius: 30px;
+  background-color: limegreen;
+  color: white;
+  font-weight: bold;
+  height: 2.3em;
+  margin-left: 0.5em;
+}
+.btn-cancel {
+  background-color: orange;
+}
+.btn-save:hover,
+.btn-cancel:hover {
+  transform: scale(1.05);
+}
+
+/* -------------------------------------------
+                  SECTION TODOS
+---------------------------------------------- */
+.sect-project-todos {
+  grid-column: 1;
+  grid-row: 2;
+  box-shadow: 0 0 5px 1px rgba(0, 0, 0, 0.5);
+  background: #fff;
+}
+.sect-project-todo-item, .sect-project-message-item, .sect-project-btn-add{
+  padding: 1em;
+  box-shadow: 0 0 5px 1px rgba(0, 0, 0, 0.5);
+  margin-bottom: 1em;
+  background: #444;
+  color: white;
+  border-radius: 20px;
+}
+.sect-project-todo-item:hover{
+  cursor: pointer;
+  transform: scale(1.01)
+
+}
+.sect-project-todo-item h3{
+  text-align: center;
+}
+
+
+/* -------------------------------------------
+                  SECTION MESSAGES
+---------------------------------------------- */
+.sect-project-messages, .sect-todo-messages {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+  box-shadow: 0 0 5px 1px rgba(0, 0, 0, 0.5);
+  background: #fff;
+}
+.sect-todo-messages{
+  grid-row: 1 / span 1;
+}
+
+/* --------------------------------------------- */
+
+.sect-project,
+.sect-project-todos,
+.sect-project-messages,
+.sect-todo-messages,
+.sect-todo {
+  margin: 20px;
+  padding: 20px;
+  border-radius: 20px;
+}
+.sect-project-btn-add{
+  padding: 0;
+  font-size: 1.5em;
+  text-align: center;
+}
+.sect-title{
+  text-align: center
+}
+.sect-project-btn-add:hover{
+  cursor: pointer;
+  transform: scale(1.01, 1.05)
+
+}
+.link-project-title{
+  text-align: center;
+  font-size: 1.5em;
+  text-decoration: underline;
+}
+@media all and (max-width: 800px){
+  .main-project, .todo-page-main{
+    grid-template-columns: 1fr;
+  }
+  .sect-project-messages {
+    grid-column: 1;
+    grid-row: 3;   
+  }
+  .sect-todo-messages{
+    grid-column: 1;
+    grid-row: 2;
+  }
 }
