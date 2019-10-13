@@ -61,7 +61,8 @@ export default class NavBar extends Component {
 		return (
 			<Navbar
 				className={
-					"flex-column flex-md-row text-center" +
+					"flex-column flex-md-row text-center" 
+					+
 					(this.state.expanded || this.state.withBg
 						? " bg-white border-bottom"
 						: " bg-transparent")

@@ -17,7 +17,7 @@ class Dashboard extends Component {
 }
 
 const mapStateToProps = state => ({
-  projectList: state.user.projectList.reverse() || []
+  projectList: state.user.projectList || []
 });
 
 export default connect(mapStateToProps)(Dashboard);

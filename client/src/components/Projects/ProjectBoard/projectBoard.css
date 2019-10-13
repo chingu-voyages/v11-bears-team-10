@@ -4,19 +4,23 @@ body {
   margin: 0;
   padding: 0;
 }
+#nav{
+  background: #444;
+}
 .main-project, .todo-page-main {
-  font-family: sans-serif;
+  font-family: 'Roboto', sans-serif;
   background: #444;
   flex: 1;
   display: grid;
-  grid-template-columns: 3fr 1fr;
-  
+  grid-template-columns: 1fr 5fr 3fr 1fr;
+  /* justify-content: center; */
+  /* margin: 0; */
 }
 /* -------------------------------------------
                   SECTION PROJECT
 ---------------------------------------------- */
 .sect-project, .sect-todo {
-  grid-column: 1;
+  grid-column: 2;
   box-shadow: 0 0 5px 1px rgba(0, 0, 0, 0.5);
   background: #ffffff;
   position: relative;
@@ -43,6 +47,7 @@ body {
 }
 .sect-project-opts{
   position: absolute;
+  width: 8em;
   right: 50%;
   border: solid thin black;
   border-bottom: none;
@@ -191,7 +196,7 @@ body {
                   SECTION TODOS
 ---------------------------------------------- */
 .sect-project-todos {
-  grid-column: 1;
+  grid-column: 2;
   grid-row: 2;
   box-shadow: 0 0 5px 1px rgba(0, 0, 0, 0.5);
   background: #fff;
@@ -218,7 +223,7 @@ body {
                   SECTION MESSAGES
 ---------------------------------------------- */
 .sect-project-messages, .sect-todo-messages {
-  grid-column: 2;
+  grid-column: 3;
   grid-row: 1 / span 2;
   box-shadow: 0 0 5px 1px rgba(0, 0, 0, 0.5);
   background: #fff;
@@ -256,16 +261,27 @@ body {
   font-size: 1.5em;
   text-decoration: underline;
 }
-@media all and (max-width: 800px){
+@media all and (max-width: 760px){
   .main-project, .todo-page-main{
-    grid-template-columns: 1fr;
+    grid-template-columns: 0.5fr 5fr 0.5fr;
+  }
+  .sect-project, .sect-project-todos{
+    grid-column: 2;
   }
   .sect-project-messages {
-    grid-column: 1;
+    grid-column: 2;
     grid-row: 3;   
   }
   .sect-todo-messages{
-    grid-column: 1;
+    grid-column: 2;
     grid-row: 2;
   }
+}
+
+@media all and (max-width: 400px){
+  .main-project, .todo-page-main{
+    grid-template-columns: 10px 1fr 10px;
+   
+  }
+  
 }

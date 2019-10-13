@@ -161,6 +161,58 @@ function TodoPage({ project, updateProject, todo, userId, username, history }) {
           Created by {username} on {new Date(todo.date_create).toLocaleString()}
         </div>
 
+        <div className="sect-project-description">
+          <div className="sect-project-description-wraper">
+            {!isUpdateDescription && <p>{todo.description}</p>}
+            {editBtn && !isUpdateDescription && (
+              <button
+                className="btn-edit"
+                onClick={() => {
+                  setisUpdateDescription(true);
+                }}
+              >
+                Edit
+              </button>
+            )}
+          </div>
+          {isUpdateDescription && (
+            <form
+              className="sect-project-form-description"
+              onSubmit={e => {
+                e.preventDefault();
+                const todoId = todo._id;
+                const todos = project.todos.map(todo => {
+                  if (todo._id === todoId) {
+                    todo.description = description;
+                  }
+                  return todo;
+                });
+                const update = { ...project, todos };
+                updateProject(update);
+                setisUpdateDescription(false);
+              }}
+            >
+              <textarea
+                value={description}
+                onChange={e => setDescription(e.target.value)}
+                required
+              />
+              <div className="btns-update-wraper">
+                <input className="btn-save" type="submit" value="Save" />
+                <input
+                  className="btn-cancel"
+                  type="button"
+                  value="cancel"
+                  onClick={() => {
+                    setDescription(todo.description);
+                    setisUpdateDescription(false);
+                  }}
+                />
+              </div>
+            </form>
+          )}
+        </div>
+
         <div className="sect-project-title">
           <span>Date Due: </span>
           <span className="text">
@@ -306,58 +358,6 @@ function TodoPage({ project, updateProject, todo, userId, username, history }) {
             </div>
           </form>
         )}
-
-        <div className="sect-project-description">
-          <div className="sect-project-description-wraper">
-            {!isUpdateDescription && <p>{todo.description}</p>}
-            {editBtn && !isUpdateDescription && (
-              <button
-                className="btn-edit"
-                onClick={() => {
-                  setisUpdateDescription(true);
-                }}
-              >
-                Edit
-              </button>
-            )}
-          </div>
-          {isUpdateDescription && (
-            <form
-              className="sect-project-form-description"
-              onSubmit={e => {
-                e.preventDefault();
-                const todoId = todo._id;
-                const todos = project.todos.map(todo => {
-                  if (todo._id === todoId) {
-                    todo.description = description;
-                  }
-                  return todo;
-                });
-                const update = { ...project, todos };
-                updateProject(update);
-                setisUpdateDescription(false);
-              }}
-            >
-              <textarea
-                value={description}
-                onChange={e => setDescription(e.target.value)}
-                required
-              />
-              <div className="btns-update-wraper">
-                <input className="btn-save" type="submit" value="Save" />
-                <input
-                  className="btn-cancel"
-                  type="button"
-                  value="cancel"
-                  onClick={() => {
-                    setDescription(todo.description);
-                    setisUpdateDescription(false);
-                  }}
-                />
-              </div>
-            </form>
-          )}
-        </div>
 
         {todo.completed && (
           <div>
