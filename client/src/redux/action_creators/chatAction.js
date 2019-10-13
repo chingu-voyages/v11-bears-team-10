@@ -54,6 +54,10 @@ export default function configureSocketIo() {
 
   };
 }
+export function chatDisconnect(){
+  socket.close()
+}
+
 export function sendMessage({ room, username, message }) {
   const msgID = username + Date.now()
   socket.emit(room, { username, message, room, msgID });

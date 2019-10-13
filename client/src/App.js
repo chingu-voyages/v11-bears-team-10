@@ -28,7 +28,7 @@ function App({ user, error, resetError, configSocketIo }) {
     if (user) configSocketIo();
   }, [configSocketIo, user]);
   return (
-    <BrowserRouter>
+    <BrowserRouter >
       <ErrorToast error={error} onClose={resetError} delay={3000} />
       <NavBar user={user} />
 

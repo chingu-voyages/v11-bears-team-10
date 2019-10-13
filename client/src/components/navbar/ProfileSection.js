@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 
 import logout from "../../redux/action_creators/logout";
+import { chatDisconnect } from '../../redux/action_creators/chatAction'
 
 import Avatar from "../../reusable_components/Avatar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -16,6 +17,7 @@ function ProfileSection({ user, logout }) {
 
 		// this will unset the user from the state
 		// so there's no need to hide the spinner later since this component will be unmounted
+		chatDisconnect();
 		logout();
 	};
 
