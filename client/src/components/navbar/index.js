@@ -61,11 +61,12 @@ export default class NavBar extends Component {
 		return (
 			<Navbar
 				className={
-					"flex-column flex-md-row text-center" 
-					+
-					(this.state.expanded || this.state.withBg
-						? " bg-white border-bottom"
-						: " bg-transparent")
+					"flex-column flex-md-row text-center bg-white border-bottom" 
+					
+					// +
+					// (this.state.expanded || this.state.withBg
+					// 	? " bg-white border-bottom"
+					// 	: " bg-transparent")
 				}
 				onToggle={this.onToggle}
 				expand="md"
@@ -82,7 +83,7 @@ export default class NavBar extends Component {
 
 				<Navbar.Collapse id="navbar-nav-collapse">
 					<Nav as="ul" className="pl-md-2">
-						<NavItem as="li" className="ml-md-2 my-md-0 my-2" onClick={this.shrink}>
+						{/* <NavItem as="li" className="ml-md-2 my-md-0 my-2" onClick={this.shrink}>
 							<NavLink to="/features" className="nav-link">
 								Features
 							</NavLink>
@@ -96,10 +97,15 @@ export default class NavBar extends Component {
 							<NavLink to="/contact-us" className="nav-link">
 								Contact us
 							</NavLink>
+						</NavItem> */}
+							<NavItem as="li" className="ml-md-2 my-md-0 my-2" onClick={this.shrink}>
+							<NavLink to="/dashboard" className="nav-link">
+								Dashboard
+							</NavLink>
 						</NavItem>
 						<NavItem as="li" className="ml-md-2 my-md-0 my-2" onClick={this.shrink}>
 							<NavLink to="/chat" className="nav-link">
-								Chat
+								Chat with your colleagues
 							</NavLink>
 						</NavItem>
 					</Nav>

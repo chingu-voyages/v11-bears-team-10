@@ -5,7 +5,6 @@ import {
   sendMessage,
   resetCounter,
   iamTyping,
-  setTypingInterval
 } from "../../redux/action_creators/chatAction";
 
 function Chat({
@@ -14,11 +13,14 @@ function Chat({
   userList = [],
   counter,
   isTyping,
-  timeout,
   dispatch
 }) {
   const { projectList } = user;
   const [message, setMessage] = useState("");
+
+  const [typing, setTyping] = useState(false);
+  const [timer, setTimer] = useState();
+
 
   const [chatRoom, setChatRoom] = useState(projectList.length ? projectList[0].title : '');
   const [currentProject, setCurrentProject] = useState(projectList.length ? projectList[0] : '')
@@ -91,12 +93,16 @@ function Chat({
               value={message}
               onChange={e => {
                 setMessage(e.target.value);
-                // iamTyping(user.username)
-                // clearTimeout(timeout)
-                // const timer = setTimeout(() => {
-                //   iamTyping('')
-                // }, 5000);
-                // setTypingInterval(timer)
+                clearTimeout(timer)
+                if(!typing){
+                  setTyping(true);
+                  iamTyping(user.username)
+                }
+                  const interval =setTimeout(() => {
+                    setTyping(false);
+                    iamTyping("")
+                  }, 2000);
+                setTimer(interval)
               }}
             />
             <input className="btn-chat-send" type="submit" value="" />
@@ -124,7 +130,6 @@ const mapStateToProps = state => {
     userList: state.chat.userList || [],
     counter: state.chat.newMessagesCounter || {},
     isTyping: state.chat.isTyping || '',
-    timeout: state.chat.interval
   };
 };
 

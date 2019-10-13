@@ -300,13 +300,14 @@ function Project(props) {
               type="text"
               value={textDelete}
               onChange={e => setTextDelete(e.target.value)}
-              placeholder="Title of the project"
+              placeholder="Project Title"
             />
             <input
               className="btn-save"
               type="submit"
               value="Delete"
               disabled={project.title !== textDelete}
+              style={project.title === textDelete ? {background: "red"} : {}}
             />
             <input
               className="btn-cancel"
@@ -322,14 +323,14 @@ function Project(props) {
       </section>
       <section className="sect-project-todos">
         <h2 className="sect-title">Todos</h2>
-        <div
+        {!project.completed && <div
           className="sect-project-btn-add"
           onClick={() => {
             setShowModaltodo(true);
           }}
         >
           +
-        </div>
+        </div>}
         {project.todos.map(todo => (
           <div
             className="sect-project-todo-item"

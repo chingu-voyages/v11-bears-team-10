@@ -369,7 +369,7 @@ function TodoPage({ project, updateProject, todo, userId, username, history }) {
         {formDelete && (
           <form
             className="sect-project-form-delete"
-            onSubmit={e => {
+            onSubmit={() => {
               const todoId = todo._id;
               project.todos = project.todos.filter(todo => todo._id !== todoId);
               updateProject(project);
@@ -380,13 +380,14 @@ function TodoPage({ project, updateProject, todo, userId, username, history }) {
               type="text"
               value={textDelete}
               onChange={e => setTextDelete(e.target.value)}
-              placeholder="Title of the project"
+              placeholder="Todo Title"
             />
             <input
               className="btn-save"
               type="submit"
               value="Delete"
               disabled={todo.title !== textDelete}
+              style={todo.title === textDelete ? {background: "red"} : {}}
             />
             <input
               className="btn-cancel"

@@ -8,9 +8,9 @@ import ProtectedRoute from "./reusable_components/ProtectedRoute";
 
 import NavBar from "./components/navbar";
 import LandingPage from "./components/LandingPage";
-import HowItWorks from "./components/HowItWorks";
-import Features from "./components/Features";
-import ContactUs from "./components/ContactUs";
+// import HowItWorks from "./components/HowItWorks";
+// import Features from "./components/Features";
+// import ContactUs from "./components/ContactUs";
 import LoginForm from "./components/LoginForm";
 import RegisterForm from "./components/RegisterForm";
 import Footer from "./components/Footer";
@@ -34,9 +34,9 @@ function App({ user, error, resetError, configSocketIo }) {
 
       <Switch>
         <Route path="/" exact component={LandingPage} />
-        <Route path="/features" component={Features} />
+        {/* <Route path="/features" component={Features} />
         <Route path="/how-it-works" component={HowItWorks} />
-        <Route path="/contact-us" component={ContactUs} />
+        <Route path="/contact-us" component={ContactUs} /> */}
 
         <ProtectedRoute
           path="/project/:id"

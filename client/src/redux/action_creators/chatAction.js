@@ -71,14 +71,5 @@ export function resetCounter(prj){
   }
 }
 export function iamTyping(username){
-  console.log("--------------------username----------- =", username)
   socket.emit('isTyping', username)
-}
-export function setTypingInterval(interval){
-  return dispatch => {
-    dispatch({
-      type: 'SET_INTERVAL',
-      interval
-    })
-  }
 }
