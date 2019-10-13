@@ -17,7 +17,8 @@ class Dashboard extends Component {
 }
 
 const mapStateToProps = state => ({
-  projectList: state.user.projectList || []
+  projectList: state.user.projectList || [],
+  userID : state.user._id
 });
 
 export default connect(mapStateToProps)(Dashboard);

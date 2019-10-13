@@ -12,18 +12,18 @@ const Summary = ({ projectList }) => (
 		<h1 className="section-title">Summary</h1>
 		<hr className="w-100" />
 		<Row noGutters>
-			<Col xs={12} sm={4} className="px-2">
+			<Col xs={12} sm={6} className="px-2">
 				<h2 className="p-2 rounded">
 					{projectList.length}
 					<span className="mt-2 d-block">Projects</span>
 				</h2>
 			</Col>
-			<Col xs={12} sm={4} className="px-2">
+			{/* <Col xs={12} sm={4} className="px-2">
 				<h2 className="p-2 rounded">
 					0<span className="mt-2 d-block">Connections</span>
 				</h2>
-			</Col>
-			<Col xs={12} sm={4} className="px-2">
+			</Col> */}
+			<Col xs={12} sm={6} className="px-2">
 				<h2 className="p-2 rounded">
 					{projectList.reduce(reducer, 0)}
 					<span className="mt-2 d-block">Finished Projects</span>
