@@ -9,10 +9,10 @@ module.exports = server => {
       projectList.forEach(project => {
         socket.on(project, async function(msg) {
           try {
-            const findDouble = await MessageChat.findOne({ msgID: msg.msgID });
-            if (findDouble) return;
+            if (socket.id === msg.msgID) return;
             const message = await MessageChat.create(msg);
             await message.save();
+            socket.id = msg.msgID
             io.emit(project, message);
           } catch (error) {
             console.error(error);
