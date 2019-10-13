@@ -1,23 +1,23 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "be70ac5e41c9dfaf871b086200245a71",
+    "revision": "957acd1475c6f230d77f81d8a7ecaad9",
     "url": "/v11-bears-team-10/index.html"
   },
   {
-    "revision": "ad6cb46565dc9a722897",
+    "revision": "f359451f3e1e33780a08",
     "url": "/v11-bears-team-10/static/css/2.ffea287f.chunk.css"
   },
   {
-    "revision": "33fd3837a4d72379affb",
-    "url": "/v11-bears-team-10/static/css/main.1c1f28bb.chunk.css"
+    "revision": "b8c8c04037f79f1df7c2",
+    "url": "/v11-bears-team-10/static/css/main.8762b5cd.chunk.css"
   },
   {
-    "revision": "ad6cb46565dc9a722897",
-    "url": "/v11-bears-team-10/static/js/2.05e7a61c.chunk.js"
+    "revision": "f359451f3e1e33780a08",
+    "url": "/v11-bears-team-10/static/js/2.f1eec563.chunk.js"
   },
   {
-    "revision": "33fd3837a4d72379affb",
-    "url": "/v11-bears-team-10/static/js/main.a926b76b.chunk.js"
+    "revision": "b8c8c04037f79f1df7c2",
+    "url": "/v11-bears-team-10/static/js/main.762a71fd.chunk.js"
   },
   {
     "revision": "61b2a3751c30431c6f8d",
