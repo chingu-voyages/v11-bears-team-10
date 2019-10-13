@@ -1,21 +1,15 @@
-import axios from "axios";
 
 const authToken = (state = null, action) => {
-	switch (action.type) {
-		case "SET_USER":
-			console.log('set token reducer --------------------------------', action.authToken)
-			// localStorage.setItem("authToken", action.authToken);
-			// axios.defaults.headers.common["Authorization"] = "Bearer " + action.authToken;
-			return action.authToken;
+  switch (action.type) {
+    case "SET_USER":
+      return action.authToken;
 
-		case "RESET_USER":
-			localStorage.removeItem("authToken");
-			delete axios.defaults.headers.common["Authorization"];
-			return null;
+    case "RESET_USER":
+      return null;
 
-		default:
-			return state;
-	}
+    default:
+      return state;
+  }
 };
 
 export default authToken;
