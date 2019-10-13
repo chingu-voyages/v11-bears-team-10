@@ -1,8 +1,7 @@
 const { ChatUser, MessageChat } = require("../models/chat");
 
 module.exports = server => {
-  // var server = require("http").Server(app);
-  var io = require("socket.io")(server);
+  const io = require("socket.io")(server);
 
   io.on("connection", function(socket) {
     socket.on("create", function(projectList) {
@@ -26,7 +25,6 @@ module.exports = server => {
     });
 
     socket.on("disconnect", async function() {
-      console.log("chat user disconnect =", socket.username);
       try {
         if (socket.username) {
           await ChatUser.findOneAndDelete({ username: socket.username });
@@ -39,7 +37,6 @@ module.exports = server => {
     });
 
     socket.on("login", async function(username) {
-      console.log("chat user login =", username);
       try {
         socket.username = username;
         const finduser = await ChatUser.findOne({ username });
