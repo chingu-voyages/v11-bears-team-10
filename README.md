@@ -16,6 +16,7 @@ The app helps you to manage your projects by assigning todos to the project's te
 - Express.js
 - Mongoose
 - React
+- Redux
 - Socket.io
 
 ---
